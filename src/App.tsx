@@ -1,43 +1,24 @@
+import { FC, ReactElement } from "react";
 import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import NotFound from "./components/NotFound";
+import Layout from "./components/layout/Layout";
+import OrderList from "./components/orderList/OrderList";
 import Login from "./pages/Login";
-import Test from "./pages/Test";
-import { useUserStore } from "./stores/user.store";
 
-function App() {
-  const user = useUserStore((state) => state);
-
-  const patchUser = user.setCurrentUser;
-
+const App: FC = (): ReactElement => {
   return (
-    <>
-      <Login />
-      {/* <Test /> */}
-      {/* <div className="p-4 m-auto border-2 rounded-lg bg-slate-800 text-white">
-        <h1 className="text-3xl font-bold">
-          Hello world!{" "}
-          {user.currentUser ? user.currentUser.name : "MBOLA TSY DEFINIE"}
-        </h1>
-        <p className="mt-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam qui
-          minima autem nobis animi perspiciatis deleniti quaerat, recusandae
-          officiis ea totam quisquam repellat quidem perferendis ad! Vel officia
-          voluptatibus ipsam.
-        </p>
-        <button
-          className="bg-indigo-600 hover:bg-indigo-800 mt-4 py-2 px-4 rounded"
-          onClick={() => {
-            patchUser({
-              id: 1,
-              name: "Ranto",
-              token: "dzaldjlazkfhaoelkdjeklfhezkjlazjdkazhdlazhdzkajd",
-            });
-          }}
-        >
-          Click Me
-        </button>
-      </div> */}
-    </>
+    <Routes>
+      <Route path={"/"} element={<Navigate to="/app" />} />
+      <Route path={"/login"} element={<Login />} />
+      <Route
+        path={"app"}
+        element={<Layout />}
+        children={[<Route path="orders" element={<OrderList />} />]}
+      />
+      <Route path={"/*"} element={<NotFound />} />
+    </Routes>
   );
-}
+};
 
 export default App;
