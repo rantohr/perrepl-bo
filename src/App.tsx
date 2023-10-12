@@ -1,19 +1,19 @@
 import { FC, ReactElement } from "react";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import ClientList from "./components/clientList/ClientList";
+import { Routes, Route, Navigate } from "react-router-dom";
 import NotFound from "./components/NotFound";
+import Layout from "./components/layout/Layout";
+import OrderList from "./components/orderList/OrderList";
 
 const App: FC = (): ReactElement => {
 
   return (
     <Routes>
-      <Route path={'/'} element={<ClientList />} />
-      {/* <Route path={'/login'} element={<LoginPage />} />
-      <Route path={'client'} element={<ClientList />} children={[
-        <Route path='' element={<ProductsPage />} />,
-        <Route path='product/:id' element={<ProductDetail />} />,
-      ]} /> */}
+      <Route path={'/'} element={<Navigate to="/app" />} />
+      {/* <Route path={'/login'} element={<LoginPage />} /> */}
+      <Route path={'app'} element={<Layout />} children={[
+        <Route path='orders' element={<OrderList />} />
+      ]} />
       <Route path={'/*'} element={<NotFound />} />
     </Routes>
   )
