@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Login() {
+  const navigate = useNavigate();
+
   return (
     <>
       <section className="flex justify-center items-center bg-gray-100 h-full min-h-screen">
@@ -68,7 +72,12 @@ export default function Login() {
                   </div>
 
                   <div className="mt-4">
-                    <p className="uppercase text-[#381A44] font-weight-700 text-xs">
+                    <p
+                      className="uppercase text-[#381A44] font-weight-700 text-xs cursor-pointer"
+                      onClick={() => {
+                        navigate("/register");
+                      }}
+                    >
                       <span className="text-[#381A4480]">Pas de compte ?</span>{" "}
                       commenez votre essai gratuit
                     </p>
