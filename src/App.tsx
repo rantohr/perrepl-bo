@@ -1,4 +1,6 @@
 import "./App.css";
+import Login from "./pages/Login";
+import Test from "./pages/Test";
 import { useUserStore } from "./stores/user.store";
 
 function App() {
@@ -8,7 +10,9 @@ function App() {
 
   return (
     <>
-      <div className="p-4 m-auto border-2 rounded-lg bg-slate-800 text-white">
+      {/* <Login /> */}
+      <Test />
+      {/* <div className="p-4 m-auto border-2 rounded-lg bg-slate-800 text-white">
         <h1 className="text-3xl font-bold">
           Hello world!{" "}
           {user.currentUser ? user.currentUser.name : "MBOLA TSY DEFINIE"}
@@ -31,7 +35,7 @@ function App() {
         >
           Click Me
         </button>
-      </div>
+      </div> */}
     </>
   );
 }
