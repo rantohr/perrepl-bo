@@ -10,8 +10,8 @@ function App() {
 
   return (
     <>
-      {/* <Login /> */}
-      <Test />
+      <Login />
+      {/* <Test /> */}
       {/* <div className="p-4 m-auto border-2 rounded-lg bg-slate-800 text-white">
         <h1 className="text-3xl font-bold">
           Hello world!{" "}
