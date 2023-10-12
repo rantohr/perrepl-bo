@@ -1,4 +1,5 @@
 import { useUserStore } from "../../stores/user.store";
+import { Outlet } from "react-router-dom";
 
 function Layout() {
   const state = useUserStore((state) => state);
@@ -97,7 +98,9 @@ function Layout() {
             </div>
           </div>
         </div>
-        <div className="container"></div>
+        <div className="container">
+          <Outlet />
+        </div>
       </div>
     </>
   );

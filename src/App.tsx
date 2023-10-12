@@ -16,7 +16,7 @@ const App: FC = (): ReactElement => {
       <Route
         path={"app"}
         element={<Layout />}
-        children={[<Route path="orders" element={<OrderList />} />]}
+        children={[<Route path="" element={<OrderList />} />]}
       />
       <Route path={"/*"} element={<NotFound />} />
     </Routes>
