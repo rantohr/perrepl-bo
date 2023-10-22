@@ -61,3 +61,161 @@
 .side-menu>div .active * {
     color: #d20072;
 }
+
+/* LIST */
+.list-container>div {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5em;
+}
+
+.list-container .main-title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.big-badge {
+    background-color: #a3a3a333;
+    border-radius: 50%;
+    width: 27px;
+    height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a3a3a3;
+}
+
+/** BUTTONS */
+.outlined-button {
+    background-color: #381a44;
+    color: #381a44;
+}
+
+.outlined-button svg,
+.outlined-button span,
+.outlined-button p {
+    color: #381a44;
+}
+
+.outlined-button:hover {
+    background-color: #381a44 !important;
+    color: #fff;
+}
+
+.outlined-button:hover svg,
+.outlined-button:hover span,
+.outlined-button:hover p {
+    color: #fff;
+}
+
+.contained-button {
+    background-color: #381a44;
+    color: #fff;
+}
+
+.contained-button svg,
+.contained-button span,
+.contained-button p {
+    color: #fff;
+}
+
+.contained-button:hover {
+    background-color: #fff !important;
+    border-color: #381a44 !important;
+    color: #381a44;
+}
+
+.contained-button:hover svg,
+.contained-button:hover span,
+.contained-button:hover p {
+    color: #381a44;
+}
+
+.default-outlined-button {
+    border-color: #a3a3a3;
+    background-color: #a3a3a3;
+    color: #a3a3a3;
+}
+
+.default-outlined-button svg,
+.default-outlined-button span,
+.default-outlined-button p {
+    color: #a3a3a3;
+}
+
+.default-outlined-button:hover {
+    background-color: #d20072 !important;
+    color: #fff;
+}
+
+.default-outlined-button:hover svg,
+.default-outlined-button:hover span,
+.default-outlined-button:hover p {
+    color: #fff;
+}
+
+.hedaer-button {
+    display: flex;
+    gap: 1em;
+}
+
+.list-filter>div {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/** TABLE */
+.table-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-container>div {
+    display: flex;
+}
+
+.table-container>div>div {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-header>div {
+    flex-direction: row !important;
+    gap: 5px;
+}
+
+.table-header h6 {
+    font-weight: 600;
+    color: #a3a3a3;
+}
+
+.table-container img {
+    width: 3.5em;
+    height: 3.5em;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.table-row {
+    background-color: white;
+    margin-bottom: 7px;
+}
+
+.table-actions svg {
+    cursor: pointer;
+}
+
+.status {
+    border-radius: 15px;
+    padding: 5px 15px;
+    width: 8em;
+}

@@ -3,9 +3,9 @@ import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import NotFound from "./components/NotFound";
 import Layout from "./components/layout/Layout";
-import OrderList from "./components/orderList/OrderList";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import OrderList from "./pages/orders/OrderList";
 
 const App: FC = (): ReactElement => {
   return (
