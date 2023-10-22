@@ -6,6 +6,7 @@ import Layout from "./components/layout/Layout";
 import OrderList from "./components/orderList/OrderList";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ClientAgenceProfile from "./components/clientList/ClientAgenceProfile";
 
 const App: FC = (): ReactElement => {
   return (
@@ -18,6 +19,10 @@ const App: FC = (): ReactElement => {
         element={<Layout />}
         children={[<Route path="" element={<OrderList />} />]}
       />
+
+      <Route path="/client">
+        <Route path="agence/update" element={<ClientAgenceProfile />} />
+      </Route>
       <Route path={"/*"} element={<NotFound />} />
     </Routes>
   );
