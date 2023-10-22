@@ -1,16 +1,21 @@
 export interface IColumn {
-  id?: number,
-  order: number,
   field: string,
   label: string,
-  width?: number,
   sortable?: boolean,
-  active: boolean,
-  ordering_asc?: boolean | null,
-  module?: string,
-  field_name?: string,
-  can_edit?: boolean,
-  fullWidth?: boolean,
+  sort?: 'asc' | 'desc' | null,
   displayValue?: (value: any, row?: any) => any,
   displayExportValue?: (value: any, row?: any) => string
+}
+
+export interface IListAction {
+  label: string,
+  icon?: any,
+  callback: (row?: any) => void
+}
+export interface IListFilter {
+  type: "custom" | "period" | "select",
+  field: string,
+  label: string,
+  onChange?: (input: any) => void,
+  options?: { value: string, label: string }[]
 }

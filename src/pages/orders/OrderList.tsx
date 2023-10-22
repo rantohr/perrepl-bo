@@ -1,130 +1,102 @@
-import { Button, Dropdown, Select } from "flowbite-react";
-import { useUserStore } from "../../stores/user.store";
-import { MdModeEdit, MdDelete, MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import { FC, useEffect, useState } from "react";
+import { MdModeEdit, MdDelete, MdOutlineAdd, MdOutlineSend } from "react-icons/md";
+import { IColumn, IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { IOrder } from "../../interfaces/iorder.interface";
+import GenericList from "../../components/genericList/GenericList";
 
-function OrderList() {
-  const user = useUserStore((state) => state);
+const OrderList: FC = () => {
+  /** LIST CONFIG */
+  const actions: IListAction[] = [
+    { label: "Nouvelle demande", icon: <MdOutlineAdd />, callback: () => console.log('add order') },
+    { label: "Envoyer un formulaire", icon: <MdOutlineSend />, callback: () => console.log('send form') },
+  ];
 
-  const patchUser = user.setCurrentUser;
+  const mainFilters: IListAction[] = [
+    { label: "Tout", callback: () => console.log('all') },
+    { label: "Nouvelle", callback: () => console.log('new') },
+    { label: "En cours", callback: () => console.log('on going') },
+    { label: "En attente", callback: () => console.log('waiting') },
+    { label: "Envoyée", callback: () => console.log('sent') },
+    { label: "En voyage", callback: () => console.log('traveling') },
+    { label: "Confirmée", callback: () => console.log('confirmed') },
+  ];
 
-  const getStatusColor = () => {
-    return "#00d971";
+  const filters: IListFilter[] = [
+    { label: "", type: "select", field: "", options: [{ label: "Nom de client", value: "client" }] }
+  ];
+
+  /** ORDER TABLE CONFIGS */
+  const rowActions: IListAction[] = [
+    { label: "Modifier", icon: MdModeEdit, callback: (row: any) => console.log('edit clicked', row) },
+    { label: "Supprimer", icon: MdDelete, callback: (row: any) => console.log('delete clicked', row) },
+  ];
+
+  const columns: IColumn[] = [
+    {
+      field: "image", label: "",
+      displayValue: (src: string) => <img src={src} />
+    },
+    { field: "client", label: "Client", sortable: true },
+    { field: "created_date", label: "Demande", sortable: true, displayValue: (date: string) => date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : '' },
+    {
+      field: "arrival_date", label: "Arrivé", sortable: true,
+      displayValue: (date: string) => (
+        <>
+          <p><b>{date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : ''}</b></p>
+          <p>{date ? format(new Date(date), 'H:m', { locale: fr }) : ''}</p>
+        </>
+      )
+    },
+    { field: "type", label: "Type de client" },
+    {
+      field: "status", label: "Status",
+      displayValue: (status: string) => <div className="status" style={{ color: getStatusColor(status), backgroundColor: getStatusBgColor(status) }}>{status}</div>
+    },
+  ];
+
+  const [rows, setRows] = useState<IOrder[]>([]);
+  useEffect(() => {
+    const fake_rows: IOrder[] = [
+      { id: 1, client: "Annette Black", created_date: '2023-11-12', arrival_date: '2023-11-13 08:15:00', type: "B2B", status: "Nouvelle", image: "/profile-pic-test.jpg" },
+      { id: 2, client: "Allison Page", created_date: '2023-11-02', arrival_date: '2023-11-02 13:55:00', type: "B2B", status: "Nouvelle", image: "/profile-pic-test.jpg" },
+      { id: 3, client: "Léon Harper", created_date: '2023-11-11', arrival_date: '2023-11-16 09:18:00', type: "B2C", status: "Nouvelle", image: "/profile-pic-test.jpg" },
+    ];
+    setRows(fake_rows);
+  }, []);
+  /** ****** */
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Nouvelle':
+        return "#00d971";
+      default:
+        return "#00d971";
+        break;
+    }
   };
 
-  const getStatusBgColor = () => {
-    return "#00d9712b";
+  const getStatusBgColor = (status: string) => {
+    switch (status) {
+      case 'Nouvelle':
+        return "#00d9712b";
+      default:
+        return "#00d9712b";
+    }
   };
 
   return (
-    <div className="list-container order-list">
-      {/* LIST HEADER */}
-      <div>
-        <div className="main-title">
-          <h1 className="text-3xl font-bold">Demandes</h1>
-          <span className="big-badge">3</span>
-        </div>
-        <div className="hedaer-button">
-          <Button outline className="outlined-button">
-            <svg className="w-4 h-4 mr-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
-            </svg>
-            <p>Nouvelle demande</p>
-          </Button>
-          <Button className="contained-button">
-            <svg className="w-4 h-4 mr-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-              <path d="M17 0h-5.768a1 1 0 1 0 0 2h3.354L8.4 8.182A1.003 1.003 0 1 0 9.818 9.6L16 3.414v3.354a1 1 0 0 0 2 0V1a1 1 0 0 0-1-1Z" />
-              <path d="m14.258 7.985-3.025 3.025A3 3 0 1 1 6.99 6.768l3.026-3.026A3.01 3.01 0 0 1 8.411 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V9.589a3.011 3.011 0 0 1-1.742-1.604Z" />
-            </svg>
-            <p>Envoyer un formulaire</p>
-          </Button>
-        </div>
-      </div>
-
-      {/* LIST FILTER */}
-      <div className="list-filter">
-        <div>
-          <Button outline className="default-outlined-button">Tout</Button>
-          <Button outline className="default-outlined-button">Nouvelle</Button>
-          <Button outline className="default-outlined-button">En cours</Button>
-          <Button outline className="default-outlined-button">En attente</Button>
-          <Button outline className="default-outlined-button">Envoyée</Button>
-          <Button outline className="default-outlined-button">En voyage</Button>
-          <Button outline className="default-outlined-button">Confirmée</Button>
-        </div>
-        <div>
-          <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m2.133 2.6 5.856 6.9L8 14l4 3 .011-7.5 5.856-6.9a1 1 0 0 0-.804-1.6H2.937a1 1 0 0 0-.804 1.6Z" />
-          </svg>
-          <p>Filtrer par</p>
-          <Select>
-            <option>Nom du client</option>
-          </Select>
-        </div>
-      </div>
-
-      <div className="table-container">
-        <div className="table-header">
-          <div>
-            <h6></h6>
-          </div>
-          <div>
-            <h6>Client</h6>
-            <MdKeyboardArrowDown />
-          </div>
-          <div>
-            <h6>Demande</h6>
-          </div>
-          <div>
-            <h6>Arrivé</h6>
-          </div>
-          <div>
-            <h6>Type de client</h6>
-          </div>
-          <div>
-            <h6>Status</h6>
-          </div>
-          <div>
-            <h6></h6>
-          </div>
-        </div>
-        {[1, 2].map(i => {
-          return (
-            <div className="table-row" key={i}>
-              <div>
-                <img src="/profile-pic-test.jpg" />
-              </div>
-              <div>
-                <p>Annette Black</p>
-              </div>
-              <div>
-                <p>19/11/2023</p>
-              </div>
-              <div>
-                <p><b>19/11/2023</b></p>
-                <p>06h42</p>
-              </div>
-              <div>
-                <b>B2B</b>
-              </div>
-              <div>
-                <div className="status" style={{ color: getStatusColor(), backgroundColor: getStatusBgColor() }}>Nouvelle</div>
-              </div>
-              <div className="table-actions">
-
-                <Dropdown dismissOnClick={false} renderTrigger={() => (
-                  <svg className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                  </svg>
-                )}>
-                  <Dropdown.Item icon={MdModeEdit}>Modifier</Dropdown.Item>
-                  <Dropdown.Item icon={MdDelete}>Supprimer</Dropdown.Item>
-                </Dropdown>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    </div>
+    <GenericList
+      title="Demandes"
+      total={3}
+      columns={columns}
+      rows={rows}
+      actions={actions}
+      rowActions={rowActions}
+      mainFilters={mainFilters}
+      filters={filters}
+    />
   );
 }
 

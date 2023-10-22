@@ -62,40 +62,22 @@
     color: #d20072;
 }
 
-/* LIST */
-.list-container>div {
-    display: flex;
-    justify-content: space-between;
-    padding: 1.5em;
-}
-
-.list-container .main-title {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.big-badge {
-    background-color: #a3a3a333;
-    border-radius: 50%;
-    width: 27px;
-    height: 27px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #a3a3a3;
-}
-
 /** BUTTONS */
 .outlined-button {
     background-color: #381a44;
     color: #381a44;
 }
 
+.outlined-button svg {
+    font-size: 20px;
+}
+
 .outlined-button svg,
 .outlined-button span,
 .outlined-button p {
     color: #381a44;
+    display: flex;
+    gap: 5px;
 }
 
 .outlined-button:hover {
@@ -142,6 +124,8 @@
 .default-outlined-button span,
 .default-outlined-button p {
     color: #a3a3a3;
+    display: flex;
+    gap: 5px;
 }
 
 .default-outlined-button:hover {
@@ -153,65 +137,6 @@
 .default-outlined-button:hover span,
 .default-outlined-button:hover p {
     color: #fff;
-}
-
-.hedaer-button {
-    display: flex;
-    gap: 1em;
-}
-
-.list-filter>div {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-/** TABLE */
-.table-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.table-container>div {
-    display: flex;
-}
-
-.table-container>div>div {
-    flex: 1;
-    padding: 8px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.table-header>div {
-    flex-direction: row !important;
-    gap: 5px;
-}
-
-.table-header h6 {
-    font-weight: 600;
-    color: #a3a3a3;
-}
-
-.table-container img {
-    width: 3.5em;
-    height: 3.5em;
-    object-fit: cover;
-    border-radius: 50%;
-    margin: 0;
-    padding: 0;
-}
-
-.table-row {
-    background-color: white;
-    margin-bottom: 7px;
-}
-
-.table-actions svg {
-    cursor: pointer;
 }
 
 .status {

@@ -1,8 +1,6 @@
-import { useUserStore } from "../../stores/user.store";
 import { Outlet } from "react-router-dom";
 
 function Layout() {
-  const state = useUserStore((state) => state);
 
   return (
     <>
@@ -11,7 +9,7 @@ function Layout() {
           <div className="flex flex-wrap justify-between items-center mx-auto">
             <a href="/" className="flex items-center">
               <img
-                src="pereepl-logo.png"
+                src="/pereepl-logo.png"
                 className="mr-3 h-6 sm:h-9"
                 alt="Pereepl Logo"
               />
@@ -45,7 +43,7 @@ function Layout() {
               <div className="menu-user-info">
                 <img
                   className="w-10 h-10 rounded"
-                  src="profile-pic-test.jpg"
+                  src="/profile-pic-test.jpg"
                   alt="Default avatar"
                 />
                 <div>
