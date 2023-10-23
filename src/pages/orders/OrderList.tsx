@@ -12,7 +12,7 @@ const OrderList: FC = () => {
     { label: "Nouvelle demande", icon: <MdOutlineAdd />, callback: () => console.log('add order') },
     { label: "Envoyer un formulaire", icon: <MdOutlineSend />, callback: () => console.log('send form') },
   ];
-
+  
   const mainFilters: IListAction[] = [
     { label: "Tout", callback: () => console.log('all') },
     { label: "Nouvelle", callback: () => console.log('new') },
@@ -25,6 +25,12 @@ const OrderList: FC = () => {
 
   const filters: IListFilter[] = [
     { label: "", type: "select", field: "", options: [{ label: "Nom de client", value: "client" }] }
+  ];
+  
+  const tabs: IListAction[] = [
+    { label: "Contenu", callback: () => console.log('content clicked') },
+    { label: "Media", callback: () => console.log('media clicked') },
+    { label: "Document", callback: () => console.log('document clicked') },
   ];
 
   /** ORDER TABLE CONFIGS */
@@ -96,6 +102,7 @@ const OrderList: FC = () => {
       rowActions={rowActions}
       mainFilters={mainFilters}
       filters={filters}
+      tabs={tabs}
     />
   );
 }

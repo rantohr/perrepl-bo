@@ -1,19 +1,24 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { IColumn, IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface";
 import './genericList.css'
 import GenericTable from "../genericTable/GenericTable";
 import { Button, Select } from "flowbite-react";
+import { MdDashboard, MdDns } from "react-icons/md";
 
 const GenericList: FC<{
   title: string,
   total?: number,
   actions?: IListAction[],
+  tabs?: IListAction[],
   mainFilters?: IListAction[],
   filters?: IListFilter[],
   columns: IColumn[],
   rows: any[],
   rowActions?: IListAction[],
-}> = ({ title, total, actions, mainFilters, filters, columns, rows, rowActions }) => {
+  displayModeChange?: (mode: "list" | "table" | "card") => void,
+}> = ({ title, total, actions, mainFilters, filters, columns, rows, rowActions, tabs, displayModeChange }) => {
+
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <div className="list-container order-list">
@@ -39,6 +44,25 @@ const GenericList: FC<{
 
       {/* LIST FILTER */}
       <div className="list-filter">
+
+        {/* TABS */}
+        <div className="list-tabs">
+          {tabs?.map((tab, tab_index) => {
+            return (
+              <div key={`tab-${tab_index}`} className={tab_index === activeTab ? 'list-active-tab' : ''} onClick={() => { setActiveTab(tab_index); tab.callback(); }}>
+                <p>{tab.label}</p>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* DISPLAY */}
+        <div className="list-display">
+          <MdDns />
+          <MdDashboard />
+        </div>
+
+        {/* MAIN FILTERS */}
         <div>
           {
             mainFilters?.map((filter, filter_index) => {
@@ -48,6 +72,8 @@ const GenericList: FC<{
             })
           }
         </div>
+
+        {/* FILTER */}
         <div>
           <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m2.133 2.6 5.856 6.9L8 14l4 3 .011-7.5 5.856-6.9a1 1 0 0 0-.804-1.6H2.937a1 1 0 0 0-.804 1.6Z" />

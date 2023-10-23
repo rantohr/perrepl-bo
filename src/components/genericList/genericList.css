@@ -27,8 +27,57 @@
     gap: 1em;
 }
 
+.list-filter {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list-filter>div:nth-child(odd) {
+    width: 70%;
+}
+
 .list-filter>div {
     display: flex;
     gap: 10px;
     align-items: center;
+}
+
+.list-tabs {
+    gap: 0px !important;
+}
+
+.list-tabs>div {
+    border-bottom: 1px solid #a3a3a3;
+    margin-bottom: 1em;
+    width: 150px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.list-active-tab {
+    border-bottom: 3px solid #9f1972 !important;
+}
+
+.list-active-tab p {
+    color: #381a44 !important;
+}
+
+.list-tabs>div p {
+    text-transform: uppercase;
+    color: #a3a3a3;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+}
+
+.list-display svg {
+    cursor: pointer;
+    font-size: xx-large;
+    fill: #381a44;
+
+}
+
+.list-display svg:hover {
+    transform: scale(1.1);
+
 }
