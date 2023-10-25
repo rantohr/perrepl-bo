@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import DefaultInput from "../../components/input/DefaultInput";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,7 +26,8 @@ export default function Login() {
                   </span>
 
                   <div className="mt-4">
-                    <div className="relative">
+                    <DefaultInput label="Email" type="text" />
+                    {/* <div className="relative">
                       <input
                         type="text"
                         id="floating_outlined"
@@ -38,11 +40,13 @@ export default function Login() {
                       >
                         Email
                       </label>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="mt-4">
-                    <div className="relative">
+                    <DefaultInput label="Mots de passe" type="password" />
+
+                    {/* <div className="relative">
                       <input
                         type="password"
                         id="floating_outlined"
@@ -55,7 +59,7 @@ export default function Login() {
                       >
                         Mots de passe
                       </label>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="mt-4 text-right">
