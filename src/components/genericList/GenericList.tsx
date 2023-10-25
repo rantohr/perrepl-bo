@@ -1,22 +1,11 @@
 import { FC, useState } from "react";
-import { IColumn, IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface";
+import { IListOptions } from "../../interfaces/genricModule/icolumn.interface";
 import './genericList.css'
 import GenericTable from "../genericTable/GenericTable";
 import { Button, Select } from "flowbite-react";
 import { MdDashboard, MdDns } from "react-icons/md";
 
-const GenericList: FC<{
-  title: string,
-  total?: number,
-  actions?: IListAction[],
-  tabs?: IListAction[],
-  mainFilters?: IListAction[],
-  filters?: IListFilter[],
-  columns: IColumn[],
-  rows: any[],
-  rowActions?: IListAction[],
-  displayModeChange?: (mode: "list" | "table" | "card") => void,
-}> = ({ title, total, actions, mainFilters, filters, columns, rows, rowActions, tabs, displayModeChange }) => {
+const GenericList: FC<IListOptions> = ({ title, total, actions, mainFilters, filters, columns, rows, rowActions, tabs, displayModeChange }) => {
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -32,7 +21,7 @@ const GenericList: FC<{
           {
             actions?.map((action, action_index) => {
               return (
-                <Button key={`list-action-${action_index}`} outline className="outlined-button" onClick={() => action.callback()}>
+                <Button key={`list-action-${action_index}`} outline className={action_index % 2 === 0 ? "outlined-button" : "contained-button"} onClick={() => action.callback()}>
                   {action.icon}
                   <p>{action.label}</p>
                 </Button>
@@ -58,8 +47,13 @@ const GenericList: FC<{
 
         {/* DISPLAY */}
         <div className="list-display">
-          <MdDns />
-          <MdDashboard />
+          {
+            displayModeChange !== undefined &&
+            <>
+              <MdDns />
+              <MdDashboard />
+            </>
+          }
         </div>
 
         {/* MAIN FILTERS */}

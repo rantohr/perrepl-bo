@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,800;1,100&family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,600;0,800;1,100;1,600&family=Roboto:wght@100&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
     transition: 0.5s;
+    font-family: 'Raleway', sans-serif;
 }
 
 .menu-user-info {
@@ -99,7 +104,10 @@
 .contained-button svg,
 .contained-button span,
 .contained-button p {
+    background-color: #381a44;
     color: #fff;
+    display: flex;
+    gap: 5px;
 }
 
 .contained-button:hover {
@@ -111,6 +119,7 @@
 .contained-button:hover svg,
 .contained-button:hover span,
 .contained-button:hover p {
+    background-color: #fff !important;
     color: #381a44;
 }
 
@@ -143,4 +152,25 @@
     border-radius: 15px;
     padding: 5px 15px;
     width: 8em;
+}
+
+/* FORM MODAL */
+.form-modal-header svg {
+    font-size: x-large;
+    fill: #381a44;
+}
+
+.form-modal-header p {
+    color: #a3a3a3;
+    font-size: small;
+}
+
+.form-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+}
+
+.form-modal-body {
+    margin: 15px 0;
 }
