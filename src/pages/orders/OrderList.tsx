@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { MdModeEdit, MdDelete, MdOutlineAdd, MdOutlineSend } from "react-icons/md";
+import { HiBuildingOffice } from "react-icons/hi2"
 import { IColumn, IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -92,7 +93,8 @@ const OrderList: FC = () => {
   let exampleMark: typeMark = {
     label: "HÉBERGEMENT",
     position: "right-2 top-2/3",
-    color: "bg-orange-400"
+    color: "bg-orange-400",
+    icon: <HiBuildingOffice/>
   };
 
 

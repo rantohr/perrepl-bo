@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { FaMapMarkerAlt } from "react-icons/fa"
 
 export type typeMark = {
   label: string
@@ -29,8 +30,13 @@ const GenericCard: FC<{
             />
             {mark && (
               <span
-                className={`absolute ${mark.position} rounded-l-lg ${mark.color} bg-opacity-90 px-3 py-2 text-xs font-semibold text-white`}
+                className={`flex items-center absolute ${mark.position} rounded-l-lg ${mark.color} bg-opacity-90 px-3 py-2 text-xs font-semibold text-white`}
               >
+                <span className="mx-1">
+                  {mark.icon &&
+                    mark.icon
+                  }
+                </span>
                 {mark.label}
               </span>
             )}
@@ -49,7 +55,7 @@ const GenericCard: FC<{
                 </p>
               </div>
             )}
-            {place && <div className="py-1 text-gray-800">{place}</div>}
+            {place && <div className="flex items-baseline py-1 text-gray-800"><FaMapMarkerAlt class="mr-2"/> {place}</div>}
             {button && (
               <div className="pt-0">
                 <button
