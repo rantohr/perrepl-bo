@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { IOrder } from "../../interfaces/iorder.interface";
 import GenericList from "../../components/genericList/GenericList";
+import GenericCard from "../../components/genericCard/GenericCard";
+import { typeMark } from "../../components/genericCard/GenericCard";
 
 const OrderList: FC = () => {
   /** LIST CONFIG */
@@ -86,17 +88,50 @@ const OrderList: FC = () => {
     }
   };
 
+  // CONFIG CARD
+  let exampleMark: typeMark = {
+    label: "HÉBERGEMENT",
+    position: "right-2 top-2/3",
+    color: "bg-orange-400"
+  };
+
+
   return (
-    <GenericList
-      title="Demandes"
-      total={3}
-      columns={columns}
-      rows={rows}
-      actions={actions}
-      rowActions={rowActions}
-      mainFilters={mainFilters}
-      filters={filters}
-    />
+    <>
+      <GenericList
+        title="Demandes"
+        total={3}
+        columns={columns}
+        rows={rows}
+        actions={actions}
+        rowActions={rowActions}
+        mainFilters={mainFilters}
+        filters={filters}
+      />
+      <GenericCard 
+        title = "Carlton Madagascar"
+        image = "https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph"
+        description = "Réservez des Hebergements A Andasibe, Madagascar booking.com a été visité par plus d'un million d'utilisateurs au cours du mois dernier Auberges de Jeunesse Réservation Sécurisée"
+        place = "Antananarivo, Analamanga"
+        mark ={
+          exampleMark
+        }
+      />
+      <GenericCard 
+        title = "Road Trip a Madagascar"
+        image = "https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph"
+        date = "01 JUIN - 10 JUIN | 9 Jours"
+        button="Paysages des hauts plateaux"
+        price = {440}
+        mark ={
+          {
+            label: "NOUVEAU",
+            position: "right-0 top-4",
+            color: "bg-green-400"
+          }
+        }
+      />
+    </>
   );
 }
 
