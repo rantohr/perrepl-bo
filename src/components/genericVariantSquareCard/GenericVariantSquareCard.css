@@ -85,8 +85,11 @@ body {
 .card .card-body .card-header .card-header-text h3 {
   margin-right: 30px; 
 }
-.card .card-body .card-header .card-header-text h5 {
-
+.card .card-body .card-header .card-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 .card .card-body .card-header .card-title {
   color: rgb(54, 54, 54);

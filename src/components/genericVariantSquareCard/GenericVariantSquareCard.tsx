@@ -24,6 +24,18 @@ const GenericVariantSquareCard: FC<props> = ({ title, image, content, action, pr
   
   return (
     <div className="card">
+      {mark && (
+        <span
+          className={`flex items-center absolute right-0 top-4 rounded-l-lg ${mark.bg ? mark.bg : "bg-green-400"} bg-opacity-90 px-3 py-2 text-xs font-semibold text-white`}
+        >
+          <span className="mx-1">
+            {mark.icon &&
+              mark.icon
+            }
+          </span>
+          {mark.label && mark.label}
+        </span>
+      )}
       <img className="card-image" src={image && image} alt="" />
       <div className="card-body">
         <div className="card-header">
@@ -35,7 +47,7 @@ const GenericVariantSquareCard: FC<props> = ({ title, image, content, action, pr
               title
             }
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             {content && (
               <>
                 <div className="card-container">
@@ -49,7 +61,7 @@ const GenericVariantSquareCard: FC<props> = ({ title, image, content, action, pr
                 {content.date && <div className="text-base text-gray-500 mb-4">{content.date}</div>}
               </>
             )}
-            <div className="flex items-center justify-between">
+            <div className="card-action">
               <div className="pt-0">
                 {action && action.action && (
                   <Button outline className="contained-button" onClick={clickAction}> {action.action} </Button>
