@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa"
 
 export type typeMark = {
