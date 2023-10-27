@@ -8,6 +8,7 @@ import ClientAgenceProfile from "./pages/clientList/ClientAgenceProfile";
 import Layout from "./pages/layout/Layout";
 import OrderList from "./pages/orders/OrderList";
 import TemplateList from "./pages/templates/TemplateList";
+import ClientAgenceProfileView from "./pages/clientList/ClientAgenceProfileView";
 
 const App: FC = (): ReactElement => {
   return (
@@ -23,7 +24,8 @@ const App: FC = (): ReactElement => {
           <Route path="templates" element={<TemplateList />} />,
           <Route path="client">
             <Route path="agence/update" element={<ClientAgenceProfile />} />
-          </Route>
+            <Route path="agence/view" element={<ClientAgenceProfileView />} />
+          </Route>,
         ]}
       />
       <Route path={"/*"} element={<NotFound />} />

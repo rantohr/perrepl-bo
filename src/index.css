@@ -12,93 +12,93 @@
 }
 
 .menu-user-info {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
 .menu-user-info img {
-    object-fit: cover;
+  object-fit: cover;
 }
 
 .menu-user-info h5 {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .menu-user-info h6 {
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.5);
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .page-container {
-    background-color: #f6f6f6;
-    display: flex;
+  background-color: #f6f6f6;
+  display: flex;
 }
 
 .side-menu {
-    background-color: white;
-    padding: 0 1.5rem;
-    padding-top: 2em;
+  background-color: white;
+  padding: 0 1.5rem;
+  padding-top: 2em;
 }
 
-.side-menu>div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.side-menu > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.side-menu>div>div {
-    display: flex;
-    gap: 10px;
-    padding: 1.5em 15px;
-    cursor: pointer;
+.side-menu > div > div {
+  display: flex;
+  gap: 10px;
+  padding: 1.5em 15px;
+  cursor: pointer;
 }
 
-.side-menu>div>div:hover {
-    background-color: #d2007420;
+.side-menu > div > div:hover {
+  background-color: #d2007420;
 }
 
-.side-menu>div .active {
-    border-right: 6px solid #d20072;
-    color: #d20072;
+.side-menu > div .active {
+  border-right: 6px solid #d20072;
+  color: #d20072;
 }
 
-.side-menu>div .active * {
-    color: #d20072;
+.side-menu > div .active * {
+  color: #d20072;
 }
 
 /** BUTTONS */
 .outlined-button {
-    background-color: #381a44;
-    color: #381a44;
+  background-color: #381a44;
+  color: #381a44;
 }
 
 .outlined-button svg {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .outlined-button svg,
 .outlined-button span,
 .outlined-button p {
-    color: #381a44;
-    display: flex;
-    gap: 5px;
+  color: #381a44;
+  display: flex;
+  gap: 5px;
 }
 
 .outlined-button:hover {
-    background-color: #381a44 !important;
-    color: #fff;
+  background-color: #381a44 !important;
+  color: #fff;
 }
 
 .outlined-button:hover svg,
 .outlined-button:hover span,
 .outlined-button:hover p {
-    color: #fff;
+  color: #fff;
 }
 
 .contained-button {
-    background-color: #381a44;
-    color: #fff;
+  background-color: #381a44;
+  color: #fff;
 }
 
 .contained-button svg,
@@ -111,9 +111,9 @@
 }
 
 .contained-button:hover {
-    background-color: #fff !important;
-    border-color: #381a44 !important;
-    color: #381a44;
+  background-color: #fff !important;
+  border-color: #381a44 !important;
+  color: #381a44;
 }
 
 .contained-button:hover svg,
@@ -124,28 +124,28 @@
 }
 
 .default-outlined-button {
-    border-color: #a3a3a3;
-    background-color: #a3a3a3;
-    color: #a3a3a3;
+  border-color: #a3a3a3;
+  background-color: #a3a3a3;
+  color: #a3a3a3;
 }
 
 .default-outlined-button svg,
 .default-outlined-button span,
 .default-outlined-button p {
-    color: #a3a3a3;
-    display: flex;
-    gap: 5px;
+  color: #a3a3a3;
+  display: flex;
+  gap: 5px;
 }
 
 .default-outlined-button:hover {
-    background-color: #d20072 !important;
-    color: #fff;
+  background-color: #d20072 !important;
+  color: #fff;
 }
 
 .default-outlined-button:hover svg,
 .default-outlined-button:hover span,
 .default-outlined-button:hover p {
-    color: #fff;
+  color: #fff;
 }
 
 .status {

@@ -6,7 +6,11 @@ export default {
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "violet-1": "#381a44",
+      },
+    },
   },
   plugins: [require("flowbite/plugin")],
 };
