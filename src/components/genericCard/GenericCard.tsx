@@ -43,7 +43,7 @@ const GenericCard: FC<{
           </div>
           <div className="h-100 w-100 flex flex-col justify-between px-4 py-0">
             <div>
-              <h1 className="block text-2xl font-sans font-semibold leading-snug tracking-normal text-fuchsia-950 antialiased">
+              <h1 className="block text-2xl font-sans font-semibold leading-snug tracking-normal text-violet-1 antialiased">
                 {title}
               </h1>
             </div>
@@ -61,7 +61,7 @@ const GenericCard: FC<{
                 <button
                   data-ripple-light="true"
                   type="button"
-                  className="transform select-none rounded-lg bg-fuchsia-950 px-4 py-3 text-center align-middle font-sans text-base text-white shadow-md transition-all duration-300 ease-in-out hover:scale-105"
+                  className="transform select-none rounded-lg bg-violet-1 px-4 py-3 text-center align-middle font-sans text-base text-white shadow-md transition-all duration-300 ease-in-out hover:scale-105"
                 >
                   {button}
                 </button>
@@ -71,10 +71,10 @@ const GenericCard: FC<{
         </div>
         {price && (
           <div className="w-100 h-100 px-4">
-            <span className="text-2xl font-medium text-fuchsia-950">
+            <span className="text-2xl font-medium text-violet-1">
               {price}€
             </span>
-            <span className="text-gray-500">/pax</span>
+            <span className="text-violet-light font-light">/pax</span>
           </div>
         )}
       </div>

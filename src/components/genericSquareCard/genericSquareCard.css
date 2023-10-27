@@ -58,7 +58,7 @@
 
 .square-card h6 {
     margin: 0;
-    color: #00000080;
+    color: theme('colors.grey');;
 }
 
 .square-card .square-card-content {
@@ -68,7 +68,7 @@
 }
 
 .square-card h5 {
-    color: #381a44;
+    color: theme('colors.violet-1');;
     margin: 0;
     font-weight: 600;
 }

@@ -59,18 +59,18 @@
 }
 
 .side-menu > div .active {
-  border-right: 6px solid #d20072;
-  color: #d20072;
+  border-right: 6px solid theme('colors.violet-pink');
+  color: theme('colors.violet-pink');
 }
 
 .side-menu > div .active * {
-  color: #d20072;
+  color: theme('colors.violet-pink');
 }
 
 /** BUTTONS */
 .outlined-button {
-  background-color: #381a44;
-  color: #381a44;
+  background-color: theme('colors.violet-1');
+  color: theme('colors.violet-1');
 }
 
 .outlined-button svg {
@@ -80,13 +80,13 @@
 .outlined-button svg,
 .outlined-button span,
 .outlined-button p {
-  color: #381a44;
+  color: theme('colors.violet-1');
   display: flex;
   gap: 5px;
 }
 
 .outlined-button:hover {
-  background-color: #381a44 !important;
+  background-color: theme('colors.violet-1') !important;
   color: #fff;
 }
 
@@ -97,14 +97,14 @@
 }
 
 .contained-button {
-  background-color: #381a44;
+  background-color: theme('colors.violet-1');
   color: #fff;
 }
 
 .contained-button svg,
 .contained-button span,
 .contained-button p {
-    background-color: #381a44;
+    background-color: theme('colors.violet-1');
     color: #fff;
     display: flex;
     gap: 5px;
@@ -112,33 +112,33 @@
 
 .contained-button:hover {
   background-color: #fff !important;
-  border-color: #381a44 !important;
-  color: #381a44;
+  border-color: theme('colors.violet-1') !important;
+  color: theme('colors.violet-1');
 }
 
 .contained-button:hover svg,
 .contained-button:hover span,
 .contained-button:hover p {
     background-color: #fff !important;
-    color: #381a44;
+    color: theme('colors.violet-1');
 }
 
 .default-outlined-button {
-  border-color: #a3a3a3;
-  background-color: #a3a3a3;
-  color: #a3a3a3;
+  border-color: theme('colors.grey');
+  background-color: theme('colors.grey');
+  color: theme('colors.grey');
 }
 
 .default-outlined-button svg,
 .default-outlined-button span,
 .default-outlined-button p {
-  color: #a3a3a3;
+  color: theme('colors.grey');
   display: flex;
   gap: 5px;
 }
 
 .default-outlined-button:hover {
-  background-color: #d20072 !important;
+  background-color: theme('colors.violet-pink') !important;
   color: #fff;
 }
 
@@ -157,11 +157,11 @@
 /* FORM MODAL */
 .form-modal-header svg {
     font-size: x-large;
-    fill: #381a44;
+    fill: theme('colors.violet-1');
 }
 
 .form-modal-header p {
-    color: #a3a3a3;
+    color: theme('colors.grey');
     font-size: small;
 }
 

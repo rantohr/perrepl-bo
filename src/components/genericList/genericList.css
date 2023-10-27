@@ -12,14 +12,14 @@
 }
 
 .big-badge {
-    background-color: #a3a3a333;
+    background-color: theme('colors.transparent-grey');
     border-radius: 50%;
     width: 27px;
     height: 27px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #a3a3a3;
+    color: theme('colors.grey');
 }
 
 .hedaer-button {
@@ -47,7 +47,7 @@
 }
 
 .list-tabs>div {
-    border-bottom: 1px solid #a3a3a3;
+    border-bottom: 1px solid theme('colors.grey');
     margin-bottom: 1em;
     width: 150px;
     cursor: pointer;
@@ -55,16 +55,16 @@
 }
 
 .list-active-tab {
-    border-bottom: 3px solid #9f1972 !important;
+    border-bottom: 3px solid theme('colors.violet-light') !important;
 }
 
 .list-active-tab p {
-    color: #381a44 !important;
+    color: theme('colors.violet-1') !important;
 }
 
 .list-tabs>div p {
     text-transform: uppercase;
-    color: #a3a3a3;
+    color: theme('colors.grey');
     width: 100%;
     text-align: center;
     font-weight: 600;
@@ -73,7 +73,7 @@
 .list-display svg {
     cursor: pointer;
     font-size: xx-large;
-    fill: #381a44;
+    fill: theme('colors.violet-1');
 }
 
 .list-display svg:hover {

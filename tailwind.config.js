@@ -9,6 +9,10 @@ export default {
     extend: {
       colors: {
         "violet-1": "#381a44",
+        "violet-light": "#9f1972",
+        "violet-pink": "#d20072",
+        "transparent-grey": "#a3a3a333",
+        "grey": "#a3a3a3",
       },
     },
   },
