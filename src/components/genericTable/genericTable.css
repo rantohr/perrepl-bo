@@ -25,7 +25,7 @@
 
 .table-header h6 {
     font-weight: 600;
-    color: #a3a3a3;
+    color: theme('colors.grey');;
 }
 
 .table-container img {

@@ -1,15 +1,23 @@
 import { FC, useEffect, useState } from "react";
 import { MdModeEdit, MdDelete, MdOutlineAdd, MdOutlineSend } from "react-icons/md";
+import { HiBuildingOffice } from "react-icons/hi2"
 import { IColumn, IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { IOrder } from "../../interfaces/iorder.interface";
 import GenericList from "../../components/genericList/GenericList";
+import { Button, Label, Modal, TextInput } from "flowbite-react";
+import { GrAddCircle } from "react-icons/gr";
+import GenericCard from "../../components/genericCard/GenericCard";
+import { typeMark } from "../../components/genericCard/GenericCard";
 
 const OrderList: FC = () => {
+
+  const [openModal, setOpenModal] = useState(false);
+
   /** LIST CONFIG */
   const actions: IListAction[] = [
-    { label: "Nouvelle demande", icon: <MdOutlineAdd />, callback: () => console.log('add order') },
+    { label: "Nouvelle demande", icon: <MdOutlineAdd />, callback: () => setOpenModal(true) },
     { label: "Envoyer un formulaire", icon: <MdOutlineSend />, callback: () => console.log('send form') },
   ];
 
@@ -26,6 +34,13 @@ const OrderList: FC = () => {
   const filters: IListFilter[] = [
     { label: "", type: "select", field: "", options: [{ label: "Nom de client", value: "client" }] }
   ];
+
+  const tabs: IListAction[] = [];
+  // const tabs: IListAction[] = [
+  //   { label: "Contenu", callback: () => console.log('content clicked') },
+  //   { label: "Media", callback: () => console.log('media clicked') },
+  //   { label: "Document", callback: () => console.log('document clicked') },
+  // ];
 
   /** ORDER TABLE CONFIGS */
   const rowActions: IListAction[] = [
@@ -86,17 +101,92 @@ const OrderList: FC = () => {
     }
   };
 
+  // CONFIG CARD
+  let exampleMark: typeMark = {
+    label: "HÉBERGEMENT",
+    position: "right-2 top-2/3",
+    color: "bg-orange-400",
+    icon: <HiBuildingOffice />
+  };
+
+
   return (
-    <GenericList
-      title="Demandes"
-      total={3}
-      columns={columns}
-      rows={rows}
-      actions={actions}
-      rowActions={rowActions}
-      mainFilters={mainFilters}
-      filters={filters}
-    />
+    <>
+      <GenericList
+        title="Demandes"
+        total={3}
+        columns={columns}
+        rows={rows}
+        actions={actions}
+        rowActions={rowActions}
+        mainFilters={mainFilters}
+        filters={filters}
+        tabs={tabs}
+      />
+
+      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal.Body>
+          <div className="form-modal">
+            <Modal.Header className="form-modal-header">
+              <GrAddCircle />
+              <h3>Nouvelle demande</h3>
+              <p>Ajouter une nouvelle demande</p>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="form-modal-body">
+                <div className="relative z-0 w-full mb-6 group">
+                  <input type="email" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                </div>
+
+                <div>
+                  <div className="mb-2 block">
+                    <Label
+                      htmlFor="email1"
+                      value="Your email"
+                    />
+                  </div>
+                  <TextInput
+                    id="email1"
+                    placeholder="name@flowbite.com"
+                    required
+                    type="email"
+                  />
+                </div>
+              </div>
+              <div className="form-modal-footer">
+                <Button color="gray" onClick={() => setOpenModal(false)}>Annuler</Button>
+                <Button onClick={() => setOpenModal(false)} className="contained-button">Passer la demande</Button>
+              </div>
+            </Modal.Body>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <GenericCard
+        title="Carlton Madagascar"
+        image="https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph"
+        description="Réservez des Hebergements A Andasibe, Madagascar booking.com a été visité par plus d'un million d'utilisateurs au cours du mois dernier Auberges de Jeunesse Réservation Sécurisée"
+        place="Antananarivo, Analamanga"
+        mark={
+          exampleMark
+        }
+      />
+      <GenericCard
+        title="Road Trip a Madagascar"
+        image="https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph"
+        date="01 JUIN - 10 JUIN | 9 Jours"
+        button="Paysages des hauts plateaux"
+        price={440}
+        mark={
+          {
+            label: "NOUVEAU",
+            position: "right-0 top-4",
+            color: "bg-green-400"
+          }
+        }
+      />
+    </>
   );
 }
 

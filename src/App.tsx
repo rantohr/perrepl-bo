@@ -7,6 +7,7 @@ import Register from "./pages/auth/Register";
 import ClientAgenceProfile from "./pages/clientList/ClientAgenceProfile";
 import Layout from "./pages/layout/Layout";
 import OrderList from "./pages/orders/OrderList";
+import TemplateList from "./pages/templates/TemplateList";
 import ClientAgenceProfileView from "./pages/clientList/ClientAgenceProfileView";
 
 const App: FC = (): ReactElement => {
@@ -20,6 +21,7 @@ const App: FC = (): ReactElement => {
         element={<Layout />}
         children={[
           <Route path="" element={<OrderList />} />,
+          <Route path="templates" element={<TemplateList />} />,
           <Route path="client">
             <Route path="agence/update" element={<ClientAgenceProfile />} />
             <Route path="agence/view" element={<ClientAgenceProfileView />} />
