@@ -2,7 +2,7 @@ import {FC} from "react"
 import GenericVariantSquareCard from "../../components/genericVariantSquareCard/GenericVariantSquareCard"
 import { props } from "../../components/genericVariantSquareCard/GenericVariantSquareCard"
 
-const ItineraireList: FC = () => {
+const ItineraryList: FC = () => {
 	const cards: props[] = [
 		{
 			title: "Road Trip a Madagascar",
@@ -68,4 +68,4 @@ const ItineraireList: FC = () => {
 	)
 }
 
-export default ItineraireList
+export default ItineraryList

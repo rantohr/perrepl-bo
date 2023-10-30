@@ -8,7 +8,8 @@ import ClientAgenceProfile from "./pages/clientList/ClientAgenceProfile";
 import Layout from "./pages/layout/Layout";
 import OrderList from "./pages/orders/OrderList";
 import TemplateList from "./pages/templates/TemplateList";
-import ItineraireList from "./pages/itineraire/ItineraireList";
+import ItineraryList from "./pages/itinerary/ItineraryList";
+import Itinerary from "./pages/itinerary/itinerary";
 import ClientAgenceProfileView from "./pages/clientList/ClientAgenceProfileView";
 
 const App: FC = (): ReactElement => {
@@ -23,7 +24,10 @@ const App: FC = (): ReactElement => {
         children={[
           <Route path="" element={<OrderList />} />,
           <Route path="templates" element={<TemplateList />} />,
-          <Route path="itineraire" element={<ItineraireList />} />,
+          <Route path="itinerary">
+            <Route path="list" element={<ItineraryList />}></Route>
+            <Route path="update" element={<Itinerary />}></Route>
+          </Route>,
           <Route path="client">
             <Route path="agence/update" element={<ClientAgenceProfile />} />
             <Route path="agence/view" element={<ClientAgenceProfileView />} />
