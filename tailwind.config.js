@@ -17,7 +17,7 @@ export default {
         neutre: "#00000080",
       },
       fontFamily: {
-        lato: ["Lato", "sans-serif"],
+        lato: ["Lato", "sans-serif"], // ITO zavatra ito ao am index.html no misintona azy
       },
     },
   },
