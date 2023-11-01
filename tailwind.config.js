@@ -16,6 +16,9 @@ export default {
         "grey-1": "#5E6062",
         neutre: "#00000080",
       },
+      fontFamily: {
+        lato: ["Lato", "sans-serif"],
+      },
     },
   },
   plugins: [require("flowbite/plugin")],

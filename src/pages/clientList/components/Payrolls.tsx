@@ -16,7 +16,7 @@ export default function Payrolls() {
       label: "Date de paiements",
       sortable: true,
       displayValue: (date: string) => {
-        return <span className="font-bold uppercase font-sans">{date}</span>;
+        return <span className="font-bold uppercase font-lato">{date}</span>;
       },
     },
     {
