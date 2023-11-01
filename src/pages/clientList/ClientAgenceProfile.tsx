@@ -1,4 +1,10 @@
+import { format } from "date-fns";
+import GenericList from "../../components/genericList/GenericList";
 import WithIconInput from "../../components/input/WithIconInput";
+import { fr } from "date-fns/locale";
+import { IColumn } from "../../interfaces/genricModule/icolumn.interface";
+import { useEffect, useState } from "react";
+import { IOrder } from "../../interfaces/iorder.interface";
 
 type PropsBadgetWithFlags = {
   close: boolean;
@@ -77,7 +83,45 @@ const BadgetWithFlags = ({
   );
 };
 
+type IAgent = {
+  id: number;
+  name: string;
+  email: string;
+  contact: string;
+};
+
 export default function ClientAgenceProfile() {
+  const [rows, setRows] = useState<IAgent[]>([]);
+  useEffect(() => {
+    const fake_rows: IAgent[] = [
+      {
+        id: 1,
+        name: "Annette Black",
+        contact: "(406) 555-0120",
+        email: "4140 Parker Rd. Allentown, New Mexico",
+      },
+      {
+        id: 2,
+        name: "Annette Black",
+        contact: "(406) 555-0120",
+        email: "4140 Parker Rd. Allentown, New Mexico",
+      },
+      {
+        id: 3,
+        name: "Annette Black",
+        contact: "(406) 555-0120",
+        email: "4140 Parker Rd. Allentown, New Mexico",
+      },
+    ];
+    setRows(fake_rows);
+  }, []);
+
+  const columns: IColumn[] = [
+    { field: "name", label: "Nom", sortable: true },
+    { field: "email", label: "Adresse email", sortable: true },
+    { field: "contact", label: "Contact", sortable: true },
+  ];
+
   return (
     <div className="flex flex-col  h-full w-full">
       <div className="flex row w-full gap-4 ">
@@ -216,7 +260,53 @@ export default function ClientAgenceProfile() {
 
           <h4 className="text-[#030229] font-bold text-base">Liste d'agents</h4>
 
-          <div className="mt-4">
+          <GenericList
+            title=""
+            // total={3}
+            columns={columns}
+            rows={rows}
+            // actions={actions}
+            // rowActions={rowActions}
+            // mainFilters={mainFilters}
+            // filters={filters}
+            // tabs={tabs}
+          />
+
+          <div className="">
+            <button
+              type="button"
+              className="text-[#AAAAAA] bg-[#F6F6F6] w-full font-bold hover:bg-transparent outline-none focus:outline-none focus:ring-0 rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center gap-4 mr-2 mb-2"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_445_3764)">
+                  <path
+                    d="M4.67139 8.00005C4.67139 7.86745 4.72407 7.74027 4.81783 7.6465C4.9116 7.55273 5.03878 7.50005 5.17139 7.50005H7.50005V5.17139C7.50005 5.03878 7.55273 4.9116 7.6465 4.81783C7.74027 4.72407 7.86745 4.67139 8.00005 4.67139C8.13266 4.67139 8.25984 4.72407 8.35361 4.81783C8.44737 4.9116 8.50005 5.03878 8.50005 5.17139V7.50005H10.8287C10.9613 7.50005 11.0885 7.55273 11.1823 7.6465C11.276 7.74027 11.3287 7.86745 11.3287 8.00005C11.3287 8.13266 11.276 8.25984 11.1823 8.35361C11.0885 8.44737 10.9613 8.50005 10.8287 8.50005H8.50005V10.8287C8.50005 10.9613 8.44737 11.0885 8.35361 11.1823C8.25984 11.276 8.13266 11.3287 8.00005 11.3287C7.86745 11.3287 7.74027 11.276 7.6465 11.1823C7.55273 11.0885 7.50005 10.9613 7.50005 10.8287V8.50005H5.17139C5.03878 8.50005 4.9116 8.44737 4.81783 8.35361C4.72407 8.25984 4.67139 8.13266 4.67139 8.00005Z"
+                    fill="#AAAAAA"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M4.87798 2.51261C6.95295 2.28258 9.047 2.28258 11.122 2.51261C12.34 2.64861 13.3233 3.60794 13.466 4.83261C13.7126 6.93728 13.7126 9.06328 13.466 11.1679C13.3226 12.3926 12.3393 13.3513 11.122 13.4879C9.047 13.718 6.95295 13.718 4.87798 13.4879C3.65998 13.3513 2.67664 12.3926 2.53398 11.1679C2.28783 9.06334 2.28783 6.93721 2.53398 4.83261C2.67664 3.60794 3.66064 2.64861 4.87798 2.51261ZM11.0113 3.50594C9.00988 3.2841 6.99007 3.2841 4.98864 3.50594C4.61814 3.54705 4.27231 3.71186 4.00703 3.97375C3.74175 4.23565 3.5725 4.57933 3.52664 4.94928C3.28954 6.97659 3.28954 9.02463 3.52664 11.0519C3.57264 11.4218 3.74195 11.7653 4.00722 12.0271C4.27249 12.2888 4.61824 12.4535 4.98864 12.4946C6.97331 12.7159 9.02664 12.7159 11.0113 12.4946C11.3816 12.4534 11.7272 12.2886 11.9923 12.0269C12.2575 11.7651 12.4267 11.4217 12.4726 11.0519C12.7098 9.02463 12.7098 6.97659 12.4726 4.94928C12.4265 4.57967 12.2573 4.23637 11.9921 3.97476C11.727 3.71314 11.3815 3.54846 11.0113 3.50728V3.50594Z"
+                    fill="#AAAAAA"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_445_3764">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              Ajouter un agent
+            </button>
+          </div>
+
+          <div className="mt-4 flex flex-row justify-end">
             <button
               type="button"
               className="text-white bg-violet-1 uppercase hover:bg-violet-1  outline-none focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
