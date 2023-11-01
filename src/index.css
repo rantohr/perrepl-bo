@@ -10,8 +10,7 @@
   transition: 0.5s;
   font-family: "Raleway", sans-serif;
 }
-.activeTabs {
-}
+
 .menu-user-info {
   display: flex;
   gap: 15px;

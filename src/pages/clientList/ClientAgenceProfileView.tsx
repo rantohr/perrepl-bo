@@ -150,7 +150,7 @@ export default function ClientAgenceProfileView() {
               />
             </div>
           </div>
-          <div className="h-5 bg-red-500">
+          <div className="container_based_outlet">
             <Outlet />
           </div>
         </div>
