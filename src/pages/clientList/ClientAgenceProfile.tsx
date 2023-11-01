@@ -1,10 +1,7 @@
-import { format } from "date-fns";
 import GenericList from "../../components/genericList/GenericList";
 import WithIconInput from "../../components/input/WithIconInput";
-import { fr } from "date-fns/locale";
 import { IColumn } from "../../interfaces/genricModule/icolumn.interface";
 import { useEffect, useState } from "react";
-import { IOrder } from "../../interfaces/iorder.interface";
 
 type PropsBadgetWithFlags = {
   close: boolean;

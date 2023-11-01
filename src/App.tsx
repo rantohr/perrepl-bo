@@ -24,7 +24,13 @@ const App: FC = (): ReactElement => {
           <Route path="templates" element={<TemplateList />} />,
           <Route path="client">
             <Route path="agence/update" element={<ClientAgenceProfile />} />
-            <Route path="agence/view" element={<ClientAgenceProfileView />} />
+            <Route path="agence/view" element={<ClientAgenceProfileView />}>
+              {/* <Route path="" element={<>general</>} /> */}
+              <Route path="general" element={<>general</>} />
+              <Route path="notes" element={<>notes</>} />
+              <Route path="clients" element={<>clients</>} />
+              <Route path="payrolls" element={<>payrolls</>} />
+            </Route>
           </Route>,
         ]}
       />

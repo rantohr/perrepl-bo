@@ -1,29 +1,10 @@
-type PropsItemsTabs = {
-  label: string;
-};
-const ItemsTabs = ({ label }: PropsItemsTabs) => {
-  return (
-    <li className="mr-2">
-      <a
-        href="#"
-        className="
-        inline-block 
-        uppercase 
-        p-4 
-        border-b-2 
-        border-transparent 
-        rounded-t-lg 
-        hover:text-[#9F1972] 
-        hover:border-[#9F1972]
-        "
-      >
-        {label}
-      </a>
-    </li>
-  );
-};
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import Tabs from "../../components/tabs/Tabs";
 
 export default function ClientAgenceProfileView() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   return (
     <div className="flex flex-col  h-full w-full">
       <div className="flex row w-full gap-4 ">
@@ -135,23 +116,42 @@ export default function ClientAgenceProfileView() {
         <div className="w-full flex flex-col ">
           <div className="bg-white rounded-lg">
             <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-              <ul className="flex flex-wrap -mb-px justify-center">
-                {/* <li className="mr-2">
-                  <a
-                    href="#"
-                    className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500"
-                    aria-current="page"
-                  >
-                    Notes
-                  </a>
-                </li> */}
-
-                <ItemsTabs label="Généralité" />
-                <ItemsTabs label="Notes" />
-                <ItemsTabs label="Clients" />
-                <ItemsTabs label="paiements" />
-              </ul>
+              <Tabs
+                items={[
+                  {
+                    active: pathname.includes("general"),
+                    label: "Généralité",
+                    callback: () => {
+                      navigate("/app/client/agence/view/general");
+                    },
+                  },
+                  {
+                    active: pathname.includes("notes"),
+                    label: "Notes",
+                    callback: () => {
+                      navigate("/app/client/agence/view/notes");
+                    },
+                  },
+                  {
+                    active: pathname.includes("clients"),
+                    label: "Clients",
+                    callback: () => {
+                      navigate("/app/client/agence/view/clients");
+                    },
+                  },
+                  {
+                    active: pathname.includes("payrolls"),
+                    label: "paiements",
+                    callback: () => {
+                      navigate("/app/client/agence/view/payrolls");
+                    },
+                  },
+                ]}
+              />
             </div>
+          </div>
+          <div className="h-5 bg-red-500">
+            <Outlet />
           </div>
         </div>
       </div>
