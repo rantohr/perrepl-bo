@@ -52,14 +52,14 @@ button:focus {
   justify-content: space-between;
 }
 
-.side-menu > div > div {
+.side-menu > div > a {
   display: flex;
   gap: 10px;
   padding: 1.5em 15px;
   cursor: pointer;
 }
 
-.side-menu > div > div:hover {
+.side-menu > div > a:hover {
   background-color: #d2007420;
 }
 

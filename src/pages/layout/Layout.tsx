@@ -1,6 +1,22 @@
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 function Layout() {
+
+  const [selectedMenu, setSelectedMenu] = useState(3);
+  useEffect(() => {
+    const currentURL = window.location.href;
+
+    const pathSegments = new URL(currentURL).pathname.split('/');
+    const appIndex = pathSegments.indexOf('app');
+
+    if (appIndex !== -1 && appIndex < pathSegments.length - 1) {
+      const textAfterApp = pathSegments[appIndex + 1];
+      const menuIndex = ['dashboard', 'templates', 'client', '', 'itinerary', 'library', 'provider', 'reporting', 'settings']
+        .findIndex(i => i === textAfterApp);
+      setSelectedMenu(menuIndex);
+    }
+  }, [])
 
   return (
     <>
@@ -75,7 +91,7 @@ function Layout() {
       <div className="page-container">
         <div className="side-menu">
           <div>
-            <div>
+            <a href="" onClick={() => setSelectedMenu(0)} className={selectedMenu === 0 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -92,8 +108,8 @@ function Layout() {
                 />
               </svg>
               Dashboard
-            </div>
-            <div>
+            </a>
+            <a href="/app/templates" onClick={() => setSelectedMenu(1)} className={selectedMenu === 1 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -109,8 +125,8 @@ function Layout() {
                 />
               </svg>
               Templates
-            </div>
-            <div>
+            </a>
+            <a href="/app/client/agence/view" onClick={() => setSelectedMenu(2)} className={selectedMenu === 2 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -127,8 +143,8 @@ function Layout() {
                 />
               </svg>
               Clients
-            </div>
-            <div className="active">
+            </a>
+            <a href="/app" onClick={() => setSelectedMenu(3)} className={selectedMenu === 3 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -144,8 +160,8 @@ function Layout() {
                 />
               </svg>
               Demandes
-            </div>
-            <div>
+            </a>
+            <a href="/app/itinerary/list" onClick={() => setSelectedMenu(4)} className={selectedMenu === 4 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -162,8 +178,8 @@ function Layout() {
                 />
               </svg>
               Itinéraire
-            </div>
-            <div>
+            </a>
+            <a href="/app/library" onClick={() => setSelectedMenu(5)} className={selectedMenu === 5 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -180,8 +196,8 @@ function Layout() {
                 />
               </svg>
               Librairie
-            </div>
-            <div>
+            </a>
+            <a href="" onClick={() => setSelectedMenu(6)} className={selectedMenu === 6 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -198,8 +214,8 @@ function Layout() {
                 />
               </svg>
               Prestatires
-            </div>
-            <div>
+            </a>
+            <a href="" onClick={() => setSelectedMenu(7)} className={selectedMenu === 7 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -216,10 +232,10 @@ function Layout() {
                 />
               </svg>
               Reporting
-            </div>
+            </a>
           </div>
           <div>
-            <div>
+            <a href="" onClick={() => setSelectedMenu(8)} className={selectedMenu === 8 ? "active" : ""}>
               <svg
                 className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -236,7 +252,7 @@ function Layout() {
                 />
               </svg>
               Paramètre
-            </div>
+            </a>
           </div>
         </div>
         <div className="container p-5">
