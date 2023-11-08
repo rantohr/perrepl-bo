@@ -11,6 +11,7 @@ import TemplateList from "./pages/templates/TemplateList";
 import ItineraryList from "./pages/itinerary/ItineraryList";
 import Itinerary from "./pages/itinerary/itinerary";
 import ClientAgenceProfileView from "./pages/clientList/ClientAgenceProfileView";
+import LibraryList from "./pages/library/LibraryList";
 
 const App: FC = (): ReactElement => {
   return (
@@ -23,8 +24,9 @@ const App: FC = (): ReactElement => {
         element={<Layout />}
         children={[
           <Route path="" element={<OrderList />} />,
-          <Route path="templates" element={<TemplateList />} />,
+          <Route path="library" element={<LibraryList />} />,
           <Route path="itinerary">
+            <Route path="templates" element={<TemplateList />} />,
             <Route path="list" element={<ItineraryList />}></Route>
             <Route path="update" element={<Itinerary />}></Route>
           </Route>,

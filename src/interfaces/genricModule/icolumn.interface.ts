@@ -10,6 +10,7 @@ export interface IColumn {
 export interface IListAction {
   label: string,
   icon?: any,
+  className?: string,
   callback: (row?: any) => void
 }
 

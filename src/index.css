@@ -11,6 +11,10 @@
     font-family: 'Raleway', sans-serif;
 }
 
+button:focus {
+  box-shadow: none !important;
+}
+
 .menu-user-info {
   display: flex;
   gap: 15px;
@@ -33,6 +37,7 @@
 .page-container {
   background-color: #f6f6f6;
   display: flex;
+  min-height: 100vh;
 }
 
 .side-menu {
@@ -93,7 +98,6 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 0.5rem 1rem;
 }
 .contained-button-secondary svg,
 .contained-button-secondary span,
@@ -107,7 +111,6 @@
   background-color: #fff !important;
   border-color: theme('colors.violet-pink') !important;
   color: theme('colors.violet-pink');
-  border-width: 2px;
 }
 .contained-button-secondary:hover svg,
 .contained-button-secondary:hover span,
