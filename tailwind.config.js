@@ -12,7 +12,12 @@ export default {
         "violet-light": "#9f1972",
         "violet-pink": "#d20072",
         "transparent-grey": "#a3a3a333",
-        "grey": "#a3a3a3",
+        grey: "#a3a3a3",
+        "grey-1": "#5E6062",
+        neutre: "#00000080",
+      },
+      fontFamily: {
+        lato: ["Lato", "sans-serif"], // ITO zavatra ito ao am index.html no misintona azy
       },
     },
   },

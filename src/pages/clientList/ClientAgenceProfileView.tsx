@@ -1,29 +1,10 @@
-type PropsItemsTabs = {
-  label: string;
-};
-const ItemsTabs = ({ label }: PropsItemsTabs) => {
-  return (
-    <li className="mr-2">
-      <a
-        href="#"
-        className="
-        inline-block 
-        uppercase 
-        p-4 
-        border-b-2 
-        border-transparent 
-        rounded-t-lg 
-        hover:text-[#9F1972] 
-        hover:border-[#9F1972]
-        "
-      >
-        {label}
-      </a>
-    </li>
-  );
-};
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import Tabs from "../../components/tabs/Tabs";
 
 export default function ClientAgenceProfileView() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   return (
     <div className="flex flex-col  h-full w-full">
       <div className="flex row w-full gap-4 ">
@@ -111,27 +92,66 @@ export default function ClientAgenceProfileView() {
               </div>
             </div>
           </div>
+
+          <div className="mt-4 flex justify-center">
+            <button
+              type="button"
+              className="text-violet-1 bg-transparent  font-bold hover:bg-transparent outline-none focus:outline-none focus:ring-0 rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  mr-2 mb-2"
+            >
+              <svg
+                className="w-4 h-4 mr-2"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.6278 1.58566C11.1319 1.09319 11.8098 0.819306 12.5145 0.82341C13.2192 0.827514 13.8939 1.10928 14.3922 1.60759C14.8905 2.1059 15.1723 2.78057 15.1764 3.48527C15.1805 4.18998 14.9066 4.86789 14.4141 5.37196L13.812 5.97406L10.0257 2.18776L10.6278 1.58566ZM9.38943 2.82496L2.19033 10.0241C1.89575 10.319 1.69127 10.6917 1.60083 11.0987L0.810634 14.6537C0.794107 14.7276 0.796529 14.8046 0.817677 14.8774C0.838826 14.9501 0.878014 15.0164 0.931607 15.07C0.985199 15.1236 1.05146 15.1628 1.12424 15.1839C1.19702 15.2051 1.27397 15.2075 1.34793 15.191L4.88133 14.4053C5.30203 14.3116 5.68729 14.0999 5.99193 13.7951L13.1757 6.61126L9.38943 2.82496Z"
+                  fill="#381A44"
+                />
+              </svg>
+              Modifier profil
+            </button>
+          </div>
         </div>
         <div className="w-full flex flex-col ">
           <div className="bg-white rounded-lg">
             <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-              <ul className="flex flex-wrap -mb-px justify-center">
-                {/* <li className="mr-2">
-                  <a
-                    href="#"
-                    className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500"
-                    aria-current="page"
-                  >
-                    Notes
-                  </a>
-                </li> */}
-
-                <ItemsTabs label="Généralité" />
-                <ItemsTabs label="Notes" />
-                <ItemsTabs label="Clients" />
-                <ItemsTabs label="paiements" />
-              </ul>
+              <Tabs
+                items={[
+                  {
+                    active: pathname.includes("general"),
+                    label: "Généralité",
+                    callback: () => {
+                      navigate("/app/client/agence/view/general");
+                    },
+                  },
+                  {
+                    active: pathname.includes("notes"),
+                    label: "Notes",
+                    callback: () => {
+                      navigate("/app/client/agence/view/notes");
+                    },
+                  },
+                  {
+                    active: pathname.includes("clients"),
+                    label: "Clients",
+                    callback: () => {
+                      navigate("/app/client/agence/view/clients");
+                    },
+                  },
+                  {
+                    active: pathname.includes("payrolls"),
+                    label: "paiements",
+                    callback: () => {
+                      navigate("/app/client/agence/view/payrolls");
+                    },
+                  },
+                ]}
+              />
             </div>
+          </div>
+          <div className="container_based_outlet">
+            <Outlet />
           </div>
         </div>
       </div>

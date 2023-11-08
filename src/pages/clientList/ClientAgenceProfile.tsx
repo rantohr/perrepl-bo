@@ -1,3 +1,8 @@
+import GenericList from "../../components/genericList/GenericList";
+import WithIconInput from "../../components/input/WithIconInput";
+import { IColumn } from "../../interfaces/genricModule/icolumn.interface";
+import { useEffect, useState } from "react";
+
 type PropsBadgetWithFlags = {
   close: boolean;
   contryName: string;
@@ -75,7 +80,45 @@ const BadgetWithFlags = ({
   );
 };
 
+type IAgent = {
+  id: number;
+  name: string;
+  email: string;
+  contact: string;
+};
+
 export default function ClientAgenceProfile() {
+  const [rows, setRows] = useState<IAgent[]>([]);
+  useEffect(() => {
+    const fake_rows: IAgent[] = [
+      {
+        id: 1,
+        name: "Annette Black",
+        contact: "(406) 555-0120",
+        email: "4140 Parker Rd. Allentown, New Mexico",
+      },
+      {
+        id: 2,
+        name: "Annette Black",
+        contact: "(406) 555-0120",
+        email: "4140 Parker Rd. Allentown, New Mexico",
+      },
+      {
+        id: 3,
+        name: "Annette Black",
+        contact: "(406) 555-0120",
+        email: "4140 Parker Rd. Allentown, New Mexico",
+      },
+    ];
+    setRows(fake_rows);
+  }, []);
+
+  const columns: IColumn[] = [
+    { field: "name", label: "Nom", sortable: true },
+    { field: "email", label: "Adresse email", sortable: true },
+    { field: "contact", label: "Contact", sortable: true },
+  ];
+
   return (
     <div className="flex flex-col  h-full w-full">
       <div className="flex row w-full gap-4 ">
@@ -145,50 +188,53 @@ export default function ClientAgenceProfile() {
         </div>
         <div className="w-full flex flex-col ">
           <h4 className="text-[#030229] font-bold text-base">Coordonnées</h4>
-          <div className="ml-20 mt-5">
-            <div className="bg-white h-10 w-1/2 flex flex-row  p-4 gap-2 rounded mb-2 items-center border ">
-              <div>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M16.5625 3.125H3.4375C2.85753 3.12562 2.30149 3.35629 1.89139 3.76639C1.48129 4.17649 1.25062 4.73253 1.25 5.3125V14.6875C1.25062 15.2675 1.48129 15.8235 1.89139 16.2336C2.30149 16.6437 2.85753 16.8744 3.4375 16.875H16.5625C17.1425 16.8744 17.6985 16.6437 18.1086 16.2336C18.5187 15.8235 18.7494 15.2675 18.75 14.6875V5.3125C18.7494 4.73253 18.5187 4.17649 18.1086 3.76639C17.6985 3.35629 17.1425 3.12562 16.5625 3.125ZM16.0086 6.74336L10.3836 11.1184C10.2739 11.2036 10.1389 11.2499 10 11.2499C9.86107 11.2499 9.72609 11.2036 9.61641 11.1184L3.99141 6.74336C3.92532 6.69345 3.86981 6.63091 3.8281 6.55936C3.78639 6.48781 3.75932 6.40869 3.74846 6.32659C3.73759 6.24449 3.74315 6.16104 3.76482 6.08111C3.78648 6.00118 3.82381 5.92635 3.87465 5.86097C3.92548 5.79559 3.9888 5.74096 4.06093 5.70027C4.13306 5.65957 4.21255 5.63362 4.2948 5.62391C4.37704 5.6142 4.4604 5.62094 4.54002 5.64372C4.61964 5.66651 4.69394 5.70489 4.75859 5.75664L10 9.8332L15.2414 5.75664C15.3725 5.65766 15.5372 5.61425 15.7 5.6358C15.8629 5.65734 16.0107 5.74211 16.1115 5.87177C16.2123 6.00142 16.258 6.16555 16.2387 6.32866C16.2195 6.49176 16.1368 6.64073 16.0086 6.74336Z"
-                    fill="#D3D3D3"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h4 className="text-xs text-[#000000]">example@codeo.mg</h4>
-              </div>
-            </div>
+          <div className="ml-20 mt-5 w-[324px]">
+            <WithIconInput value={"example@codeo.mg"}>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.5625 3.125H3.4375C2.85753 3.12562 2.30149 3.35629 1.89139 3.76639C1.48129 4.17649 1.25062 4.73253 1.25 5.3125V14.6875C1.25062 15.2675 1.48129 15.8235 1.89139 16.2336C2.30149 16.6437 2.85753 16.8744 3.4375 16.875H16.5625C17.1425 16.8744 17.6985 16.6437 18.1086 16.2336C18.5187 15.8235 18.7494 15.2675 18.75 14.6875V5.3125C18.7494 4.73253 18.5187 4.17649 18.1086 3.76639C17.6985 3.35629 17.1425 3.12562 16.5625 3.125ZM16.0086 6.74336L10.3836 11.1184C10.2739 11.2036 10.1389 11.2499 10 11.2499C9.86107 11.2499 9.72609 11.2036 9.61641 11.1184L3.99141 6.74336C3.92532 6.69345 3.86981 6.63091 3.8281 6.55936C3.78639 6.48781 3.75932 6.40869 3.74846 6.32659C3.73759 6.24449 3.74315 6.16104 3.76482 6.08111C3.78648 6.00118 3.82381 5.92635 3.87465 5.86097C3.92548 5.79559 3.9888 5.74096 4.06093 5.70027C4.13306 5.65957 4.21255 5.63362 4.2948 5.62391C4.37704 5.6142 4.4604 5.62094 4.54002 5.64372C4.61964 5.66651 4.69394 5.70489 4.75859 5.75664L10 9.8332L15.2414 5.75664C15.3725 5.65766 15.5372 5.61425 15.7 5.6358C15.8629 5.65734 16.0107 5.74211 16.1115 5.87177C16.2123 6.00142 16.258 6.16555 16.2387 6.32866C16.2195 6.49176 16.1368 6.64073 16.0086 6.74336Z"
+                  fill="#D3D3D3"
+                />
+              </svg>
+            </WithIconInput>
 
-            <div className="bg-white h-10 w-1/2 flex flex-row  p-4 gap-2 rounded mb-2 items-center border ">
-              <div>
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 22 22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10.9999 11.0001C10.0833 11.0001 9.33325 10.2501 9.33325 9.33341C9.33325 8.41675 10.0833 7.66675 10.9999 7.66675C11.9166 7.66675 12.6666 8.41675 12.6666 9.33341C12.6666 10.2501 11.9166 11.0001 10.9999 11.0001ZM10.9999 2.66675C7.49992 2.66675 4.33325 5.35008 4.33325 9.50008C4.33325 12.2667 6.55825 15.5417 10.9999 19.3334C15.4416 15.5417 17.6666 12.2667 17.6666 9.50008C17.6666 5.35008 14.4999 2.66675 10.9999 2.66675Z"
-                    fill="#BBBBBB"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h4 className="text-xs text-[#000000]">
-                  Galaxy Andraharo, Antananarivo
-                </h4>
-              </div>
-            </div>
+            <WithIconInput value={" Galaxy Andraharo, Antananarivo"}>
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.9999 11.0001C10.0833 11.0001 9.33325 10.2501 9.33325 9.33341C9.33325 8.41675 10.0833 7.66675 10.9999 7.66675C11.9166 7.66675 12.6666 8.41675 12.6666 9.33341C12.6666 10.2501 11.9166 11.0001 10.9999 11.0001ZM10.9999 2.66675C7.49992 2.66675 4.33325 5.35008 4.33325 9.50008C4.33325 12.2667 6.55825 15.5417 10.9999 19.3334C15.4416 15.5417 17.6666 12.2667 17.6666 9.50008C17.6666 5.35008 14.4999 2.66675 10.9999 2.66675Z"
+                  fill="#BBBBBB"
+                />
+              </svg>
+            </WithIconInput>
 
-            <div className="bg-white h-10 w-1/2 flex flex-row  p-4 gap-2 rounded mb-2 items-center border ">
+            <WithIconInput value={"+261 34 57 067 89"}>
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.9999 11.0001C10.0833 11.0001 9.33325 10.2501 9.33325 9.33341C9.33325 8.41675 10.0833 7.66675 10.9999 7.66675C11.9166 7.66675 12.6666 8.41675 12.6666 9.33341C12.6666 10.2501 11.9166 11.0001 10.9999 11.0001ZM10.9999 2.66675C7.49992 2.66675 4.33325 5.35008 4.33325 9.50008C4.33325 12.2667 6.55825 15.5417 10.9999 19.3334C15.4416 15.5417 17.6666 12.2667 17.6666 9.50008C17.6666 5.35008 14.4999 2.66675 10.9999 2.66675Z"
+                  fill="#BBBBBB"
+                />
+              </svg>
+            </WithIconInput>
+
+            {/* <div className="bg-white h-10 w-1/2 flex flex-row  p-4 gap-2 rounded mb-2 items-center border ">
               <div>
                 <svg
                   width="22"
@@ -206,10 +252,72 @@ export default function ClientAgenceProfile() {
               <div>
                 <h4 className="text-xs text-[#000000]">+261 34 57 067 89</h4>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <h4 className="text-[#030229] font-bold text-base">Liste d'agents</h4>
+
+          <GenericList
+            title=""
+            // total={3}
+            columns={columns}
+            rows={rows}
+            // actions={actions}
+            // rowActions={rowActions}
+            // mainFilters={mainFilters}
+            // filters={filters}
+            // tabs={tabs}
+          />
+
+          <div className="">
+            <button
+              type="button"
+              className="text-[#AAAAAA] bg-[#F6F6F6] w-full font-bold hover:bg-transparent outline-none focus:outline-none focus:ring-0 rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center gap-4 mr-2 mb-2"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_445_3764)">
+                  <path
+                    d="M4.67139 8.00005C4.67139 7.86745 4.72407 7.74027 4.81783 7.6465C4.9116 7.55273 5.03878 7.50005 5.17139 7.50005H7.50005V5.17139C7.50005 5.03878 7.55273 4.9116 7.6465 4.81783C7.74027 4.72407 7.86745 4.67139 8.00005 4.67139C8.13266 4.67139 8.25984 4.72407 8.35361 4.81783C8.44737 4.9116 8.50005 5.03878 8.50005 5.17139V7.50005H10.8287C10.9613 7.50005 11.0885 7.55273 11.1823 7.6465C11.276 7.74027 11.3287 7.86745 11.3287 8.00005C11.3287 8.13266 11.276 8.25984 11.1823 8.35361C11.0885 8.44737 10.9613 8.50005 10.8287 8.50005H8.50005V10.8287C8.50005 10.9613 8.44737 11.0885 8.35361 11.1823C8.25984 11.276 8.13266 11.3287 8.00005 11.3287C7.86745 11.3287 7.74027 11.276 7.6465 11.1823C7.55273 11.0885 7.50005 10.9613 7.50005 10.8287V8.50005H5.17139C5.03878 8.50005 4.9116 8.44737 4.81783 8.35361C4.72407 8.25984 4.67139 8.13266 4.67139 8.00005Z"
+                    fill="#AAAAAA"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M4.87798 2.51261C6.95295 2.28258 9.047 2.28258 11.122 2.51261C12.34 2.64861 13.3233 3.60794 13.466 4.83261C13.7126 6.93728 13.7126 9.06328 13.466 11.1679C13.3226 12.3926 12.3393 13.3513 11.122 13.4879C9.047 13.718 6.95295 13.718 4.87798 13.4879C3.65998 13.3513 2.67664 12.3926 2.53398 11.1679C2.28783 9.06334 2.28783 6.93721 2.53398 4.83261C2.67664 3.60794 3.66064 2.64861 4.87798 2.51261ZM11.0113 3.50594C9.00988 3.2841 6.99007 3.2841 4.98864 3.50594C4.61814 3.54705 4.27231 3.71186 4.00703 3.97375C3.74175 4.23565 3.5725 4.57933 3.52664 4.94928C3.28954 6.97659 3.28954 9.02463 3.52664 11.0519C3.57264 11.4218 3.74195 11.7653 4.00722 12.0271C4.27249 12.2888 4.61824 12.4535 4.98864 12.4946C6.97331 12.7159 9.02664 12.7159 11.0113 12.4946C11.3816 12.4534 11.7272 12.2886 11.9923 12.0269C12.2575 11.7651 12.4267 11.4217 12.4726 11.0519C12.7098 9.02463 12.7098 6.97659 12.4726 4.94928C12.4265 4.57967 12.2573 4.23637 11.9921 3.97476C11.727 3.71314 11.3815 3.54846 11.0113 3.50728V3.50594Z"
+                    fill="#AAAAAA"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_445_3764">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              Ajouter un agent
+            </button>
+          </div>
+
+          <div className="mt-4 flex flex-row justify-end">
+            <button
+              type="button"
+              className="text-white bg-violet-1 uppercase hover:bg-violet-1  outline-none focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+            >
+              Enregistrer
+            </button>
+
+            <button
+              type="button"
+              className="text-violet-1 bg-transparent uppercase hover:bg-transparent outline-none focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+            >
+              Annuler
+            </button>
+          </div>
         </div>
       </div>
     </div>

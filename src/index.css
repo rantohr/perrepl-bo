@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,800;1,100&family=Roboto:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,600;0,800;1,100;1,600&family=Roboto:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,800;1,100&family=Roboto:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,600;0,800;1,100;1,600&family=Roboto:wght@100&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-    transition: 0.5s;
-    font-family: 'Raleway', sans-serif;
+  transition: 0.5s;
+  font-family: "Raleway", sans-serif;
 }
 
 button:focus {
@@ -64,18 +64,18 @@ button:focus {
 }
 
 .side-menu > div .active {
-  border-right: 6px solid theme('colors.violet-pink');
-  color: theme('colors.violet-pink');
+  border-right: 6px solid theme("colors.violet-pink");
+  color: theme("colors.violet-pink");
 }
 
 .side-menu > div .active * {
-  color: theme('colors.violet-pink');
+  color: theme("colors.violet-pink");
 }
 
 /** BUTTONS */
 .outlined-button {
-  background-color: theme('colors.violet-1');
-  color: theme('colors.violet-1');
+  background-color: theme("colors.violet-1");
+  color: theme("colors.violet-1");
 }
 
 /* BUTTON SECONDARY */
@@ -127,13 +127,13 @@ button:focus {
 .outlined-button svg,
 .outlined-button span,
 .outlined-button p {
-  color: theme('colors.violet-1');
+  color: theme("colors.violet-1");
   display: flex;
   gap: 5px;
 }
 
 .outlined-button:hover {
-  background-color: theme('colors.violet-1') !important;
+  background-color: theme("colors.violet-1") !important;
   color: #fff;
 }
 
@@ -147,48 +147,48 @@ button:focus {
 }
 
 .contained-button {
-  background-color: theme('colors.violet-1');
+  background-color: theme("colors.violet-1");
   color: #fff;
 }
 
 .contained-button svg,
 .contained-button span,
 .contained-button p {
-    background-color: theme('colors.violet-1');
-    color: #fff;
-    display: flex;
-    gap: 5px;
+  background-color: theme("colors.violet-1");
+  color: #fff;
+  display: flex;
+  gap: 5px;
 }
 
 .contained-button:hover {
   background-color: #fff !important;
-  border-color: theme('colors.violet-1') !important;
-  color: theme('colors.violet-1');
+  border-color: theme("colors.violet-1") !important;
+  color: theme("colors.violet-1");
 }
 
 .contained-button:hover svg,
 .contained-button:hover span,
 .contained-button:hover p {
-    background-color: #fff !important;
-    color: theme('colors.violet-1');
+  background-color: #fff !important;
+  color: theme("colors.violet-1");
 }
 
 .default-outlined-button {
-  border-color: theme('colors.grey');
-  background-color: theme('colors.grey');
-  color: theme('colors.grey');
+  border-color: theme("colors.grey");
+  background-color: theme("colors.grey");
+  color: theme("colors.grey");
 }
 
 .default-outlined-button svg,
 .default-outlined-button span,
 .default-outlined-button p {
-  color: theme('colors.grey');
+  color: theme("colors.grey");
   display: flex;
   gap: 5px;
 }
 
 .default-outlined-button:hover {
-  background-color: theme('colors.violet-pink') !important;
+  background-color: theme("colors.violet-pink") !important;
   color: #fff;
 }
 
@@ -199,28 +199,28 @@ button:focus {
 }
 
 .status {
-    border-radius: 15px;
-    padding: 5px 15px;
-    width: 8em;
+  border-radius: 15px;
+  padding: 5px 15px;
+  width: 8em;
 }
 
 /* FORM MODAL */
 .form-modal-header svg {
-    font-size: x-large;
-    fill: theme('colors.violet-1');
+  font-size: x-large;
+  fill: theme("colors.violet-1");
 }
 
 .form-modal-header p {
-    color: theme('colors.grey');
-    font-size: small;
+  color: theme("colors.grey");
+  font-size: small;
 }
 
 .form-modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1em;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
 }
 
 .form-modal-body {
-    margin: 15px 0;
+  margin: 15px 0;
 }

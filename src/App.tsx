@@ -12,6 +12,10 @@ import ItineraryList from "./pages/itinerary/ItineraryList";
 import Itinerary from "./pages/itinerary/itinerary";
 import ClientAgenceProfileView from "./pages/clientList/ClientAgenceProfileView";
 import LibraryList from "./pages/library/LibraryList";
+import General from "./pages/clientList/components/General";
+import Notes from "./pages/clientList/components/Notes";
+import Clients from "./pages/clientList/components/Clients";
+import Payrolls from "./pages/clientList/components/Payrolls";
 
 const App: FC = (): ReactElement => {
   return (
@@ -32,7 +36,13 @@ const App: FC = (): ReactElement => {
           </Route>,
           <Route path="client">
             <Route path="agence/update" element={<ClientAgenceProfile />} />
-            <Route path="agence/view" element={<ClientAgenceProfileView />} />
+            <Route path="agence/view" element={<ClientAgenceProfileView />}>
+              {/* <Route path="" element={<>general</>} /> */}
+              <Route path="general" element={<General />} />
+              <Route path="notes" element={<Notes />} />
+              <Route path="clients" element={<Clients />} />
+              <Route path="payrolls" element={<Payrolls />} />
+            </Route>
           </Route>,
         ]}
       />
