@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Tabs from "../../components/tabs/Tabs";
 
 const Kpi = ({ className = " bg-linear-blue" }: { className?: string }) => {
@@ -104,7 +104,7 @@ const Kpi = ({ className = " bg-linear-blue" }: { className?: string }) => {
 
 export default function LayoutClientWithTabs() {
   const { pathname } = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="container_layoutClientWithTabs">
@@ -367,35 +367,35 @@ export default function LayoutClientWithTabs() {
                     active: pathname.includes("general"),
                     label: "Généralité",
                     callback: () => {
-                      // navigate("/app/client/agence/view/general");
+                      navigate("/app/client/overview/view/general");
                     },
                   },
                   {
                     active: pathname.includes("notes"),
                     label: "Notes",
                     callback: () => {
-                      // navigate("/app/client/agence/view/notes");
+                      navigate("/app/client/overview/view/notes");
                     },
                   },
                   {
                     active: pathname.includes("trips"),
                     label: "Trip",
                     callback: () => {
-                      // navigate("/app/client/agence/view/clients");
+                      navigate("/app/client/overview/view/trips");
                     },
                   },
                   {
                     active: pathname.includes("docs"),
                     label: "Docs",
                     callback: () => {
-                      // navigate("/app/client/agence/view/payrolls");
+                      navigate("/app/client/overview/view/docs");
                     },
                   },
                   {
                     active: pathname.includes("paxList"),
                     label: "Pax List",
                     callback: () => {
-                      // navigate("/app/client/agence/view/payrolls");
+                      navigate("/app/client/overview/view/paxList");
                     },
                   },
 
@@ -403,11 +403,15 @@ export default function LayoutClientWithTabs() {
                     active: pathname.includes("payroll"),
                     label: "paiements",
                     callback: () => {
-                      // navigate("/app/client/agence/view/payrolls");
+                      navigate("/app/client/overview/view/payroll");
                     },
                   },
                 ]}
               />
+            </div>
+
+            <div className="containerBodyOutlet">
+              <Outlet />
             </div>
 
             <Kpi />

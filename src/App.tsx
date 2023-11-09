@@ -19,6 +19,12 @@ import Payrolls from "./pages/clientList/components/Payrolls";
 import LayoutClient from "./pages/clients/LayoutClient";
 import Test from "./pages/test/Test";
 import LayoutClientWithTabs from "./pages/clients/LayoutClientWithTabs";
+import GeneralClient from "./pages/clients/childTabs/General";
+import NotesClient from "./pages/clients/childTabs/Notes";
+import TripsClient from "./pages/clients/childTabs/Trips";
+import DocsClient from "./pages/clients/childTabs/Docs";
+import PaxListsClient from "./pages/clients/childTabs/PaxLists";
+import PayrollClient from "./pages/clients/childTabs/Payroll";
 
 const App: FC = (): ReactElement => {
   return (
@@ -49,11 +55,13 @@ const App: FC = (): ReactElement => {
               <Route path="payrolls" element={<Payrolls />} />
             </Route>
             <Route path="overview/view" element={<LayoutClientWithTabs />}>
-              {/* <Route path="" element={<>general</>} /> */}
-              {/* <Route path="general" element={<General />} />
-              <Route path="notes" element={<Notes />} />
-              <Route path="clients" element={<Clients />} />
-              <Route path="payrolls" element={<Payrolls />} /> */}
+              <Route path="" element={<GeneralClient />} />
+              <Route path="general" element={<GeneralClient />} />
+              <Route path="notes" element={<NotesClient />} />
+              <Route path="trips" element={<TripsClient />} />
+              <Route path="docs" element={<DocsClient />} />
+              <Route path="paxList" element={<PaxListsClient />} />
+              <Route path="payroll" element={<PayrollClient />} />
             </Route>
           </Route>,
         ]}
