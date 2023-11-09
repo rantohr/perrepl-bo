@@ -11,6 +11,7 @@ export default {
         white: "#FFFFFF",
         "violet-1": "#381a44",
         "violet-2": "#030229",
+        "violet-3": "#381A4426",
         "violet-light": "#9f1972",
         "violet-pink": "#d20072",
         "transparent-grey": "#a3a3a333",

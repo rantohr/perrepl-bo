@@ -1,107 +1,6 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Tabs from "../../components/tabs/Tabs";
 
-const Kpi = ({ className = " bg-linear-blue" }: { className?: string }) => {
-  return (
-    <div
-      className={` relative w-[233px] h-[76px] ${className} rounded-xl flex flex-row justify-around items-center`}
-    >
-      <div>
-        <p className="font-normal text-10 text-white-1">Date d’arrivée</p>
-        <h3 className="font-bold text-xs text-white font-lato">20 Jun 2023</h3>
-      </div>
-      <div>
-        <svg
-          width="35"
-          height="35"
-          viewBox="0 0 35 35"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g clip-path="url(#clip0_411_4404)">
-            <path
-              d="M8.57122 10.2857C8.11656 10.2857 7.68053 10.4664 7.35904 10.7879C7.03755 11.1093 6.85693 11.5454 6.85693 12V27.4286C6.85693 27.8833 7.03755 28.3193 7.35904 28.6408C7.68053 28.9623 8.11656 29.1429 8.57122 29.1429H27.4284C27.883 29.1429 28.3191 28.9623 28.6405 28.6408C28.962 28.3193 29.1426 27.8833 29.1426 27.4286V12C29.1426 11.5454 28.962 11.1093 28.6405 10.7879C28.3191 10.4664 27.883 10.2857 27.4284 10.2857H23.9998M6.85693 17.1429H29.1426M11.9998 6.85718V13.7143M23.9998 6.85718V13.7143M11.9998 10.2857H20.5712"
-              stroke="white"
-              stroke-width="1.2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </g>
-          <defs>
-            <clipPath id="clip0_411_4404">
-              <rect
-                width="24"
-                height="24"
-                fill="white"
-                transform="translate(6 6)"
-              />
-            </clipPath>
-          </defs>
-        </svg>
-      </div>
-
-      <svg
-        width="31"
-        height="31"
-        viewBox="0 0 31 31"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute top-0 right-0"
-      >
-        <circle
-          cx="31"
-          r="31"
-          fill="url(#paint0_linear_310_4512)"
-          fill-opacity="0.5"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_310_4512"
-            x1="31"
-            y1="-31"
-            x2="31"
-            y2="31"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="white" stop-opacity="0.5" />
-            <stop offset="1" stop-color="white" stop-opacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      <svg
-        width="52"
-        height="24"
-        viewBox="0 0 52 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute bottom-0 right-0"
-      >
-        <circle
-          cx="47"
-          cy="47"
-          r="47"
-          fill="url(#paint0_linear_310_4511)"
-          fill-opacity="0.1"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_310_4511"
-            x1="47"
-            y1="0"
-            x2="47"
-            y2="94"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="white" stop-opacity="0.5" />
-            <stop offset="1" stop-color="white" stop-opacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-  );
-};
-
 export default function LayoutClientWithTabs() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -413,9 +312,6 @@ export default function LayoutClientWithTabs() {
             <div className="containerBodyOutlet">
               <Outlet />
             </div>
-
-            <Kpi />
-            <Kpi className="bg-linear-blue-2" />
           </div>
         </div>
       </div>

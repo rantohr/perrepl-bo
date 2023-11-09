@@ -29,6 +29,9 @@ button:focus {
 .bg-linear-blue-2 {
   background: linear-gradient(293.34deg, #868cff -12.59%, #4318ff 130.45%);
 }
+.bg-linear-blue-3 {
+  background: linear-gradient(79.63deg, #0c1f61 -6.72%, #1f50cd 124.22%);
+}
 .menu-user-info img {
   object-fit: cover;
 }
@@ -88,18 +91,18 @@ button:focus {
 
 /* BUTTON SECONDARY */
 .outlined-button-secondary {
-  background-color: theme('colors.violet-pink');
+  background-color: theme("colors.violet-pink");
   color: white;
 }
 .outlined-button-secondary svg,
 .outlined-button-secondary span,
 .outlined-button-secondary p {
-  color: theme('colors.violet-pink');
+  color: theme("colors.violet-pink");
   display: flex;
   gap: 5px;
 }
 .contained-button-secondary {
-  background-color: theme('colors.violet-pink');
+  background-color: theme("colors.violet-pink");
   color: #fff;
   border-radius: 0.5rem;
   display: flex;
@@ -110,21 +113,21 @@ button:focus {
 .contained-button-secondary svg,
 .contained-button-secondary span,
 .contained-button-secondary p {
-    background-color: theme('colors.violet-pink');
-    color: #fff;
-    display: flex;
-    gap: 5px;
+  background-color: theme("colors.violet-pink");
+  color: #fff;
+  display: flex;
+  gap: 5px;
 }
 .contained-button-secondary:hover {
   background-color: #fff !important;
-  border-color: theme('colors.violet-pink') !important;
-  color: theme('colors.violet-pink');
+  border-color: theme("colors.violet-pink") !important;
+  color: theme("colors.violet-pink");
 }
 .contained-button-secondary:hover svg,
 .contained-button-secondary:hover span,
 .contained-button-secondary:hover p {
-    background-color: #fff !important;
-    color: theme('colors.violet-pink');
+  background-color: #fff !important;
+  color: theme("colors.violet-pink");
 }
 
 .outlined-button svg,
@@ -150,7 +153,7 @@ button:focus {
 .outlined-button:hover p,
 .outlined-button-secondary:hover svg,
 .outlined-button-secondary:hover span,
-.outlined-button-secondary:hover p  {
+.outlined-button-secondary:hover p {
   color: #fff;
 }
 
