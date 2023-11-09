@@ -32,6 +32,14 @@
     flex-wrap: wrap;
 }
 
+.list-filter .contained-button-secondary, .list-filter .default-outlined-button {
+    text-transform: uppercase;
+}
+
+.list-filter .contained-button-secondary *, .list-filter .default-outlined-button * {
+    font-size: small;
+}
+
 .list-filter>div:nth-child(odd) {
     width: 70%;
 }

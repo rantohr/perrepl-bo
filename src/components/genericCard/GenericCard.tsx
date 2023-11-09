@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa"
 
 export type typeMark = {
@@ -19,8 +19,8 @@ const GenericCard: FC<{
   mark: typeMark
 }> = ({ title, image, date, description, place, button, price, mark }) => {
   return (
-    <div className="p-3">
-      <div className="w-100 mx-4 p-4 flex justify-between rounded-xl bg-white bg-clip-border text-gray-700 shadow-sm">
+    <div>
+      <div className="w-100 p-4 flex justify-between rounded-xl bg-white bg-clip-border text-gray-700 shadow-sm">
         <div className="flex">
           <div className="h-full relative min-h-[0] w-48 flex-shrink-0">
             <img

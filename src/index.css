@@ -13,6 +13,10 @@
   font-family: "Raleway", sans-serif;
 }
 
+button:focus {
+  box-shadow: none !important;
+}
+
 .menu-user-info {
   display: flex;
   gap: 15px;
@@ -41,6 +45,7 @@
 .page-container {
   background-color: #f6f6f6;
   display: flex;
+  min-height: 100vh;
 }
 
 .side-menu {
@@ -55,14 +60,14 @@
   justify-content: space-between;
 }
 
-.side-menu > div > div {
+.side-menu > div > a {
   display: flex;
   gap: 10px;
   padding: 1.5em 15px;
   cursor: pointer;
 }
 
-.side-menu > div > div:hover {
+.side-menu > div > a:hover {
   background-color: #d2007420;
 }
 
@@ -81,7 +86,49 @@
   color: theme("colors.violet-1");
 }
 
-.outlined-button svg {
+/* BUTTON SECONDARY */
+.outlined-button-secondary {
+  background-color: theme('colors.violet-pink');
+  color: white;
+}
+.outlined-button-secondary svg,
+.outlined-button-secondary span,
+.outlined-button-secondary p {
+  color: theme('colors.violet-pink');
+  display: flex;
+  gap: 5px;
+}
+.contained-button-secondary {
+  background-color: theme('colors.violet-pink');
+  color: #fff;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.contained-button-secondary svg,
+.contained-button-secondary span,
+.contained-button-secondary p {
+    background-color: theme('colors.violet-pink');
+    color: #fff;
+    display: flex;
+    gap: 5px;
+}
+.contained-button-secondary:hover {
+  background-color: #fff !important;
+  border-color: theme('colors.violet-pink') !important;
+  color: theme('colors.violet-pink');
+}
+.contained-button-secondary:hover svg,
+.contained-button-secondary:hover span,
+.contained-button-secondary:hover p {
+    background-color: #fff !important;
+    color: theme('colors.violet-pink');
+}
+
+.outlined-button svg,
+.outlined-button-secondary svg {
   font-size: 20px;
 }
 
@@ -100,7 +147,10 @@
 
 .outlined-button:hover svg,
 .outlined-button:hover span,
-.outlined-button:hover p {
+.outlined-button:hover p,
+.outlined-button-secondary:hover svg,
+.outlined-button-secondary:hover span,
+.outlined-button-secondary:hover p  {
   color: #fff;
 }
 

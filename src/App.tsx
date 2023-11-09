@@ -8,7 +8,10 @@ import ClientAgenceProfile from "./pages/clientList/ClientAgenceProfile";
 import Layout from "./pages/layout/Layout";
 import OrderList from "./pages/orders/OrderList";
 import TemplateList from "./pages/templates/TemplateList";
+import ItineraryList from "./pages/itinerary/ItineraryList";
+import Itinerary from "./pages/itinerary/itinerary";
 import ClientAgenceProfileView from "./pages/clientList/ClientAgenceProfileView";
+import LibraryList from "./pages/library/LibraryList";
 import General from "./pages/clientList/components/General";
 import Notes from "./pages/clientList/components/Notes";
 import Clients from "./pages/clientList/components/Clients";
@@ -29,7 +32,12 @@ const App: FC = (): ReactElement => {
         element={<Layout />}
         children={[
           <Route path="" element={<OrderList />} />,
+          <Route path="library" element={<LibraryList />} />,
           <Route path="templates" element={<TemplateList />} />,
+          <Route path="itinerary">
+            <Route path="list" element={<ItineraryList />}></Route>
+            <Route path="update" element={<Itinerary />}></Route>
+          </Route>,
           <Route path="client">
             <Route path="" element={<LayoutClient />} />
             <Route path="agence/update" element={<ClientAgenceProfile />} />
