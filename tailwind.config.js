@@ -19,10 +19,12 @@ export default {
         "grey-1": "#5E6062",
         "grey-2": "#888888",
         "grey-3": "#AAAAAA",
+        "grey-4": "#00000099",
         neutre: "#00000080",
         "green-1": "#15D77A",
         "green-2": "#15D77A1A",
         "white-1": "#ABD4F2",
+        "black-1": "#000000CC",
       },
       fontFamily: {
         lato: ["Lato", "sans-serif"], // ITO zavatra ito ao am index.html no misintona azy
