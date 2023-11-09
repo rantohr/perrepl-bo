@@ -1,6 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,800;1,100&family=Roboto:wght@100&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,600;0,800;1,100;1,600&family=Roboto:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&family=Lato:wght@100&family=Raleway:ital,wght@0,100;0,600;0,800;1,100;1,600&family=Roboto:wght@100&display=swap"); */
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -17,6 +19,12 @@
   align-items: center;
 }
 
+.bg-linear-blue {
+  background: linear-gradient(79.63deg, #253f82 -6.72%, #375eeb 124.22%);
+}
+.bg-linear-blue-2 {
+  background: linear-gradient(293.34deg, #868cff -12.59%, #4318ff 130.45%);
+}
 .menu-user-info img {
   object-fit: cover;
 }

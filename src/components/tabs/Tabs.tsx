@@ -11,6 +11,7 @@ const ItemsTabs = ({ active, label, callback }: PropsItemsTabs) => {
         className={`
         inline-block p-4
         uppercase
+        text-xs
         ${active ? "text-violet-1 border-violet-light" : "text-grey"}
         border-b-2
         font-bold

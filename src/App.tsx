@@ -13,6 +13,9 @@ import General from "./pages/clientList/components/General";
 import Notes from "./pages/clientList/components/Notes";
 import Clients from "./pages/clientList/components/Clients";
 import Payrolls from "./pages/clientList/components/Payrolls";
+import LayoutClient from "./pages/clients/LayoutClient";
+import Test from "./pages/test/Test";
+import LayoutClientWithTabs from "./pages/clients/LayoutClientWithTabs";
 
 const App: FC = (): ReactElement => {
   return (
@@ -20,6 +23,7 @@ const App: FC = (): ReactElement => {
       <Route path={"/"} element={<Navigate to="/app" />} />
       <Route path={"/login"} element={<Login />} />
       <Route path={"/register"} element={<Register />} />
+      <Route path={"/test"} element={<Test />} />
       <Route
         path={"app"}
         element={<Layout />}
@@ -27,6 +31,7 @@ const App: FC = (): ReactElement => {
           <Route path="" element={<OrderList />} />,
           <Route path="templates" element={<TemplateList />} />,
           <Route path="client">
+            <Route path="" element={<LayoutClient />} />
             <Route path="agence/update" element={<ClientAgenceProfile />} />
             <Route path="agence/view" element={<ClientAgenceProfileView />}>
               {/* <Route path="" element={<>general</>} /> */}
@@ -34,6 +39,13 @@ const App: FC = (): ReactElement => {
               <Route path="notes" element={<Notes />} />
               <Route path="clients" element={<Clients />} />
               <Route path="payrolls" element={<Payrolls />} />
+            </Route>
+            <Route path="overview/view" element={<LayoutClientWithTabs />}>
+              {/* <Route path="" element={<>general</>} /> */}
+              {/* <Route path="general" element={<General />} />
+              <Route path="notes" element={<Notes />} />
+              <Route path="clients" element={<Clients />} />
+              <Route path="payrolls" element={<Payrolls />} /> */}
             </Route>
           </Route>,
         ]}

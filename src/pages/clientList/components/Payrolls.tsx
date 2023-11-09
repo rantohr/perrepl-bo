@@ -33,7 +33,7 @@ export default function Payrolls() {
       sortable: true,
       displayValue: (travelDate: string) => {
         return (
-          <span className="uppercase text-neutre font-bold font-sans">
+          <span className="uppercase text-neutre font-bold font-lato">
             {travelDate}
           </span>
         );
@@ -50,6 +50,36 @@ export default function Payrolls() {
   ];
 
   const rows: IPayrolls[] = [
+    {
+      client: "Darlene Robertson",
+      paymentDate: format(new Date(), "dd MMM yyyy"),
+      tranche: "1 er",
+      travelDate: "24 JUL - 27 JUL",
+    },
+    {
+      client: "Darlene Robertson",
+      paymentDate: format(new Date(), "dd MMM yyyy"),
+      tranche: "1 er",
+      travelDate: "24 JUL - 27 JUL",
+    },
+    {
+      client: "Darlene Robertson",
+      paymentDate: format(new Date(), "dd MMM yyyy"),
+      tranche: "1 er",
+      travelDate: "24 JUL - 27 JUL",
+    },
+    {
+      client: "Darlene Robertson",
+      paymentDate: format(new Date(), "dd MMM yyyy"),
+      tranche: "1 er",
+      travelDate: "24 JUL - 27 JUL",
+    },
+    {
+      client: "Darlene Robertson",
+      paymentDate: format(new Date(), "dd MMM yyyy"),
+      tranche: "1 er",
+      travelDate: "24 JUL - 27 JUL",
+    },
     {
       client: "Darlene Robertson",
       paymentDate: format(new Date(), "dd MMM yyyy"),
