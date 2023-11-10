@@ -20,7 +20,7 @@ export default function WithIconInput({
       >
         {label}
       </label>
-      <div className="relative mb-6">
+      <div className="relative mb-2">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
           {children ? (
             children

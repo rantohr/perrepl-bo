@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import GenericList from "../../../components/genericList/GenericList";
 import {
   IColumn,
@@ -14,16 +15,18 @@ type IAgence = {
 };
 
 export default function AgenceBadge() {
+  const navigate = useNavigate();
+
   const rowActions: IListAction[] = [
+    {
+      label: "Voir",
+      //   icon: MdDelete,
+      callback: () => navigate("/app/client/agence/view/general"),
+    },
     {
       label: "Modifier",
       //   icon: MdModeEdit,
-      callback: (row: any) => console.log("edit clicked", row),
-    },
-    {
-      label: "Supprimer",
-      //   icon: MdDelete,
-      callback: (row: any) => console.log("delete clicked", row),
+      callback: () => navigate("/app/client/agence/update"),
     },
   ];
 
@@ -175,15 +178,9 @@ export default function AgenceBadge() {
     <div>
       <GenericList
         title=""
-        // total={3}
         columns={columns}
         rows={rows}
         rowActions={rowActions}
-        // actions={actions}
-        // rowActions={rowActions}
-        // mainFilters={mainFilters}
-        // filters={filters}
-        // tabs={tabs}
       />
     </div>
   );

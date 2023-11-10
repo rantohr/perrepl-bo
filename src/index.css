@@ -6,13 +6,17 @@
 
 @tailwind base;
 @tailwind components;
+
 @tailwind utilities;
 
 * {
   transition: 0.5s;
   font-family: "Raleway", sans-serif;
 }
-
+.glass-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px);
+}
 button:focus {
   box-shadow: none !important;
 }

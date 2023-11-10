@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import GenericList from "../../components/genericList/GenericList";
 import WithIconInput from "../../components/input/WithIconInput";
 import { IColumn } from "../../interfaces/genricModule/icolumn.interface";
@@ -32,6 +33,21 @@ const CloseIcon = () => {
 const EditIcon = () => {
   return (
     <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.83325 5.47909L7.072 9.572L11.1653 5.33325"
+        stroke="#888888"
+        stroke-width="1.16667"
+      />
+    </svg>
+  );
+  return (
+    <svg
       width="35"
       height="20"
       viewBox="0 0 14 14"
@@ -64,7 +80,7 @@ const BadgetWithFlags = ({
   labelPng,
 }: PropsBadgetWithFlags) => {
   return (
-    <div className="bg-[#E9E9E980] h-10 flex flex-row items-center p-2 gap-2 rounded-full mb-2 ml-2">
+    <div className="bg-[#E9E9E980] h-10 flex flex-row items-center p-2 pr-4 gap-2 rounded-full mb-2 ml-2">
       <div className="w-[35px] h-[20px]">
         <img src={`/photos/${labelPng}.png`} className="w-full h-full" />
       </div>
@@ -88,6 +104,8 @@ type IAgent = {
 };
 
 export default function ClientAgenceProfile() {
+  const navigate = useNavigate();
+
   const [rows, setRows] = useState<IAgent[]>([]);
   useEffect(() => {
     const fake_rows: IAgent[] = [
@@ -121,9 +139,25 @@ export default function ClientAgenceProfile() {
 
   return (
     <div className="flex flex-col  h-full w-full">
-      <div className="flex row w-full gap-4 ">
-        <img src="/photos/bi_arrow-left.png" alt="Sample image" />
-        <span className="font-bold text-2xl text-[#030229]">
+      <div
+        className="flex row w-full gap-4 items-center cursor-pointer"
+        onClick={() => navigate("/app/client/agence")}
+      >
+        <svg
+          width="18"
+          height="12"
+          viewBox="0 0 18 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M17.7499 6.00006C17.7499 5.8343 17.684 5.67533 17.5668 5.55812C17.4496 5.44091 17.2907 5.37506 17.1249 5.37506H2.38365L6.3174 1.44256C6.37551 1.38445 6.4216 1.31546 6.45305 1.23954C6.4845 1.16361 6.50069 1.08224 6.50069 1.00006C6.50069 0.917877 6.4845 0.836502 6.45305 0.760578C6.4216 0.684654 6.37551 0.615667 6.3174 0.557557C6.25929 0.499447 6.1903 0.453352 6.11438 0.421903C6.03845 0.390454 5.95708 0.374268 5.8749 0.374268C5.79272 0.374268 5.71134 0.390454 5.63542 0.421903C5.55949 0.453352 5.49051 0.499447 5.4324 0.557557L0.432397 5.55756C0.374192 5.61561 0.328014 5.68458 0.296506 5.76052C0.264998 5.83645 0.248779 5.91785 0.248779 6.00006C0.248779 6.08227 0.264998 6.16367 0.296506 6.2396C0.328014 6.31553 0.374192 6.3845 0.432397 6.44256L5.4324 11.4426C5.49051 11.5007 5.55949 11.5468 5.63542 11.5782C5.71134 11.6097 5.79272 11.6258 5.8749 11.6258C5.95708 11.6258 6.03845 11.6097 6.11438 11.5782C6.1903 11.5468 6.25929 11.5007 6.3174 11.4426C6.37551 11.3844 6.4216 11.3155 6.45305 11.2395C6.4845 11.1636 6.50069 11.0822 6.50069 11.0001C6.50069 10.9179 6.4845 10.8365 6.45305 10.7606C6.4216 10.6847 6.37551 10.6157 6.3174 10.5576L2.38365 6.62506H17.1249C17.2907 6.62506 17.4496 6.55921 17.5668 6.442C17.684 6.32479 17.7499 6.16582 17.7499 6.00006Z"
+            fill="#AAAAAA"
+          />
+        </svg>
+        <span className="font-bold text-2xl text-violet-2">
           Profil de l’agence
         </span>
       </div>
@@ -143,7 +177,7 @@ export default function ClientAgenceProfile() {
             </div>
           </div>
           <div className="text-center">
-            <h4 className="font-bold text-2xl text-[#030229] ">
+            <h4 className="font-bold text-2xl text-violet-2 ">
               Toursoft{" "}
               <img src="/photos/pencil.png" className="inline-block " />
             </h4>
@@ -151,7 +185,7 @@ export default function ClientAgenceProfile() {
           </div>
           <div>
             <div>
-              <h4 className="font-bold text-[#381A44] text-sm mb-2">Pays</h4>
+              <h4 className="font-bold text-violet-1 text-sm mb-2">Pays</h4>
               <BadgetWithFlags
                 close={false}
                 contryName="Pèru"
@@ -160,7 +194,7 @@ export default function ClientAgenceProfile() {
             </div>
 
             <div>
-              <h4 className="font-bold text-[#381A44] text-sm mb-2">Market</h4>
+              <h4 className="font-bold text-violet-1 text-sm mb-2">Market</h4>
 
               <BadgetWithFlags
                 close={true}
@@ -187,7 +221,7 @@ export default function ClientAgenceProfile() {
           </div>
         </div>
         <div className="w-full flex flex-col ">
-          <h4 className="text-[#030229] font-bold text-base">Coordonnées</h4>
+          <h4 className="text-violet-1 font-bold text-base">Coordonnées</h4>
           <div className="ml-20 mt-5 w-[324px]">
             <WithIconInput value={"example@codeo.mg"}>
               <svg
@@ -255,7 +289,7 @@ export default function ClientAgenceProfile() {
             </div> */}
           </div>
 
-          <h4 className="text-[#030229] font-bold text-base">Liste d'agents</h4>
+          <h4 className="text-violet-1 font-bold text-base">Liste d'agents</h4>
 
           <GenericList
             title=""
@@ -305,17 +339,18 @@ export default function ClientAgenceProfile() {
 
           <div className="mt-4 flex flex-row justify-end">
             <button
+              onClick={() => navigate("/app/client/agence")}
               type="button"
-              className="text-white bg-violet-1 uppercase hover:bg-violet-1  outline-none focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-            >
-              Enregistrer
-            </button>
-
-            <button
-              type="button"
-              className="text-violet-1 bg-transparent uppercase hover:bg-transparent outline-none focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+              className="text-violet-1 bg-transparent uppercase hover:bg-transparent outline-none focus:outline-none focus:ring-0 font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
             >
               Annuler
+            </button>
+            <button
+              onClick={() => navigate("/app/client/agence")}
+              type="button"
+              className="text-white font-bold bg-violet-1 uppercase hover:bg-violet-1  outline-none focus:outline-none focus:ring-0 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+            >
+              Enregistrer
             </button>
           </div>
         </div>
