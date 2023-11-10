@@ -1,4 +1,12 @@
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import BadgeCustom from "../components/BadgeCustom";
+
 export default function LayoutClient() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const paths = pathname.split("/");
+  const last = paths[paths.length - 1];
+
   return (
     <div className="ml-4 mr-6 mt-4">
       <div className="header flex flex-row gap-9">
@@ -8,14 +16,13 @@ export default function LayoutClient() {
             <span className="font-normal text-xs text-neutre ">2</span>
           </div>
         </div>
-        {/* px-5 py-2.5 text-center mr-2 mb-2   */}
         <div className=" w-1/2 flex gap-4 justify-end">
           <button
             type="button"
             className="
             text-violet-1
             hover:violet-1 font-bold border border-transparent-grey hover:bg-transparent focus:outline-none   rounded-lg text-sm 
-            flex items-center justify-center px-3 py-2
+            flex items-center justify-center px-3 py-1
             
             "
           >
@@ -76,6 +83,41 @@ export default function LayoutClient() {
             Nouveau client
           </button>
         </div>
+      </div>
+
+      <div className="flex gap-2 mt-4">
+        <BadgeCustom
+          label="Tout"
+          active={last.includes("client")}
+          onClick={() => {
+            navigate("/app/client");
+          }}
+        />
+        <BadgeCustom
+          label="Client B2C"
+          active={last.includes("b2c")}
+          onClick={() => {
+            navigate("/app/client/b2c");
+          }}
+        />
+        <BadgeCustom
+          label="Client B2B"
+          active={last.includes("b2b")}
+          onClick={() => {
+            navigate("/app/client/b2b");
+          }}
+        />
+        <BadgeCustom
+          label="Agence"
+          active={last.includes("agence")}
+          onClick={() => {
+            navigate("/app/client/agence");
+          }}
+        />
+      </div>
+
+      <div className="container mt-4">
+        <Outlet />
       </div>
     </div>
   );

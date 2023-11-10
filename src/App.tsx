@@ -25,6 +25,10 @@ import TripsClient from "./pages/clients/childTabs/Trips";
 import DocsClient from "./pages/clients/childTabs/Docs";
 import PaxListsClient from "./pages/clients/childTabs/PaxLists";
 import PayrollClient from "./pages/clients/childTabs/Payroll";
+import AllBadge from "./pages/clients/childBadge/All";
+import B2BBadge from "./pages/clients/childBadge/B2B";
+import B2CBadge from "./pages/clients/childBadge/B2C";
+import AgenceBadge from "./pages/clients/childBadge/Agence";
 
 const App: FC = (): ReactElement => {
   return (
@@ -45,7 +49,12 @@ const App: FC = (): ReactElement => {
             <Route path="update" element={<Itinerary />}></Route>
           </Route>,
           <Route path="client">
-            <Route path="" element={<LayoutClient />} />
+            <Route path="" element={<LayoutClient />}>
+              <Route path="" element={<AllBadge />} />
+              <Route path="b2b" element={<B2BBadge />} />
+              <Route path="b2c" element={<B2CBadge />} />
+              <Route path="agence" element={<AgenceBadge />} />
+            </Route>
             <Route path="agence/update" element={<ClientAgenceProfile />} />
             <Route path="agence/view" element={<ClientAgenceProfileView />}>
               {/* <Route path="" element={<>general</>} /> */}

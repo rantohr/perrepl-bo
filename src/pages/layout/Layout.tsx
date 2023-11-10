@@ -317,7 +317,7 @@ function Layout() {
             }
             title="Client"
             onClick={() => {
-              navigate("/app/client/agence/view");
+              navigate("/app/client");
               setSelectedMenu(2);
             }}
             active={selectedMenu === 2}
