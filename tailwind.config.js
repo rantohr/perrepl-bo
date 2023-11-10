@@ -25,6 +25,8 @@ export default {
         "green-2": "#15D77A1A",
         "white-1": "#ABD4F2",
         "black-1": "#000000CC",
+        "blue-1": "#1189F81A",
+        "blue-2": "#1189F8",
       },
       fontFamily: {
         lato: ["Lato", "sans-serif"], // ITO zavatra ito ao am index.html no misintona azy

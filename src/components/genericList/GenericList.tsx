@@ -17,14 +17,24 @@ const GenericList: FC<IListOptions> = ({
   tabs,
   displayModeChange,
 }) => {
-
   return (
     <div className="list-container order-list">
       {/* LIST HEADER */}
-      <GenericPageHeader title={title} total={total} actions={actions} />
+
+      {total && actions && (
+        <GenericPageHeader title={title} total={total} actions={actions} />
+      )}
 
       {/* LIST FILTER */}
-      <GenericListFilters mainFilters={mainFilters} filters={filters} tabs={tabs} displayModeChange={displayModeChange} />
+
+      {filters && (
+        <GenericListFilters
+          mainFilters={mainFilters}
+          filters={filters}
+          tabs={tabs}
+          displayModeChange={displayModeChange}
+        />
+      )}
 
       <GenericTable columns={columns} rows={rows} rowActions={rowActions} />
     </div>
