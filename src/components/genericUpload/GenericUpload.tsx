@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent, useCallback, useRef } from 'react';
+import { FC, useState, ChangeEvent, useCallback, useRef } from 'react'
 import { BiSolidImageAdd } from 'react-icons/bi'
 
 interface GenericUploadProps {
@@ -7,23 +7,23 @@ interface GenericUploadProps {
 }
 
 const GenericUpload: FC<GenericUploadProps> = ({ buttonText, icon }) => {
-    const [selectedImages, setSelectedImages] = useState<(string | File)[]>([]);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const [selectedImages, setSelectedImages] = useState<(string | File)[]>([])
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const handleImageChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
+        const files = e.target.files
         if (files) {
-            const newImages = Array.from(files).map((file) => URL.createObjectURL(file));
-            setSelectedImages((prevImages) => [...prevImages, ...newImages]);
+            const newImages = Array.from(files).map((file) => URL.createObjectURL(file))
+            setSelectedImages((prevImages) => [...prevImages, ...newImages])
             console.log(selectedImages)
         }
-    }, []);
+    }, [])
 
     const handleClick = () => {
         if (inputRef.current) {
-            inputRef.current.click();
+            inputRef.current.click()
         }
-    };
+    }
 
     return (
         <div>
@@ -56,7 +56,7 @@ const GenericUpload: FC<GenericUploadProps> = ({ buttonText, icon }) => {
                 </label>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default GenericUpload
