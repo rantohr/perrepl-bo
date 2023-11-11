@@ -14,6 +14,7 @@ import FlightCard from "./components/event/flightCard";
 import ActivityCard from "./components/event/activityCard";
 import LodgingCard from "./components/event/lodgingCard";
 import { Modal, Select, Button } from "flowbite-react";
+import GenericUpload from "../../components/genericUpload/GenericUpload";
  
 const Itinerary: FC = () =>{
     const [isOpenDropDownEvent, setIsOpenDropDownEvent] = useState<boolean>(false)
@@ -379,8 +380,8 @@ const Itinerary: FC = () =>{
                     </div>
                 </div>
                 <div className="my-4">
-                    <button className="contained-button-secondary">
-                        <AiOutlinePlus className="" />
+                    <button className="contained-button-secondary px-4 py-3">
+                        <AiOutlinePlus className="text-xl font-semibold" />
                         <span className="text-semibold">Nouvelle liste</span>
                     </button>
                 </div>
@@ -467,6 +468,10 @@ const Itinerary: FC = () =>{
         </Modal.Body>
     </Modal>
     {/*  END MODAL */}
+
+    {/*  GENERIC UPLOAD */}
+    <GenericUpload />
+
     </>
 }
 
