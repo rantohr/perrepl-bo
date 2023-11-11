@@ -3,7 +3,6 @@ import { AiOutlineCamera, AiOutlinePlus } from "react-icons/ai"
 import { IoBed, IoCalendarOutline, IoPricetagOutline } from "react-icons/io5"
 import { BsSendFill, BsFillCarFrontFill } from "react-icons/bs"
 import { RiArrowDropDownLine } from "react-icons/ri"
-import { TbClockHour5 } from "react-icons/tb"
 import { BiSearch, BiSolidPlaneAlt } from "react-icons/bi"
 import { TiDocumentText } from "react-icons/ti"
 import { GiFootTrip } from "react-icons/gi"
@@ -11,6 +10,10 @@ import { HiMiniBuildingOffice } from "react-icons/hi2"
 import { FaTaxi } from "react-icons/fa"
 import { HiOutlinePhotograph } from "react-icons/hi"
 import { CgFileDocument } from "react-icons/cg"
+import FlightCard from "./components/event/flightCard";
+import ActivityCard from "./components/event/activityCard";
+import LodgingCard from "./components/event/lodgingCard";
+import { Modal, Select, Button } from "flowbite-react";
  
 const Itinerary: FC = () =>{
     const [isOpenDropDownEvent, setIsOpenDropDownEvent] = useState<boolean>(false)
@@ -87,23 +90,51 @@ const Itinerary: FC = () =>{
             label: 'Service',
         }
     ];
+    // // Config Card
+    const flightData = {
+        title: 'DEPARTURE - Central European Summer Time',
+        schedule: '22:53',
+        airport: 'Paris-Charles De Gaulle (CDG)',
+        airline: 'Air France',
+        flightNumber: 'AF 934',
+    };
+    const activityData = {
+        title: 'Visit to Ambohimanga Place',
+        description: 'Réservez des Hebergements A Andasibe, Madagascar booking.com a été visité par plus d\'un million d\'utilisateurs au cours du mois dernier Auberges de Jeunesse Réservation Sécurisée',
+        images: [
+            'https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph',
+            'https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph',
+        ],
+        tags: [
+            { icon: <IoPricetagOutline className="mr-2"/>, label: 'Tour guide' },
+            { icon: <IoPricetagOutline className="mr-2"/>, label: 'Prix d\'entree' }
+        ],
+    };
+    const lodgingData = {
+        title: 'Relais des Plateaux Hotel & Spa',
+        description: 'Located less than 5 km from Ivato Airport...',
+        image: 'https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph',
+    };
 
     // VISIBILITY
-    const [isFlightVisible, setIsFlightVisible] = useState(false);
-    const [isActivityVisible, setIsActivityVisible] = useState(false);
-    const [isExcursionVisible, setIsExcursionVisible] = useState(false);
+    const [isFlightVisible, setIsFlightVisible] = useState(false)
+    const [isActivityVisible, setIsActivityVisible] = useState(false)
+    const [isLodgingVisible, setIsLodgingVisible] = useState(false)
     const handleFlightClick = () => {
         setIsFlightVisible(!isFlightVisible);
     };
     const handleActivityClick = () => {
         setIsActivityVisible(!isActivityVisible);
     };
-    const handleExcursionClick = () => {
-        setIsExcursionVisible(!isExcursionVisible);
+    const handleLodgingClick = () => {
+        setIsLodgingVisible(!isLodgingVisible);
     };
 
+    // Modal
+    const [openModal, setOpenModal] = useState(false)
+
     return <>
-    {/* START HEAD */}
+    {/* START HEADER */}
     <div className="relative">
         <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-b rotate-180 opacity-80 from-stone-900"></div>
         <div className="flex flex-col justify-between py-4 bg-cover bg-top bg-no-repeat" style={{backgroundImage: "url('../../../photos/bg_maki.png')", minHeight: "400px"}}>
@@ -231,16 +262,23 @@ const Itinerary: FC = () =>{
                     <span className="text-grey font-bold" style={{fontSize:"25px"}}>Ambohimanga Place</span>
                 </div>
                 <div className="relative inline-block text-left" ref={dropdownEventRef}>
+                        
+                    <button
+                        onClick={() => setOpenModal(true)}
+                        className="contained-button-secondary text-white w-full flex items-center px-4 py-4 rounded-lg my-2"
+                    >
+                        Open Modal
+                    </button>
                     <button
                         onClick={toggleDropdownEvent}
                         className="font-bold bg-violet-1 shadow-lg shadow-violet-300 text-white w-full flex items-center px-4 py-4 rounded-lg my-2"
                     >
                         <AiOutlinePlus className="mr-4" />
-                        Ajouter une événement
+                        Ajouter un événement
                     </button>
                     {isOpenDropDownEvent && (
                         <div
-                        className="origin-top-right w-full absolute right-0 mt-2 rounded-lg shadow-lg bg-white divide-y divide-gray-100"
+                        className="z-10 origin-top-right w-full absolute right-0 mt-2 rounded-lg shadow-lg bg-white divide-y divide-gray-100"
                         >
                             <ul className=" py-2 text-sm text-gray-700 dark:text-gray-200">
                                 {eventCategories && 
@@ -254,8 +292,8 @@ const Itinerary: FC = () =>{
                                                         ? handleFlightClick
                                                         : category.label === 'Activite'
                                                         ? handleActivityClick
-                                                        : category.label === 'Excursion'
-                                                        ? handleExcursionClick
+                                                        : category.label === 'Hebergement'
+                                                        ? handleLodgingClick 
                                                         : undefined
                                                 }
                                                 >
@@ -274,64 +312,10 @@ const Itinerary: FC = () =>{
 
             {/* EVENTS */}
             <div className="flex flex-col w-full">
-                {isFlightVisible &&
-                <div className="bg-white rounded-tr-3xl rounded-br-3xl rounded-bl-3xl px-10 pt-4 pb-6 ml-6 mt-8 mr-14">
-                    <div className="text-violet-1 text-lg font-semibold">DEPARTURE - Central European Summer Time</div>
-                    <div className="flex w-full">
-                        <div className="flex flex-col justify-start mt-4 pr-12 mr-10 border-r-2 border-r-grey">
-                            <div className="text-grey font-normal flex items-center"><TbClockHour5/>Horaire</div>
-                            <span className="font-semibold text-violet-1">22:53</span>
-                        </div>
-                        <div className="flex flex-col justify-start mt-4 pr-12 mr-10 border-r-2 border-r-grey">
-                            <div className="text-grey font-normal flex items-center">AEROPORT</div>
-                            <span className="font-semibold text-violet-1">Paris-Charles De Gaulle(CDG)</span>
-                        </div>
-                        <div className="flex flex-col justify-start mt-4 pr-12 mr-10 border-r-2 border-r-grey">
-                            <div className="text-grey font-normal flex items-center">AIRLINE</div>
-                            <span className="font-semibold text-violet-1">Air France</span>
-                        </div>
-                        <div className="flex flex-col justify-start mt-4 pr-12 mr-10">
-                            <div className="text-grey font-normal flex items-center">FLIGHT NUMBER</div>
-                            <span className="font-semibold text-violet-1">AF 934</span>
-                        </div>
-                    </div>
-                </div>
-                }
-                {isActivityVisible &&
-                <div className="bg-white rounded-tr-3xl rounded-br-3xl rounded-bl-3xl px-10 pt-4 pb-6 ml-6 mt-8 mr-14">
-                    <div className="text-violet-1 text-lg font-semibold">Visit to Ambohimanga Place</div>
-                    <div className="text-grey text-xs">Réservez des Hebergements A Andasibe, Madagascar booking.com a été visité par plus d'un million d'utilisateurs au cours du mois dernier Auberges de Jeunesse Réservation Sécurisée</div>
-                    <div className="flex w-full">
-                        <div className=" rounded-2xl flex w-36 gap-5 mt-4 mr-1">
-                            <img className=" rounded-xl" src="https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph" alt="" />
-                        </div>
-                        <div className=" rounded-2xl flex w-36 gap-5 mt-4 mr-1">
-                            <img className=" rounded-xl" src="https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph" alt="" />
-                        </div>
-                    </div>
-                    <div className="flex mt-4">
-                        <div className="flex items-center bg-stone-100 font-semibold text-sm text-grey rounded-2xl p-2 mr-5">
-                            <IoPricetagOutline className="mr-2"/>
-                            Tour guide
-                        </div>
-                        <div className="flex items-center bg-stone-100 font-semibold text-sm text-grey rounded-2xl p-2 mr-5">
-                            <IoPricetagOutline className="mr-2"/>
-                            Prix d'entree
-                        </div>
-                    </div>
-                </div>
-                }
-                {isExcursionVisible &&
-                <div className="bg-white rounded-tr-3xl rounded-br-3xl rounded-bl-3xl px-10 pt-4 pb-6 ml-6 mt-8 mr-14">
-                    <div className="text-violet-1 text-lg font-semibold">Relais des Plateaux Hotel & Spa</div>
-                    <div className="text-grey text-xs">Located less than 5 km from Ivato Airport, the Relais des Plateaux features a restaurant, a tropical garden and a 24-hour reception. This hotel provides a free shuttle to the airport and Antananarivo, the capital, is 19 km away.</div>
-                    <div className="flex w-full">
-                        <div className=" rounded-2xl flex w-36 gap-5 mt-4 mr-1">
-                            <img className=" rounded-xl" src="https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph" alt="" />
-                        </div>
-                    </div>
-                </div>
-                }
+                {isFlightVisible && <FlightCard {...flightData}/>}
+                {isActivityVisible && <ActivityCard {...activityData}/>}
+                {isLodgingVisible && <LodgingCard {...lodgingData}/>}
+                
                 {/* SEARCH BAR */}
                 <div className="flex w-full mt-14">
                     <div className="flex w-full items-center bg-white rounded-xl px-10 py-1 mr-6 shadow-lg">
@@ -404,6 +388,85 @@ const Itinerary: FC = () =>{
         </div>
     </div>
     {/* END CONTAINER */}
+
+    {/* START MODAL */}
+    <Modal size="3xl" dismissible show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal.Body>
+        <div className="form-modal">
+            <Modal.Header className="form-modal-header border-0 py-0">
+                <div className=" rounded-full p-2 bg-violet-200">
+                    <HiMiniBuildingOffice />
+                </div>
+            </Modal.Header>
+            <Modal.Body className="py-0">
+                <div className="form-modal-body">
+                    <div className="flex">
+                        <div className="flex flex-col">
+                            <div className="text-violet-1 text-lg font-semibold">Relais des Plateaux Hotel & Spa</div>
+                            <div className="text-grey text-xs">Located less than 5 km from Ivato Airport, the Relais des Plateaux features a restaurant, a tropical garden and a 24-hour reception. This hotel provides a free shuttle to the airport and Antananarivo, the capital, is 19 km away.</div>
+                        </div>
+                        <div className="flex w-auto mx-4">
+                            <div className="rounded-2xl flex w-36 gap-5">
+                                <img className="rounded-xl" src="https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-full my-6">
+                        <div className="flex items-center">
+                            <span className="text-violet-1 text-lg font-semibold">Configuration de chambre</span>
+                            <div className="flex h-auto ml-2">
+                                <div className="mx-2 text-grey text-sm font-normal border-r-2 border-stone-300 pr-2">SGL <span className="text-violet-1 font-semibold mx-1">2</span></div>
+                                <div className="mx-2 text-grey text-sm font-normal border-r-2 border-stone-300 pr-2">DBL <span className="text-violet-1 font-semibold mx-1">2</span></div>
+                                <div className="mx-2 text-grey text-sm font-normal">TPL <span className="text-violet-1 font-semibold mx-1">1</span></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <table className="text-grey w-full mt-4">
+                                <thead>
+                                    <tr>
+                                        <th className=" font-semibold py-2 text-sm text-start pl-2">Room Type</th>
+                                        <th className=" font-semibold py-2 text-sm text-start pl-2">Room Category</th>
+                                        <th className=" font-semibold py-2 text-sm text-start pl-2">Base</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {Array.from({ length: 4 }).map((_, index) => (
+                                    <>
+                                        <tr key={index} className="">
+                                            <td className="pr-2">
+                                                <select className="border-grey text-grey text-sm rounded-lg focus:ring-grey w-full p-2.5">
+                                                    <option selected>Single</option>
+                                                </select>
+                                            </td>
+                                            <td className="pr-2">
+                                                <select className="border-grey text-grey text-sm rounded-lg focus:ring-grey w-full p-2.5">
+                                                    <option selected>Standard Room</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select className="border-grey text-grey text-sm rounded-lg focus:ring-grey w-full p-2.5">
+                                                    <option selected>B&B</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <div className="mb-2"></div>
+                                    </>
+                                ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div className="form-modal-footer">
+                    <Button color="gray" onClick={() => setOpenModal(false)}>Annuler</Button>
+                    <Button onClick={() => setOpenModal(false)} className="contained-button">VALIDER</Button>
+                </div>
+            </Modal.Body>
+        </div>
+        </Modal.Body>
+    </Modal>
+    {/*  END MODAL */}
     </>
 }
 

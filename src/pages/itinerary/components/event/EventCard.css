@@ -1,0 +1,9 @@
+.dashed-line {
+    position: absolute;
+    left: -14px;
+    top: 22px;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(to bottom, theme('colors.violet-light') 0%, theme('colors.violet-light') 50%, transparent 50%, transparent 100%) repeat-y left bottom;
+    background-size: 2px 30px;
+}
