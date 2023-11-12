@@ -1,8 +1,6 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BadgeCustom from "../components/BadgeCustom";
 import { useState } from "react";
-import { Button, Label, Modal, TextInput } from "flowbite-react";
-import { GrAddCircle } from "react-icons/gr";
 
 export default function LayoutClient() {
   const navigate = useNavigate();

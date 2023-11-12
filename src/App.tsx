@@ -26,8 +26,6 @@ import DocsClient from "./pages/clients/childTabs/Docs";
 import PaxListsClient from "./pages/clients/childTabs/PaxLists";
 import PayrollClient from "./pages/clients/childTabs/Payroll";
 import AllBadge from "./pages/clients/childBadge/All";
-import B2BBadge from "./pages/clients/childBadge/B2B";
-import B2CBadge from "./pages/clients/childBadge/B2C";
 import AgenceBadge from "./pages/clients/childBadge/Agence";
 
 const App: FC = (): ReactElement => {
