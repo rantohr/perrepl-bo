@@ -26,7 +26,7 @@ export default function AllBadge() {
     {
       label: "Voir",
       //   icon: MdDelete,
-      callback: () => navigate("/app/client/overview/view"),
+      callback: () => navigate("/app/client/overview/view/general"),
     },
     {
       label: "Effacer",
