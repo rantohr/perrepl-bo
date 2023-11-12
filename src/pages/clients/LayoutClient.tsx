@@ -1,6 +1,7 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BadgeCustom from "../components/BadgeCustom";
 import { useState } from "react";
+import { Modal } from "flowbite-react";
 
 export default function LayoutClient() {
   const navigate = useNavigate();
@@ -8,6 +9,7 @@ export default function LayoutClient() {
   const paths = pathname.split("/");
   const last = paths[paths.length - 1];
   const [openModal, setOpenModal] = useState(false);
+  const [openCreateClient, setCreateClient] = useState(false);
 
   return (
     <>
@@ -68,6 +70,7 @@ export default function LayoutClient() {
             </button>
 
             <button
+              onClick={() => setCreateClient(true)}
               type="button"
               className="px-3 py-2 text-sm font-bold text-center inline-flex items-center text-white bg-violet-1 rounded-lg hover:bg-violet-1 focus:ring-0 focus:outline-none focus:ring-blue-300 "
             >
@@ -170,9 +173,6 @@ export default function LayoutClient() {
               </clipPath>
             </defs>
           </svg>
-          {/* <GrAddCircle />
-          <h3>Nouvelle demande</h3>
-          <p>Ajouter une nouvelle demande</p> */}
         </Modal.Header>
         <Modal.Body>
           <h3 className="font-bold text-2xl">Importer des clients</h3>
@@ -278,6 +278,43 @@ export default function LayoutClient() {
             Importer
           </button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal
+        dismissible
+        show={openCreateClient}
+        onClose={() => setCreateClient(openCreateClient)}
+        className="glass-container"
+        size={"3xl"}
+      >
+        <Modal.Header>
+          <svg
+            width="43"
+            height="43"
+            viewBox="0 0 43 43"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              width="43"
+              height="43"
+              rx="21.5"
+              fill="#381A44"
+              fill-opacity="0.1"
+            />
+            <path
+              d="M24.625 23.875C21.4544 23.875 15.125 25.4544 15.125 28.625V31H34.125V28.625C34.125 25.4544 27.7956 23.875 24.625 23.875ZM13.9375 19.125V15.5625H11.5625V19.125H8V21.5H11.5625V25.0625H13.9375V21.5H17.5V19.125M24.625 21.5C25.8848 21.5 27.093 20.9996 27.9838 20.1088C28.8746 19.218 29.375 18.0098 29.375 16.75C29.375 15.4902 28.8746 14.282 27.9838 13.3912C27.093 12.5004 25.8848 12 24.625 12C23.3652 12 22.157 12.5004 21.2662 13.3912C20.3754 14.282 19.875 15.4902 19.875 16.75C19.875 18.0098 20.3754 19.218 21.2662 20.1088C22.157 20.9996 23.3652 21.5 24.625 21.5Z"
+              fill="#381A44"
+            />
+          </svg>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Nouveau client</h4>
+          <span>Ajouter un nouveau client</span>
+
+          <div></div>
+        </Modal.Body>
+        <Modal.Footer className="flex  justify-end pt-1 border-t-0"></Modal.Footer>
       </Modal>
     </>
   );
