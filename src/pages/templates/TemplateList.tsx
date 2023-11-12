@@ -9,26 +9,34 @@ const TemplateList: FC = () => {
 
   const cards: ICardOptions[] = [
     {
-      image: "/profile-pic-test.jpg",
+      image: "/photos/rec-1.jpg",
       title: "Titre du template",
       subtitle: { icon: <MdAddLocation />, text: "Catégorie" },
-      label: { icon: <MdDirectionsCar />, text: "Transport", },
+      
       content: { content_icon: <MdAddLocation />, content_title: "12 jours", content_subtitle: "50.000Ar" },
       actions: { main_title: "Explorer", main_callback: () => { }, secondary_icon: <MdContentCopy />, secondary_callback: () => { } },
     },
     {
-      image: "/profile-pic-test.jpg",
+      image: "/photos/rec-2.jpg",
       title: "Titre du template",
       subtitle: { icon: <MdAddLocation />, text: "Catégorie" },
-      label: { icon: <MdDirectionsCar />, text: "Transport", },
+      
       content: { content_icon: <MdAddLocation />, content_title: "12 jours", content_subtitle: "50.000Ar" },
       actions: { main_title: "Explorer", main_callback: () => { }, secondary_icon: <MdContentCopy />, secondary_callback: () => { } },
     },
     {
-      image: "/profile-pic-test.jpg",
+      image: "/photos/rec-3.jpg",
       title: "Titre du template",
       subtitle: { icon: <MdAddLocation />, text: "Catégorie" },
-      label: { icon: <MdDirectionsCar />, text: "Transport", },
+      
+      content: { content_icon: <MdAddLocation />, content_title: "12 jours", content_subtitle: "50.000Ar" },
+      actions: { main_title: "Explorer", main_callback: () => { }, secondary_icon: <MdContentCopy />, secondary_callback: () => { } },
+    },
+    {
+      image: "/photos/rec-4.jpg",
+      title: "Titre du template",
+      subtitle: { icon: <MdAddLocation />, text: "Catégorie" },
+      
       content: { content_icon: <MdAddLocation />, content_title: "12 jours", content_subtitle: "50.000Ar" },
       actions: { main_title: "Explorer", main_callback: () => { }, secondary_icon: <MdContentCopy />, secondary_callback: () => { } },
     }
@@ -45,7 +53,7 @@ const TemplateList: FC = () => {
   return (
     <div className="list-container order-list">
       <GenericPageHeader title="Template" total={12} actions={actions} />
-      <GenericListFilters filters={filters} />
+      {/* <GenericListFilters filters={filters} /> */}
 
       <div className="square-cards">
         {cards.map((card, card_index) => {

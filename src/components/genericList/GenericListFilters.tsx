@@ -61,28 +61,31 @@ const GenericListFilters: FC<{
       </div>
 
       {/* FILTER */}
-      <div>
-        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m2.133 2.6 5.856 6.9L8 14l4 3 .011-7.5 5.856-6.9a1 1 0 0 0-.804-1.6H2.937a1 1 0 0 0-.804 1.6Z" />
-        </svg>
-        <p>Filtrer par</p>
-        {
-          filters?.map((filter, filter_index) => {
-            if (filter.type === "select") {
-              return (
-                <Select key={`list-filter-${filter_index}`}>
-                  {
-                    filter.options?.map((option, option_index) => {
-                      return <option key={`list-filter-option-${filter.field}-${option_index}`} value={option.value}>{option.label}</option>
-                    })
-                  }
-                </Select>
-              );
-            }
-            return <div key={`list-filter-${filter_index}`}></div>;
-          })
-        }
-      </div>
+      {
+        Boolean(filters?.length) &&
+        <div>
+          <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m2.133 2.6 5.856 6.9L8 14l4 3 .011-7.5 5.856-6.9a1 1 0 0 0-.804-1.6H2.937a1 1 0 0 0-.804 1.6Z" />
+          </svg>
+          <p>Filtrer par</p>
+          {
+            filters?.map((filter, filter_index) => {
+              if (filter.type === "select") {
+                return (
+                  <Select key={`list-filter-${filter_index}`}>
+                    {
+                      filter.options?.map((option, option_index) => {
+                        return <option key={`list-filter-option-${filter.field}-${option_index}`} value={option.value}>{option.label}</option>
+                      })
+                    }
+                  </Select>
+                );
+              }
+              return <div key={`list-filter-${filter_index}`}></div>;
+            })
+          }
+        </div>
+      }
     </div>
   );
 }

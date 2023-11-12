@@ -12,11 +12,11 @@ body {
   border-radius: 1rem;
   display: block;
   height: 100%;
-  max-width: 500px;
-  min-width: 250px;
+  flex: 1;
   min-height: 400px;
   overflow: hidden;
   position: relative;
+  height: 400px;
 }
 .card .card-image {
   height: auto;

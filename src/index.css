@@ -240,3 +240,7 @@ button:focus {
 .form-modal-body {
   margin: 15px 0;
 }
+
+.hover-event-item:hover {
+  background-color: #381a441a;
+}

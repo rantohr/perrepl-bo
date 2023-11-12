@@ -110,11 +110,10 @@ const OrderList: FC = () => {
         actions={actions}
         rowActions={rowActions}
         mainFilters={mainFilters}
-        filters={filters}
         tabs={tabs}
       />
 
-      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} className="glass-container">
         <Modal.Body>
           <div className="form-modal">
             <Modal.Header className="form-modal-header">

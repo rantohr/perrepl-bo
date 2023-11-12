@@ -2,6 +2,7 @@ import { FC } from "react"
 import "./GenericVariantSquareCard.css"
 import "../../../public/photos/people.svg"
 import { Button } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 export type typeMark = {
   label: string
@@ -11,17 +12,19 @@ export type typeMark = {
 export type props = {
   title: string
   image: string
-  content: {img_profil: string, name_profil: string, nb_person: string, date: string}
+  content: { img_profil: string, name_profil: string, nb_person: string, date: string }
   action: { action: string, callback?: () => void }
   price: number
   mark: typeMark
 }
 
 const GenericVariantSquareCard: FC<props> = ({ title, image, content, action, price, mark }) => {
+  const navigate = useNavigate();
+
   const clickAction = () => {
-    if (action.callback !== undefined) action.callback();
+    navigate('/app/itinerary/update')
   };
-  
+
   return (
     <div className="card">
       {mark && (
@@ -58,7 +61,7 @@ const GenericVariantSquareCard: FC<props> = ({ title, image, content, action, pr
                     <h5 className="">{content.nb_person && content.nb_person}</h5>
                   </div>
                 </div>
-                {content.date && <div className="text-base text-gray-500 mb-4">{content.date}</div>}
+                {content.date && <div className=" text-gray-500 mb-4 mt-4 ">{content.date}</div>}
               </>
             )}
             <div className="card-action">
@@ -69,7 +72,7 @@ const GenericVariantSquareCard: FC<props> = ({ title, image, content, action, pr
               </div>
               {price && (
                 <div className="w-100 h-100 px-4">
-                  <span className="text-2xl font-medium text-violet-1">
+                  <span className="text-xl font-medium text-violet-1">
                     {price}€
                   </span>
                   <span className="text-violet-light font-light">/pax</span>

@@ -43,7 +43,7 @@ const LibraryList: FC = () => {
   return (
     <div className="list-container order-list">
       <GenericPageHeader title="Librairie" total={8} actions={actions} />
-      <GenericListFilters filters={filters} tabs={tabs} mainFilters={mainFilters} />
+      <GenericListFilters tabs={tabs} mainFilters={mainFilters} />
       <GenericCard
         title="Carlton Madagascar"
         image="https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph"

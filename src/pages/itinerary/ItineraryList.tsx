@@ -10,7 +10,7 @@ const ItineraryList: FC = () => {
 	const cards: props[] = [
 		{
 			title: "Road Trip a Madagascar",
-			image: "https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph",
+			image: "/photos/Rectangle-2384.jpg",
 			content: {
 				img_profil: "/profile-pic-test.jpg",
 				name_profil: "Jane Cooper",
@@ -25,7 +25,7 @@ const ItineraryList: FC = () => {
 		},
 		{
 			title: "Road Trip a Madagascar",
-			image: "https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph",
+			image: "/photos/rec-1.jpg",
 			content: {
 				img_profil: "/profile-pic-test.jpg",
 				name_profil: "Jane Cooper",
@@ -40,7 +40,7 @@ const ItineraryList: FC = () => {
 		},
 		{
 			title: "Road Trip a Madagascar",
-			image: "https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph",
+			image: "/photos/rec-3.jpg",
 			content: {
 				img_profil: "/profile-pic-test.jpg",
 				name_profil: "Jane Cooper",
@@ -52,7 +52,8 @@ const ItineraryList: FC = () => {
 			mark: {
 				label: "NOUVEAU"
 			}
-		}
+		},
+		
 	]
 
 	const actions: IListAction[] = [
@@ -66,7 +67,7 @@ const ItineraryList: FC = () => {
 	return (
 		<div className="list-container order-list">
 			<GenericPageHeader title="Itinéraire" total={8} actions={actions} />
-			<GenericListFilters filters={filters} />
+			{/* <GenericListFilters filters={filters} /> */}
 
 			<div className="cards">
 				{cards.map((card, card_index) => {

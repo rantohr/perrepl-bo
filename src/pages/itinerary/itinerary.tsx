@@ -287,7 +287,7 @@ const Itinerary: FC = () =>{
                                         return (
                                             <li key={`event-category-${category_index}`}>
                                                 <div
-                                                className="flex items-center text-lg text-violet-1 font-semibold px-4 py-1 dark:hover:text-white cursor-pointer"
+                                                className="hover-event-item flex items-center text-lg text-violet-1 font-semibold px-4 py-1 dark:hover:text-white cursor-pointer"
                                                 onClick={
                                                     category.label === 'Flight'
                                                         ? handleFlightClick
