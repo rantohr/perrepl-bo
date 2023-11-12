@@ -3,6 +3,40 @@ import BadgeCustom from "../components/BadgeCustom";
 import { useState } from "react";
 import { Modal } from "flowbite-react";
 
+const Stepper = () => {
+  return (
+    <ol className="items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0 rtl:space-x-reverse">
+      <li className="flex items-center text-blue-600 dark:text-blue-500 space-x-2.5 rtl:space-x-reverse">
+        <span className="flex items-center justify-center w-8 h-8 border border-blue-600 rounded-full shrink-0 dark:border-blue-500">
+          1
+        </span>
+        <span>
+          <h3 className="font-medium leading-tight">User info</h3>
+          <p className="text-sm">Step details here</p>
+        </span>
+      </li>
+      <li className="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5 rtl:space-x-reverse">
+        <span className="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+          2
+        </span>
+        <span>
+          <h3 className="font-medium leading-tight">Company info</h3>
+          <p className="text-sm">Step details here</p>
+        </span>
+      </li>
+      <li className="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5 rtl:space-x-reverse">
+        <span className="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+          3
+        </span>
+        <span>
+          <h3 className="font-medium leading-tight">Payment info</h3>
+          <p className="text-sm">Step details here</p>
+        </span>
+      </li>
+    </ol>
+  );
+};
+
 export default function LayoutClient() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -283,7 +317,7 @@ export default function LayoutClient() {
       <Modal
         dismissible
         show={openCreateClient}
-        onClose={() => setCreateClient(openCreateClient)}
+        onClose={() => setCreateClient(false)}
         className="glass-container"
         size={"3xl"}
       >
@@ -309,10 +343,14 @@ export default function LayoutClient() {
           </svg>
         </Modal.Header>
         <Modal.Body>
-          <h4>Nouveau client</h4>
-          <span>Ajouter un nouveau client</span>
+          <h4 className="font-bold text-2xl">Nouveau client</h4>
+          <span className="text-xs font-normal text-neutre">
+            Ajouter un nouveau client
+          </span>
 
-          <div></div>
+          <div className="mt-3">
+            <Stepper />
+          </div>
         </Modal.Body>
         <Modal.Footer className="flex  justify-end pt-1 border-t-0"></Modal.Footer>
       </Modal>
