@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import DefaultInput from "../../components/input/DefaultInput";
+import { useUserStore } from "../../stores/user.store";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setCurrentUser } = useUserStore();
 
   return (
     <>
@@ -67,7 +69,18 @@ export default function Login() {
                   </div>
 
                   <div className="mt-4">
-                    <button className="text-sm text-white bg-[#381A44] font-bold p-4 rounded-lg w-full">
+                    <button
+                      type="button"
+                      className="text-sm text-white bg-[#381A44] font-bold p-4 rounded-lg w-full"
+                      onClick={() => {
+                        setCurrentUser({
+                          id: 1,
+                          name: "dzad",
+                          token: "dzadaz",
+                        });
+                        navigate("/app");
+                      }}
+                    >
                       SE CONNECTER
                     </button>
                     {/* <button className="p-4 w-full text-sm font-bold text-purple-950">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useUserStore } from "../../stores/user.store";
 
 type PropsMenu = {
   icon: React.ReactElement;
@@ -43,6 +44,12 @@ const Menu = ({
 function Layout() {
   const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useState(0);
+  // const { currentUser } = useUserStore();
+
+  // useEffect(() => {
+  //   if (!currentUser) navigate("/login");
+  // }, [currentUser, navigate]);
+
   useEffect(() => {
     const currentURL = window.location.href;
 
@@ -189,11 +196,11 @@ function Layout() {
                 </div>
                 <img
                   className="w-10 h-10 rounded-lg"
-                  src="/profile-pic-test.jpg"
+                  src="/finoana.jpeg"
                   alt="Default avatar"
                 />
                 <div>
-                  <h5>Kristin Watson</h5>
+                  <h5>Finoana ANDRIATSILAVO</h5>
                   <h6>Admin</h6>
                 </div>
                 <div>
