@@ -83,7 +83,7 @@ export default function Login() {
                       }}
                     >
                       <span className="text-[#381A4480]">Pas de compte ?</span>{" "}
-                      commenez votre essai gratuit
+                      commencez votre essai gratuit
                     </p>
                   </div>
                 </form>
