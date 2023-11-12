@@ -8,7 +8,10 @@ export default function LayoutClientWithTabs() {
   return (
     <div className="container_layoutClientWithTabs">
       <div>
-        <div className="flex flex-row gap-2 items-center">
+        <div
+          className="flex flex-row gap-2 items-center cursor-pointer"
+          onClick={() => navigate("/app/client")}
+        >
           <svg
             width="18"
             height="12"

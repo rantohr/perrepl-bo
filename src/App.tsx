@@ -51,8 +51,8 @@ const App: FC = (): ReactElement => {
           <Route path="client">
             <Route path="" element={<LayoutClient />}>
               <Route path="" element={<AllBadge />} />
-              <Route path="b2b" element={<B2BBadge />} />
-              <Route path="b2c" element={<B2CBadge />} />
+              <Route path="b2b" element={<AllBadge />} />
+              <Route path="b2c" element={<AllBadge />} />
               <Route path="agence" element={<AgenceBadge />} />
             </Route>
             <Route path="agence/update" element={<ClientAgenceProfile />} />
