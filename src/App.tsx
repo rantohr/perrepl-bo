@@ -27,6 +27,7 @@ import PaxListsClient from "./pages/clients/childTabs/PaxLists";
 import PayrollClient from "./pages/clients/childTabs/Payroll";
 import AllBadge from "./pages/clients/childBadge/All";
 import AgenceBadge from "./pages/clients/childBadge/Agence";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const App: FC = (): ReactElement => {
   return (
@@ -39,7 +40,8 @@ const App: FC = (): ReactElement => {
         path={"app"}
         element={<Layout />}
         children={[
-          <Route path="" element={<OrderList />} />,
+          <Route path="" element={<Dashboard />} />,
+          <Route path="orders" element={<OrderList />} />,
           <Route path="library" element={<LibraryList />} />,
           <Route path="templates" element={<TemplateList />} />,
           <Route path="itinerary">

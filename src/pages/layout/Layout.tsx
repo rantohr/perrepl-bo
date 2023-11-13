@@ -357,7 +357,7 @@ function Layout() {
             }
             title="Demandes"
             onClick={() => {
-              navigate("/app");
+              navigate("/app/orders");
               setSelectedMenu(3);
             }}
             active={selectedMenu === 3}
@@ -432,8 +432,8 @@ function Layout() {
             }
             title="Prestataires"
             onClick={() => {
-              navigate("/app");
-              setSelectedMenu(6);
+              // navigate("/app");
+              // setSelectedMenu(6);
             }}
             active={selectedMenu === 6}
           />
@@ -459,8 +459,8 @@ function Layout() {
             }
             title="Reporting"
             onClick={() => {
-              navigate("/app");
-              setSelectedMenu(7);
+              // navigate("/app");
+              // setSelectedMenu(7);
             }}
             active={selectedMenu === 7}
           />
