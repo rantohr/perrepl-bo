@@ -260,7 +260,7 @@ const Itinerary: FC = () =>{
             <div className="flex w-full justify-between">
                 <div className="flex flex-col">
                     <span className="text-black font-bold mt-6 mb-1" style={{fontSize:"30px"}}>19 Septembre 2023</span>
-                    <span className="text-grey font-bold" style={{fontSize:"25px"}}>Ambohimanga Place</span>
+                    <span className="text-grey font-bold mt-3" style={{fontSize:"25px"}}>Ambohimanga Place</span>
                 </div>
                 <div className="relative inline-block text-left" ref={dropdownEventRef}>
                         
