@@ -164,7 +164,7 @@ const Itinerary: FC = () =>{
                     </div>
                     <div className="flex items-center">
                         <div className="rounded-3xl p-2 flex items-center bg-stone-400 bg-opacity-50">
-                            <img className="w-7 h-7 rounded-full mr-4" src="/profile-pic-test.jpg" alt="" />
+                            <img className="w-7 h-7 rounded-full mr-4" src="/profile-pic-test.jpg" alt="" style={{objectFit: "cover"}} />
                             <div className="">Brooklyn Simmons</div>
                         </div>
                         <div className="flex items-center mx-6 pr-6 border-r-2 border-white">
@@ -188,7 +188,7 @@ const Itinerary: FC = () =>{
                     <div className="flex flex-col">
                         <div className=" font-normale text-white my-1">Cree par:</div>
                         <div className="flex items-center">
-                            <img className="w-10 h-10 rounded-lg mr-2" src="/profile-pic-test.jpg" alt="" />
+                            <img className="w-10 h-10 rounded-lg mr-2" src="/profile-pic-test.jpg" alt="" style={{objectFit: "cover"}} />
                             <div className="flex  flex-col">
                                 <span className=" text-white font-semibold">Kristin Watson</span>
                                 <span className="text-white font-normale">Admin</span>
