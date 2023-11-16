@@ -26,6 +26,7 @@ export default {
         "grey-8": "#0000004D",
         "grey-9": "#00000033",
         "grey-10": "#0000001A",
+        "grey-11": "#00000040",
         neutre: "#00000080",
         "green-1": "#15D77A",
         "green-2": "#15D77A1A",
@@ -44,5 +45,5 @@ export default {
       },
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin"), require("daisyui")],
 };

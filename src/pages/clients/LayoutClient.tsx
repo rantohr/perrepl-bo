@@ -3,34 +3,59 @@ import BadgeCustom from "../components/BadgeCustom";
 import { useState } from "react";
 import { Modal } from "flowbite-react";
 
+const InputFloatCustom = ({
+  label,
+  className,
+}: {
+  label: string;
+  className?: string;
+}) => {
+  const n = `${Math.random()}_${label}`;
+
+  return (
+    <div className={`relative ${className}`}>
+      <input
+        type="text"
+        id={n}
+        className="
+      block px-2.5
+       pb-2.5 pt-4 w-full text-xs text-gray-900 
+       bg-transparent rounded-lg border border-grey-11 
+       appearance-none 
+       outline-none
+        focus:outline-none focus:ring-0
+         focus:border-grey-11  peer "
+        placeholder=" "
+      />
+      <label
+        htmlFor={n}
+        className="absolute text-xs text-grey-8  duration-300 transform -translate-y-4 scale-75 
+      top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2
+       peer-focus:text-black  peer-focus:font-bold  peer-placeholder-shown:scale-100 
+       peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+      >
+        {label}
+      </label>
+    </div>
+  );
+};
+
 const Stepper = () => {
   return (
     <ol className="items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0 rtl:space-x-reverse">
       <li className="flex items-center text-blue-600 dark:text-blue-500 space-x-2.5 rtl:space-x-reverse">
-        <span className="flex items-center justify-center w-8 h-8 border border-blue-600 rounded-full shrink-0 dark:border-blue-500">
+        <span className="flex items-center justify-center w-8 h-8 border border-blue-600 rounded-full shrink-0 ">
           1
         </span>
-        <span>
-          <h3 className="font-medium leading-tight">User info</h3>
-          <p className="text-sm">Step details here</p>
-        </span>
       </li>
       <li className="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5 rtl:space-x-reverse">
-        <span className="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+        <span className="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 ">
           2
         </span>
-        <span>
-          <h3 className="font-medium leading-tight">Company info</h3>
-          <p className="text-sm">Step details here</p>
-        </span>
       </li>
       <li className="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5 rtl:space-x-reverse">
-        <span className="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+        <span className="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 ">
           3
-        </span>
-        <span>
-          <h3 className="font-medium leading-tight">Payment info</h3>
-          <p className="text-sm">Step details here</p>
         </span>
       </li>
     </ol>
@@ -351,8 +376,55 @@ export default function LayoutClient() {
           <div className="mt-3">
             <Stepper />
           </div>
+
+          <div className="mt-3">
+            <h4 className="text-xs font-bold  text-black">Nombre de pax</h4>
+
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Adultes" />
+              <InputFloatCustom label="Enfants" />
+              <InputFloatCustom label="Nourrissants" />
+            </div>
+          </div>
+
+          <div className="mt-3">
+            <h4 className="text-xs font-bold  text-black">Coordonnées</h4>
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Nom" className="w-1/2" />
+              <InputFloatCustom label="Prénom" className="w-1/2" />
+            </div>
+
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Tel" className="w-1/4" />
+              <InputFloatCustom label="Email" className="w-1/2" />
+            </div>
+
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Nationalité" className="w-1/2" />
+              <InputFloatCustom label="Pays" className="w-1/2" />
+            </div>
+
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Adresse" className="w-1/2" />
+            </div>
+          </div>
         </Modal.Body>
-        <Modal.Footer className="flex  justify-end pt-1 border-t-0"></Modal.Footer>
+        <Modal.Footer className="flex  justify-end pt-1 border-t-0">
+          <div class="mt-4 flex flex-row justify-end">
+            <button
+              type="button"
+              class="text-violet-1 bg-transparent uppercase hover:bg-transparent outline-none focus:outline-none focus:ring-0 font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+            >
+              Annuler
+            </button>
+            <button
+              type="button"
+              class="text-white font-bold bg-violet-1 uppercase hover:bg-violet-1  outline-none focus:outline-none focus:ring-0 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+            >
+              Enregistrer
+            </button>
+          </div>
+        </Modal.Footer>
       </Modal>
     </>
   );

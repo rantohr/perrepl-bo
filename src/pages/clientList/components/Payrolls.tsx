@@ -89,17 +89,7 @@ export default function Payrolls() {
   ];
   return (
     <div>
-      <GenericList
-        title=""
-        // total={3}
-        columns={columns}
-        rows={rows}
-        // actions={actions}
-        // rowActions={rowActions}
-        // mainFilters={mainFilters}
-        // filters={filters}
-        // tabs={tabs}
-      />
+      <GenericList title="" columns={columns} rows={rows} />
     </div>
   );
 }
