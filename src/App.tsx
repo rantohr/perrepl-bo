@@ -9,7 +9,7 @@ import Layout from "./pages/layout/Layout";
 import OrderList from "./pages/orders/OrderList";
 import TemplateList from "./pages/templates/TemplateList";
 import ItineraryList from "./pages/itinerary/ItineraryList";
-import Itinerary from "./pages/itinerary/itinerary";
+import ItineraryPage from "./pages/itinerary/itinerary";
 import ClientAgenceProfileView from "./pages/clientList/ClientAgenceProfileView";
 import LibraryList from "./pages/library/LibraryList";
 import General from "./pages/clientList/components/General";
@@ -42,7 +42,7 @@ const App: FC = (): ReactElement => {
           <Route path="templates" element={<TemplateList />} />,
           <Route path="itinerary">
             <Route path="list" element={<ItineraryList />}></Route>
-            <Route path="update" element={<Itinerary />}></Route>
+            <Route path="update" element={<ItineraryPage />}></Route>
           </Route>,
           <Route path="client">
             <Route path="" element={<LayoutClient />} />
