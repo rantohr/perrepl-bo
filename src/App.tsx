@@ -9,7 +9,6 @@ import Layout from "./pages/layout/Layout";
 import OrderList from "./pages/orders/OrderList";
 import TemplateList from "./pages/templates/TemplateList";
 import ItineraryList from "./pages/itinerary/ItineraryList";
-import ItineraryPage from "./pages/itinerary/itinerary";
 import ClientAgenceProfileView from "./pages/clientList/ClientAgenceProfileView";
 import LibraryList from "./pages/library/LibraryList";
 import General from "./pages/clientList/components/General";
@@ -25,6 +24,11 @@ import TripsClient from "./pages/clients/childTabs/Trips";
 import DocsClient from "./pages/clients/childTabs/Docs";
 import PaxListsClient from "./pages/clients/childTabs/PaxLists";
 import PayrollClient from "./pages/clients/childTabs/Payroll";
+import Itinerary from "./pages/itinerary/components/Itinerary";
+import Quotations from "./pages/itinerary/components/Quotations";
+import Rates from "./pages/itinerary/components/Rates";
+import Invoicing from "./pages/itinerary/components/Invoicing";
+import ItineraryPage from "./pages/itinerary/ItineraryPage";
 
 const App: FC = (): ReactElement => {
   return (
@@ -42,7 +46,12 @@ const App: FC = (): ReactElement => {
           <Route path="templates" element={<TemplateList />} />,
           <Route path="itinerary">
             <Route path="list" element={<ItineraryList />}></Route>
-            <Route path="update" element={<ItineraryPage />}></Route>
+            <Route path="" element={<ItineraryPage />}>
+              <Route path="new" element={<Itinerary />} />
+              <Route path="quotations" element={<Quotations />} />
+              <Route path="rates" element={<Rates />} />
+              <Route path="invoicing" element={<Invoicing />} />
+            </Route>
           </Route>,
           <Route path="client">
             <Route path="" element={<LayoutClient />} />

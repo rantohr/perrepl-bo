@@ -2,9 +2,13 @@ import { FC } from "react";
 import { AiOutlineCamera, AiOutlinePlus } from "react-icons/ai"
 import { IoBed, IoCalendarOutline } from "react-icons/io5"
 import { BsSendFill } from "react-icons/bs"
-import { Link } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import Tabs from "../../components/tabs/Tabs"
 
-const Header: FC = () => {
+const LayoutItinerary: FC = () => {
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
+
     return <>
         <div className="relative">
             <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-b rotate-180 opacity-80 from-stone-900"></div>
@@ -73,22 +77,42 @@ const Header: FC = () => {
                 </div>
                 <div className="flex justify-center w-full absolute -bottom-6">
                     <div className="px-10 flex bg-white text-grey font-semibold rounded-2xl shadow-lg">
-                        <Link to="\">
-                            <div className="flex items-center justify-center py-3 px-8 uppercase cursor-pointer text-violet-pink border-b-4 border-violet-pink">ITINERAIRE</div>
-                        </Link>
-                        <Link to="\quotations">
-                            <div className="flex items-center justify-center py-3 px-8 uppercase cursor-pointer">COTATIONS</div>
-                        </Link>
-                        <Link to="\rates">
-                            <div className="flex items-center justify-center py-3 px-8 uppercase cursor-pointer">TARIFS</div>
-                        </Link>
-                        <Link to="\invoicing">
-                            <div className="flex items-center justify-center py-3 px-8 uppercase cursor-pointer">FACTURATION</div>
-                        </Link>
+                        <Tabs
+                            items={[
+                                {
+                                    active: pathname.includes("new"),
+                                    label: "Itinéraire",
+                                    callback: () => {
+                                        navigate("/app/itinerary/new")
+                                    }
+                                },
+                                {
+                                    active: pathname.includes("quotations"),
+                                    label: "Cotations",
+                                    callback: () => {
+                                        navigate("/app/itinerary/quotations")
+                                    }
+                                },
+                                {
+                                    active: pathname.includes("rates"),
+                                    label: "Tarifs",
+                                    callback: () => {
+                                        navigate("/app/itinerary/rates")
+                                    }
+                                },
+                                {
+                                    active: pathname.includes("invoicing"),
+                                    label: "Facturation",
+                                    callback: () => {
+                                        navigate("/app/itinerary/invoicing")
+                                    }
+                                }
+                            ]}
+                        />
                     </div>
                 </div>
             </div>
         </div>
     </>
 }
-export default Header
+export default LayoutItinerary
