@@ -21,18 +21,20 @@ const Quotations: FC = () => {
 
     const renderContent = () => {
         if (selectedDay !== "") {
-            return <div>Contenu pour le jour : {selectedDay}</div>;
+            return <div className="bg-white rounded-lg my-2 py-4 px-6">
+                <GenericTableWithInputs data={data} headers={columns} iconLeft={<BiSolidPlaneAlt/>}/>
+            </div>
         }
         switch (selectedButton) {
-            case "activites":
+            case "Activités":
                 return <div className="bg-white rounded-lg my-2 py-4 px-6">
-                    <GenericTableWithInputs data={data} headers={columns} />
+                    <GenericTableWithInputs data={data} headers={columns}/>
                 </div>
-            case "hebergement":
+            case "Hébergement":
                 return <div>Contenu de l'Hébergement</div>;
-            case "transport":
+            case "Transport":
                 return <div>Contenu du Transport</div>;
-            case "resume":
+            case "Résumé":
                 return <div>Contenu du Résumé</div>;
             default:
                 return null;
@@ -117,13 +119,15 @@ const Quotations: FC = () => {
                         </div>
                     </div>
                     <div className="w-8/12 bg-white rounded-lg flex items-center justify-around text-md font-bold text-grey mx-2">
-                        {renderButton("activites")}
+                        {renderButton("Activités")}
                         <div className="border-grey border-r-2 h-8"></div>
-                        {renderButton("hebergement")}
+                        {renderButton("Hébergement")}
                         <div className="border-grey border-r-2 h-8"></div>
-                        {renderButton("transport")}
+                        {renderButton("Transport")}
                         <div className="border-grey border-r-2 h-8"></div>
-                        {renderButton("resume")}
+                        {renderButton("Transport")}
+                        <div className="border-grey border-r-2 h-8"></div>
+                        {renderButton("Résumé")}
                     </div>
                     <div className="w-2/12 bg-white rounded-lg flex flex-col text-sm font-medium text-grey py-4 px-4">
                         Total

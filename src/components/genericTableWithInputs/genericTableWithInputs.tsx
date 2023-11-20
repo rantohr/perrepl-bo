@@ -3,11 +3,12 @@ import { FaCaretDown, FaCaretUp } from 'react-icons/fa'
 import { IColumn } from '../../interfaces/genricModule/icolumn.interface'
 
 interface Props {
-    data: { [key: string]: any }[]
-    headers: IColumn[]
+    data: { [key: string]: any }[],
+    headers: IColumn[],
+    iconLeft?: any 
 }
 
-const GenericTableWithInputs: React.FC<Props> = ({ data, headers }) => {
+const GenericTableWithInputs: React.FC<Props> = ({ data, headers, iconLeft }) => {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null)
     const [sortedColumn, setSortedColumn] = useState<string | null>(null)
 
@@ -34,10 +35,15 @@ const GenericTableWithInputs: React.FC<Props> = ({ data, headers }) => {
 
     return (
         <>
-            <table className="w-full rounded-sm text-left text-base text-violet-1">
-                <thead className="rounded-lg px-4" style={{ backgroundColor: '#f6f6f6' }}>
+            <table className="relative w-full rounded-sm text-left text-base text-violet-1">
+                {iconLeft && 
+                    <div className=" absolute top-2 -left-4 rounded-full bg-white text-violet-pink text-xl border-violet-pink border-2 p-1">
+                        {iconLeft}
+                    </div>
+                }
+                <thead className="" style={{ backgroundColor: '#f6f6f6' }}>
                     {headers.map((column, index) => (
-                        <th key={index} className={`px-2 py-3 ${index !== 0 && `pl-2 pr-8`}`} onClick={() => handleSort(column)}>
+                        <th key={index} className={`px-6 py-3 ${index !== 0 && `pl-2 pr-8`}`} onClick={() => handleSort(column)}>
                             <div className="flex items-center">
                                 {column.label} {column.sortable && (
                                     <>
