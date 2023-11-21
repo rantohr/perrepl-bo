@@ -1,4 +1,4 @@
-type PropsItemsTabs = {
+export type PropsItemsTabs = {
   active: boolean;
   label: string;
   callback?: () => void;
@@ -30,7 +30,7 @@ const ItemsTabs = ({ active, label, callback }: PropsItemsTabs) => {
   );
 };
 
-type PropsTabs = {
+export type PropsTabs = {
   items: PropsItemsTabs[];
 };
 
