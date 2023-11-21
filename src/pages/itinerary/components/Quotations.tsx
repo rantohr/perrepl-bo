@@ -1,23 +1,24 @@
-import { FC, useState } from "react";
-import { MdCalendarMonth } from "react-icons/md";
-import { BiSolidPlaneAlt } from "react-icons/bi";
-import GenericTableWithInputs from "../../../components/genericTableWithInputs/genericTableWithInputs";
-import { IColumn } from "../../../interfaces/genricModule/icolumn.interface";
+import { FC, useState } from "react"
+import { MdCalendarMonth } from "react-icons/md"
+import { BiSolidPlaneAlt } from "react-icons/bi"
+import GenericTableWithInputs from "../../../components/genericTableWithInputs/genericTableWithInputs"
+import { IColumn } from "../../../interfaces/genricModule/icolumn.interface"
+import QuotationSummary from "./quotations/QuotationSummary"
 
 const Quotations: FC = () => {
-    const [selectedButton, setSelectedButton] = useState<string>("activites");
-    const [selectedDay, setSelectedDay] = useState<string>("");
+    const [selectedButton, setSelectedButton] = useState<string>("Activités")
+    const [selectedDay, setSelectedDay] = useState<string>("")
 
     const handleButtonChange = (button: string) => {
-        setSelectedButton(button);
+        setSelectedButton(button)
         // Reset SelectDay
-        setSelectedDay("");
-    };
+        setSelectedDay("")
+    }
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedValue = event.target.value;
-        setSelectedDay(selectedValue);
-    };
+        const selectedValue = event.target.value
+        setSelectedDay(selectedValue)
+    }
 
     const renderContent = () => {
         if (selectedDay !== "") {
@@ -27,22 +28,22 @@ const Quotations: FC = () => {
         }
         switch (selectedButton) {
             case "Activités":
-                return <div className="bg-white rounded-lg my-2 py-4 px-6">
+                return <div className="">
                     <GenericTableWithInputs data={data} headers={columns}/>
                 </div>
             case "Hébergement":
-                return <div>Contenu de l'Hébergement</div>;
+                return <div>Contenu de l'Hébergement</div>
             case "Transport":
-                return <div>Contenu du Transport</div>;
+                return <div>Contenu du Transport</div>
             case "Résumé":
-                return <div>Contenu du Résumé</div>;
+                return <QuotationSummary/>
             default:
-                return null;
+                return null
         }
-    };
+    }
 
     const renderButton = (button: string) => {
-        const isButtonActive = selectedButton === button && selectedDay === "";
+        const isButtonActive = selectedButton === button && selectedDay === ""
         return (
             <div
                 key={button}
@@ -54,8 +55,8 @@ const Quotations: FC = () => {
                 <BiSolidPlaneAlt className="text-3xl mb-1" />
                 {button.charAt(0).toUpperCase() + button.slice(1)}
             </div>
-        );
-    };
+        )
+    }
 
 
     const columns: IColumn[] = [
@@ -74,10 +75,10 @@ const Quotations: FC = () => {
             displayValue: (value: string) => <input value={value} type="text" name="" id="" className="block px-2.5 py-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none outline-none focus:outline-none focus:ring-0 focus:border-violet-1 peer"/>
         },
         { field: 'total', label: 'Total', sortable: true },
-    ];
+    ]
     
     const data = [
-        {
+        [{
             date: '16 SEP 2023',
             activities: 'Visit to Ambohimanga Place',
             details: '',
@@ -92,8 +93,8 @@ const Quotations: FC = () => {
             quantity: '',
             invoicing: '',
             total: '50 000Ar'
-        }
-    ];
+        }]
+    ]
 
     return (
         <>
@@ -138,7 +139,7 @@ const Quotations: FC = () => {
                 <div className="mt-4">{renderContent()}</div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default Quotations;
+export default Quotations

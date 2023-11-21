@@ -3,7 +3,7 @@ import { FaCaretDown, FaCaretUp } from 'react-icons/fa'
 import { IColumn } from '../../interfaces/genricModule/icolumn.interface'
 
 interface Props {
-    data: { [key: string]: any }[],
+    data: { [key: string]: any }[][],
     headers: IColumn[],
     iconLeft?: any 
 }
@@ -23,15 +23,47 @@ const GenericTableWithInputs: React.FC<Props> = ({ data, headers, iconLeft }) =>
         }
     }
 
-    const sortedData = data.slice().sort((a, b) => {
-        if (sortOrder === 'asc') {
-            return a[sortedColumn as string] - b[sortedColumn as string]
-        } else if (sortOrder === 'desc') {
-            return b[sortedColumn as string] - a[sortedColumn as string]
-        } else {
-            return 0
-        }
-    })
+    const renderTableBody = (tableData: { [key: string]: any }[], tableIndex: number) => {
+        const sortedData = tableData.slice().sort((a, b) => {
+            if (sortOrder === 'asc') {
+                return a[sortedColumn as string] - b[sortedColumn as string]
+            } else if (sortOrder === 'desc') {
+                return b[sortedColumn as string] - a[sortedColumn as string]
+            } else {
+                return 0
+            }
+        })
+
+        return (
+            <>
+                <tbody className="font-semibold text-sm" key={tableIndex}>
+                    {sortedData.map((row, rowIndex) => (
+                        <tr key={rowIndex} className={`bg-white ${rowIndex !== 0 && `my-2`}`}>
+                            {headers.map((column, colIndex) => (
+                                <td key={colIndex} className={colIndex !== 0 ? `px-2 py-3` : 'pl-6 pr-2'}>
+                                    {column.displayValue ? 
+                                        (row[column.field] != '' ? column.displayValue(row[column.field], row) : '') 
+                                    : row[column.field]}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                    <tr>
+                        <td colSpan={headers.length} className='p-0'>
+                            <div className="bg-white p-6">
+                                <div className=' border-b-2 border-dashed border-grey'></div>
+                            </div>
+                            <div className="bg-white flex justify-end items-baseline text-violet-1 text-base font-semibold pb-6 pr-6">
+                                Total
+                                <span className="ml-4 text-xl font-bold">100 000Ar</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <div className='pt-2.5 opacity-0'></div>
+            </>
+        )
+    }
 
     return (
         <>
@@ -41,7 +73,7 @@ const GenericTableWithInputs: React.FC<Props> = ({ data, headers, iconLeft }) =>
                         {iconLeft}
                     </div>
                 }
-                <thead className="" style={{ backgroundColor: '#f6f6f6' }}>
+                <thead className="" style={{ backgroundColor: '#381A440A' }}>
                     {headers.map((column, index) => (
                         <th key={index} className={`px-6 py-3 ${index !== 0 && `pl-2 pr-8`}`} onClick={() => handleSort(column)}>
                             <div className="flex items-center">
@@ -56,23 +88,9 @@ const GenericTableWithInputs: React.FC<Props> = ({ data, headers, iconLeft }) =>
                         </th>
                     ))}
                 </thead>
-                <tbody className="font-semibold text-sm">
-                    {sortedData.map((row, rowIndex) => (
-                        <tr key={rowIndex} className={`bg-white ${rowIndex !== 0 && `my-2`}`}>
-                            {headers.map((column, colIndex) => (
-                                <td key={colIndex} className={colIndex !== 0 ? `px-2 py-3` : ''}>
-                                    {column.displayValue ? column.displayValue(row[column.field], row) : row[column.field]}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                </tbody>
+                <div className='pt-2.5 opacity-0'></div>
+                {data.map(renderTableBody)}
             </table>
-            <div className="border-b-2 border-dashed border-grey my-6"></div>
-            <div className="flex justify-end items-baseline text-violet-1 text-base font-semibold">
-                Total activite
-                <span className="ml-4 text-xl font-semibold">100 000Ar</span>
-            </div>
         </>
     )
 }
