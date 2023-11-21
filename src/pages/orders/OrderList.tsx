@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { MdModeEdit, MdDelete, MdOutlineAdd, MdOutlineSend } from "react-icons/md";
-import { HiBuildingOffice } from "react-icons/hi2"
 import { IColumn, IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -8,7 +7,6 @@ import { IOrder } from "../../interfaces/iorder.interface";
 import GenericList from "../../components/genericList/GenericList";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 import { GrAddCircle } from "react-icons/gr";
-import { typeMark } from "../../components/genericCard/GenericCard";
 
 const OrderList: FC = () => {
 

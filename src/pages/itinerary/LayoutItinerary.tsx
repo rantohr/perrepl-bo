@@ -2,7 +2,7 @@ import { FC } from "react";
 import { AiOutlineCamera, AiOutlinePlus } from "react-icons/ai"
 import { IoBed, IoCalendarOutline } from "react-icons/io5"
 import { BsSendFill } from "react-icons/bs"
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Tabs from "../../components/tabs/Tabs"
 
 const LayoutItinerary: FC = () => {

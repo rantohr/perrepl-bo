@@ -14,7 +14,7 @@ import { CgFileDocument } from "react-icons/cg"
 import FlightCard from "./event/flightCard"
 import ActivityCard from "./event/activityCard"
 import LodgingCard from "./event/lodgingCard";
-import { Modal, Select, Button } from "flowbite-react";
+import { Modal, Button } from "flowbite-react";
 
 const Itinerary: FC = () => {
     const [isOpenDropDownEvent, setIsOpenDropDownEvent] = useState<boolean>(false)
