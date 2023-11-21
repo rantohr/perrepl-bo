@@ -6,13 +6,17 @@
 
 @tailwind base;
 @tailwind components;
+
 @tailwind utilities;
 
 * {
   transition: 0.5s;
   font-family: "Raleway", sans-serif;
 }
-
+.glass-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px);
+}
 button:focus {
   box-shadow: none !important;
 }
@@ -53,11 +57,12 @@ button:focus {
 
 .side-menu {
   background-color: white;
-  padding: 0 1.5rem;
-  padding-top: 2em;
+  /* padding: 0 1.5rem; */
+  /* padding-top: 2em; */
+  /* padding-right: 0; */
 }
 
-.side-menu > div {
+/* .side-menu > div {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -81,7 +86,7 @@ button:focus {
 
 .side-menu > div .active * {
   color: theme("colors.violet-pink");
-}
+} */
 
 /** BUTTONS */
 .outlined-button {

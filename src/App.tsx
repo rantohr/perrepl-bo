@@ -29,6 +29,8 @@ import Quotations from "./pages/itinerary/components/Quotations";
 import Rates from "./pages/itinerary/components/Rates";
 import Invoicing from "./pages/itinerary/components/Invoicing";
 import ItineraryPage from "./pages/itinerary/ItineraryPage";
+import AllBadge from "./pages/clients/childBadge/All";
+import AgenceBadge from "./pages/clients/childBadge/Agence";
 
 const App: FC = (): ReactElement => {
   return (
@@ -54,7 +56,12 @@ const App: FC = (): ReactElement => {
             </Route>
           </Route>,
           <Route path="client">
-            <Route path="" element={<LayoutClient />} />
+            <Route path="" element={<LayoutClient />}>
+              <Route path="" element={<AllBadge />} />
+              <Route path="b2b" element={<AllBadge />} />
+              <Route path="b2c" element={<AllBadge />} />
+              <Route path="agence" element={<AgenceBadge />} />
+            </Route>
             <Route path="agence/update" element={<ClientAgenceProfile />} />
             <Route path="agence/view" element={<ClientAgenceProfileView />}>
               {/* <Route path="" element={<>general</>} /> */}
