@@ -4,7 +4,7 @@ import { AiOutlinePlus } from "react-icons/ai"
 const Rates: FC = () => {
     return <>
         <div className="flex justify-center items-start w-full">
-            <div className="text-base font-bold text-grey bg-white rounded-lg py-8 px-16 w-6/12 ">
+            <div className="text-sm font-bold text-grey bg-white rounded-lg py-8 px-16 w-7/12 ">
                 <div className="text-violet-1 mb-8">
                     <div className="mb-2">Tarif Global</div>
                     <input value="40 000 000Ar" type="text" name="" id="" className=" font-semibold px-2.5 py-2.5 w-full bg-transparent rounded-lg border border-gray-300 appearance-none outline-none focus:outline-none focus:ring-0 focus:border-violet-1 peer"/>
@@ -59,15 +59,15 @@ const Rates: FC = () => {
                 </div>
                 <div className="text-violet-1 mb-8">
                     <div className="mb-2">Les inclus</div>
-                    <div className="px-4 py-2 bg-gray-100 text-grey rounded-full w-36 justify-center flex items-center">
+                    <button className="px-4 py-2 bg-gray-100 text-grey rounded-full w-36 justify-center flex items-center">
                         <AiOutlinePlus className="pr-2 text-2xl"/> Ajouter
-                    </div>
+                    </button>
                 </div>
                 <div className="text-violet-1 mb-8">
                     <div className="mb-2">Les exclus</div>
-                    <div className="px-4 py-2 bg-gray-100 text-grey rounded-full w-36 justify-center flex items-center">
+                    <button className="px-4 py-2 bg-gray-100 text-grey rounded-full w-36 justify-center flex items-center">
                         <AiOutlinePlus className="pr-2 text-2xl"/> Ajouter
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
