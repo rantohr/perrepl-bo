@@ -1,7 +1,196 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BadgeCustom from "../components/BadgeCustom";
 import { useState } from "react";
-import { Modal } from "flowbite-react";
+import { Datepicker, Label, Modal, Select, TextInput } from "flowbite-react";
+import { StepperEnum } from "../../interfaces/enum/Stepper.enum";
+import { CgLaptop } from "react-icons/cg";
+
+type PropsDynamicComponent = {
+  setCreateClient: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const DynamicComponent = ({ setCreateClient }: PropsDynamicComponent) => {
+  const [step, setStep] = useState<StepperEnum>(StepperEnum.ONE);
+
+  return (
+    <>
+      <h4 className="font-bold text-2xl">Nouveau client</h4>
+      <span className="text-xs font-normal text-neutre">
+        Ajouter un nouveau client
+      </span>
+
+      <div className="mt-3">
+        <Stepper step={step} />
+      </div>
+
+      {step === StepperEnum.ONE && (
+        <>
+          <div className="mt-3">
+            <h4 className="text-xs font-bold  text-black">Nombre de pax</h4>
+
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Adultes" />
+              <InputFloatCustom label="Enfants" />
+              <InputFloatCustom label="Nourrissants" />
+            </div>
+          </div>
+
+          <div className="mt-3">
+            <h4 className="text-xs font-bold  text-black">Coordonnées</h4>
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Nom" className="w-1/2" />
+              <InputFloatCustom label="Prénom" className="w-1/2" />
+            </div>
+
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Tel" className="w-1/4" />
+              <InputFloatCustom label="Email" className="w-1/2" />
+            </div>
+
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Nationalité" className="w-1/2" />
+              <InputFloatCustom label="Pays" className="w-1/2" />
+            </div>
+
+            <div className="mt-2 flex gap-2">
+              <InputFloatCustom label="Adresse" className="w-1/2" />
+            </div>
+          </div>
+        </>
+      )}
+
+      {step === StepperEnum.TWO && (
+        <div className="mt-3">
+          <div className="flex gap-2">
+            <Datepicker
+              language="fr-FR"
+              autoHide={false}
+              placeholder="Date d’arrivée"
+              value={undefined}
+            />
+
+            <Datepicker
+              language="fr-FR"
+              autoHide={false}
+              value={undefined}
+              placeholder="Date de départ"
+            />
+          </div>
+
+          <div className="mt-3">
+            <div className="flex gap-2">
+              <TextInput
+                id="small"
+                type="number"
+                placeholder="Nombre de jour"
+                min={0}
+              />
+            </div>
+          </div>
+
+          <div className="mt-3">
+            <Select id="countries" required placeholder="Type de client">
+              <option>Type de client</option>
+              <option>B2B</option>
+              <option>B2c</option>
+              <option>Agence</option>
+            </Select>
+          </div>
+        </div>
+      )}
+      {step === StepperEnum.THREE && (
+        <>
+          <div className="mt-3">
+            <h4 className="text-xs font-bold  text-black">
+              Configuration chambre
+            </h4>
+
+            <div className="flex mt-2 gap-2">
+              <TextInput id="small" type="number" placeholder="SGL" min={0} />
+              <TextInput id="small" type="number" placeholder="DBL" min={0} />
+            </div>
+          </div>
+
+          <div className="mt-3">
+            <h4 className="text-xs font-bold  text-black">Voyage</h4>
+
+            <div className="flex mt-2 gap-2">
+              <TextInput
+                id="small"
+                type="number"
+                placeholder="Style de voyage"
+                className="w-[326px]"
+                min={0}
+              />
+            </div>
+
+            <div className="flex mt-2 gap-2">
+              <TextInput
+                id="small"
+                type="text"
+                placeholder="Les intérêts de voyages"
+                className="w-[326px]"
+              />
+            </div>
+
+            <div className="flex mt-2 gap-2">
+              <TextInput
+                id="small"
+                type="text"
+                placeholder="Budget souhaité"
+                className="w-[326px]"
+              />
+            </div>
+          </div>
+        </>
+      )}
+
+      <div className="mt-3">
+        <div className="mt-4 flex flex-row justify-end">
+          <button
+            onClick={() => setCreateClient(false)}
+            type="button"
+            className="text-violet-1 bg-transparent uppercase hover:bg-transparent outline-none focus:outline-none focus:ring-0 font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+          >
+            Annuler
+          </button>
+
+          {step > StepperEnum.ONE && (
+            <button
+              type="button"
+              onClick={() =>
+                setStep((oldStep) => {
+                  if (oldStep === StepperEnum.ONE) return oldStep;
+                  else return oldStep - 1;
+                })
+              }
+              className="
+            text-violet-1
+            hover:violet-1 font-bold border border-transparent-grey hover:bg-transparent focus:outline-none focus:ring-0  rounded-lg text-sm 
+            flex items-center justify-center uppercase
+            px-5 py-2.5 mr-2 mb-2
+            "
+            >
+              Retour
+            </button>
+          )}
+          <button
+            onClick={() =>
+              setStep((oldStep) => {
+                if (oldStep === StepperEnum.THREE) return oldStep;
+                else return oldStep + 1;
+              })
+            }
+            type="button"
+            className="text-white font-bold bg-violet-1 uppercase hover:bg-violet-1  outline-none focus:outline-none focus:ring-0 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+          >
+            Suivant
+          </button>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const InputFloatCustom = ({
   label,
@@ -40,24 +229,34 @@ const InputFloatCustom = ({
   );
 };
 
-const Stepper = () => {
+type PropsStepper = {
+  step: StepperEnum;
+};
+
+const Stepper = ({ step }: PropsStepper) => {
+  const Rounded = ({ n }: { n: number }) => {
+    return (
+      <li
+        className={`flex items-center ${
+          step === n ? "text-blue-600" : "text-gray-500"
+        }   space-x-2.5 rtl:space-x-reverse cursor-pointer`}
+      >
+        <span
+          className={`flex items-center justify-center w-8 h-8 border ${
+            step === n ? "border-blue-600" : "border-gray-500"
+          }  rounded-full shrink-0 `}
+        >
+          {n}
+        </span>
+      </li>
+    );
+  };
+
   return (
     <ol className="items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0 rtl:space-x-reverse">
-      <li className="flex items-center text-blue-600 dark:text-blue-500 space-x-2.5 rtl:space-x-reverse">
-        <span className="flex items-center justify-center w-8 h-8 border border-blue-600 rounded-full shrink-0 ">
-          1
-        </span>
-      </li>
-      <li className="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5 rtl:space-x-reverse">
-        <span className="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 ">
-          2
-        </span>
-      </li>
-      <li className="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5 rtl:space-x-reverse">
-        <span className="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 ">
-          3
-        </span>
-      </li>
+      <Rounded n={1} />
+      <Rounded n={2} />
+      <Rounded n={3} />
     </ol>
   );
 };
@@ -368,63 +567,8 @@ export default function LayoutClient() {
           </svg>
         </Modal.Header>
         <Modal.Body>
-          <h4 className="font-bold text-2xl">Nouveau client</h4>
-          <span className="text-xs font-normal text-neutre">
-            Ajouter un nouveau client
-          </span>
-
-          <div className="mt-3">
-            <Stepper />
-          </div>
-
-          <div className="mt-3">
-            <h4 className="text-xs font-bold  text-black">Nombre de pax</h4>
-
-            <div className="mt-2 flex gap-2">
-              <InputFloatCustom label="Adultes" />
-              <InputFloatCustom label="Enfants" />
-              <InputFloatCustom label="Nourrissants" />
-            </div>
-          </div>
-
-          <div className="mt-3">
-            <h4 className="text-xs font-bold  text-black">Coordonnées</h4>
-            <div className="mt-2 flex gap-2">
-              <InputFloatCustom label="Nom" className="w-1/2" />
-              <InputFloatCustom label="Prénom" className="w-1/2" />
-            </div>
-
-            <div className="mt-2 flex gap-2">
-              <InputFloatCustom label="Tel" className="w-1/4" />
-              <InputFloatCustom label="Email" className="w-1/2" />
-            </div>
-
-            <div className="mt-2 flex gap-2">
-              <InputFloatCustom label="Nationalité" className="w-1/2" />
-              <InputFloatCustom label="Pays" className="w-1/2" />
-            </div>
-
-            <div className="mt-2 flex gap-2">
-              <InputFloatCustom label="Adresse" className="w-1/2" />
-            </div>
-          </div>
+          <DynamicComponent setCreateClient={setCreateClient} />
         </Modal.Body>
-        <Modal.Footer className="flex  justify-end pt-1 border-t-0">
-          <div class="mt-4 flex flex-row justify-end">
-            <button
-              type="button"
-              class="text-violet-1 bg-transparent uppercase hover:bg-transparent outline-none focus:outline-none focus:ring-0 font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-            >
-              Annuler
-            </button>
-            <button
-              type="button"
-              class="text-white font-bold bg-violet-1 uppercase hover:bg-violet-1  outline-none focus:outline-none focus:ring-0 rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-            >
-              Enregistrer
-            </button>
-          </div>
-        </Modal.Footer>
       </Modal>
     </>
   );
