@@ -7,19 +7,26 @@ import { IOrder } from "../../interfaces/iorder.interface";
 import GenericList from "../../components/genericList/GenericList";
 import OrderCreateDialog from "./OrderCreateDialog";
 import { useOrderStore } from "../../stores/order.store";
+import { getOrders } from "../../services/order.service";
+import { useSnackbar } from "notistack";
+import { Spinner } from "flowbite-react";
+import OrderEditDialog from "./OrderEditDialog";
 
 const OrderList: FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
 
   /** STORE */
   const setSelectedItem = useOrderStore(state => state.setSelectedOrder);
 
   /** LOCAL STATE */
-  const [openModal, setOpenModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   /** LIST CONFIG */
   const actions: IListAction[] = [
     { label: "Nouvelle demande", icon: <MdOutlineAdd />, callback: () => onCreate() },
-    { label: "Envoyer un formulaire", icon: <MdOutlineSend />, callback: () => console.log('send form') },
+    { label: "Envoyer un formulaire", icon: <MdOutlineSend />, callback: () => console.log('TODO: send form') },
   ];
 
   const mainFilters: IListAction[] = [
@@ -36,17 +43,20 @@ const OrderList: FC = () => {
 
   /** ORDER TABLE CONFIGS */
   const rowActions: IListAction[] = [
-    { label: "Modifier", icon: MdModeEdit, callback: (row: any) => console.log('edit clicked', row) },
-    { label: "Supprimer", icon: MdDelete, callback: (row: any) => console.log('delete clicked', row) },
+    { label: "Modifier", icon: MdModeEdit, callback: (row: any) => onEdit(row) },
+    { label: "Supprimer", icon: MdDelete, callback: (row: any) => console.log('TODO: delete clicked', row) },
   ];
 
   const columns: IColumn[] = [
+    // {
+    //   field: "image", label: "",
+    //   displayValue: (src: string) => <img src={src} />
+    // },
+    { field: "travelers", label: "Client", sortable: true, displayValue: (value) => `${value![0]?.first_name || ''} ${value![0]?.last_name || ''}` },
     {
-      field: "image", label: "",
-      displayValue: (src: string) => <img src={src} />
+      field: "created_date", label: "Demande", sortable: true,
+      displayValue: (date: string) => date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : ''
     },
-    { field: "client", label: "Client", sortable: true },
-    { field: "created_date", label: "Demande", sortable: true, displayValue: (date: string) => date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : '' },
     {
       field: "arrival_date", label: "Arrivé", sortable: true,
       displayValue: (date: string) => (
@@ -56,7 +66,17 @@ const OrderList: FC = () => {
         </>
       )
     },
-    { field: "type", label: "Type de client" },
+    {
+      field: "departure_datetime", label: "Départ", sortable: true,
+      displayValue: (date: string) => (
+        <>
+          <p><b>{date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : ''}</b></p>
+          <p>{date ? format(new Date(date), 'H:m', { locale: fr }) : ''}</p>
+        </>
+      )
+    },
+    // { field: "type", label: "Type de client" },
+    { field: "trip_duration", label: "Durée (en j)" },
     {
       field: "status", label: "Status",
       displayValue: (status: string) => <div className="status" style={{ color: getStatusColor(status), backgroundColor: getStatusBgColor(status) }}>{status}</div>
@@ -65,7 +85,7 @@ const OrderList: FC = () => {
 
   const [rows, setRows] = useState<IOrder[]>([]);
   useEffect(() => {
-    setRows([]);
+    loadData();
   }, []);
   /** ****** */
 
@@ -90,12 +110,56 @@ const OrderList: FC = () => {
 
   const onCreate = () => {
     setSelectedItem(({} as any));
-    setOpenModal(true);
+    setOpenAddModal(true);
   };
-  
-  const onCancelCreate = () => {
+
+  const onEdit = (item: IOrder) => {
+    setSelectedItem(item);
+    setOpenEditModal(true);
+  };
+
+  const onCancelAction = () => {
     setSelectedItem(null);
-    setOpenModal(false);
+    setOpenAddModal(false);
+    setOpenEditModal(false);
+  };
+
+  const loadData = () => {
+    setLoading(true);
+    getOrders(20, 0)
+      .then((response) => {
+        setLoading(false);
+        setRows(response.data.results);
+      }).catch((error) => {
+        if (error.response?.data?.errors) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          for (const [_key, value] of Object.entries(error.response.data.errors)) {
+            if (Array.isArray(value)) {
+              value.map(error => enqueueSnackbar(`${error}`, { variant: 'error' }));
+            } else {
+              enqueueSnackbar(`${value}`, { variant: 'error' });
+            }
+          }
+        } else if (error.response) {
+          if (error.response.status === 400) {
+            for (const [key, value] of Object.entries(error.response.data)) {
+              if (Array.isArray(value)) {
+                value.map(error => enqueueSnackbar(`${key} : ${error}`, { variant: 'error' }));
+              } else {
+                enqueueSnackbar(`${key} : ${value}`, { variant: 'error' });
+              }
+            }
+          } else if (error.response.status === 401 || error.response.status === 403) {
+            enqueueSnackbar('Problème de permission', { variant: 'error' });
+          } else if (error.response.status === 500) {
+            enqueueSnackbar('Erreur du serveur', { variant: 'error' });
+          }
+        } else if (error.request) {
+          console.log('error.request : ', error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+      });
   };
 
   return (
@@ -111,7 +175,9 @@ const OrderList: FC = () => {
         tabs={tabs}
       />
 
-      <OrderCreateDialog open={openModal} onClose={onCancelCreate} />
+      <OrderCreateDialog open={openAddModal} onClose={onCancelAction} onSuccess={loadData} />
+      <OrderEditDialog open={openEditModal} onClose={onCancelAction} onSuccess={loadData} />
+      {loading && <div className="big-loader"><Spinner /></div>}
     </>
   );
 }

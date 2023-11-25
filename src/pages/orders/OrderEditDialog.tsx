@@ -4,9 +4,9 @@ import { GrAddCircle } from "react-icons/gr";
 import OrderForm from "./OrderForm";
 import { IOrder } from "../../interfaces/iorder.interface";
 import { useSnackbar } from "notistack";
-import { postOrder } from "../../services/order.service";
+import { patchOrder } from "../../services/order.service";
 
-const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: () => void }> = ({ open, onClose, onSuccess }) => {
+const OrderEditDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: () => void }> = ({ open, onClose, onSuccess }) => {
 
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
@@ -14,11 +14,11 @@ const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: ()
   const onConfirm = (data: IOrder) => {
     console.log('FINAL DATA', data);
     setLoading(true);
-    postOrder(data)
+    patchOrder(data.id, data)
       .then((response) => {
         console.log('response', response);
         setLoading(false);
-        enqueueSnackbar('demande créée avec succès', { variant: 'success' });
+        enqueueSnackbar('demande mise à jour avec succès', { variant: 'success' });
         onClose();
         if (onSuccess !== undefined) onSuccess();
       }).catch((error) => {
@@ -61,8 +61,8 @@ const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: ()
           <div className="form-modal">
             <Modal.Header className="form-modal-header">
               <GrAddCircle />
-              <h3>Nouvelle demande</h3>
-              <p>Ajouter une nouvelle demande</p>
+              <h3>Modification de demande</h3>
+              <p>Modifier votre demande</p>
             </Modal.Header>
             <Modal.Body>
               <OrderForm onConfirm={onConfirm} onCancel={onClose} />
@@ -75,4 +75,4 @@ const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: ()
   );
 }
 
-export default OrderCreateDialog;
+export default OrderEditDialog;
