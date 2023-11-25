@@ -235,6 +235,7 @@ button:focus {
   display: flex;
   justify-content: flex-end;
   gap: 1em;
+  margin-top: 10px;
 }
 
 .form-modal-body {
