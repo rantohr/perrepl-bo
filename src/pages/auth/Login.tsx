@@ -1,10 +1,54 @@
 import { useNavigate } from "react-router-dom";
 import DefaultInput from "../../components/input/DefaultInput";
-import { useUserStore } from "../../stores/user.store";
+import { useState } from "react";
+import { SubmitErrorHandler, useForm } from "react-hook-form";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import "../../index.css";
+import axios from "../../api/axios";
+import { IAuth } from "../../interfaces/iauth.interface";
+import { CgLaptop } from "react-icons/cg";
+import useAuth from "../../hooks/useAuth";
+// import { FloatingLabel } from "flowbite-react";
+
+type FormValue = {
+  email: string;
+  password: string;
+};
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setCurrentUser } = useUserStore();
+  const { setAuth } = useAuth();
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required(),
+    password: Yup.string().required(),
+  });
+  const {
+    register,
+    handleSubmit,
+    // control,
+    formState: { errors },
+    // setValue,
+    // clearErrors,
+    getValues,
+    // reset,
+  } = useForm<FormValue>({
+    resolver: yupResolver<FormValue>(validationSchema),
+    mode: "onSubmit",
+  });
+
+  console.log("errors", { errors, getValues: getValues() });
+
+  const onSubmit = async (body: FormValue) => {
+    try {
+      const { data } = await axios.post<IAuth>("/v1/auth/token/", body);
+      if (setAuth) setAuth(data);
+      navigate("/");
+    } catch (error) {
+      alert("Alert");
+    }
+  };
 
   return (
     <>
@@ -19,7 +63,7 @@ export default function Login() {
 
             <div className="flex justify-center">
               <div className="flex flex-1 flex-row justify-center items-center relative">
-                <form className="">
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <p className="mb-0 mr-4 text-2xl font-bold text-[#381A44]">
                     Bienvenue à vous
                   </p>
@@ -27,41 +71,28 @@ export default function Login() {
                     Je vous souhaite la bienvenue sur notre plateforme
                   </span>
 
-                  <div className="mt-4">
-                    <DefaultInput label="Email" type="text" />
-                    {/* <div className="relative">
-                      <input
-                        type="text"
-                        id="floating_outlined"
-                        className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[#381A44] focus:outline-none focus:ring-0 focus:border-[#381A44] peer"
-                        placeholder=""
-                      />
-                      <label
-                        htmlFor="floating_outlined"
-                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-[#381A44] peer-focus:dark:text-[#381A44] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-                      >
-                        Email
-                      </label>
-                    </div> */}
+                  <div className="mt-4 relative">
+                    <input
+                      type="email"
+                      className="inputFloating"
+                      id="email"
+                      {...register("email")}
+                    />
+                    <label htmlFor="email" className="labelFloating">
+                      Email
+                    </label>
                   </div>
 
-                  <div className="mt-4">
-                    <DefaultInput label="Mots de passe" type="password" />
-
-                    {/* <div className="relative">
-                      <input
-                        type="password"
-                        id="floating_outlined"
-                        className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[#381A44] focus:outline-none focus:ring-0 focus:border-[#381A44] peer"
-                        placeholder=""
-                      />
-                      <label
-                        htmlFor="floating_outlined"
-                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-[#381A44] peer-focus:dark:text-[#381A44] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-                      >
-                        Mots de passe
-                      </label>
-                    </div> */}
+                  <div className="mt-4 relative">
+                    <input
+                      type="password"
+                      className="inputFloating"
+                      id="password"
+                      {...register("password")}
+                    />
+                    <label htmlFor="password" className="labelFloating">
+                      Mots de passe
+                    </label>
                   </div>
 
                   <div className="mt-4 text-right">
@@ -70,22 +101,11 @@ export default function Login() {
 
                   <div className="mt-4">
                     <button
-                      type="button"
                       className="text-sm text-white bg-[#381A44] font-bold p-4 rounded-lg w-full"
-                      onClick={() => {
-                        setCurrentUser({
-                          id: 1,
-                          name: "dzad",
-                          token: "dzadaz",
-                        });
-                        navigate("/app");
-                      }}
+                      type="submit"
                     >
                       SE CONNECTER
                     </button>
-                    {/* <button className="p-4 w-full text-sm font-bold text-purple-950">
-                      CREER UN COMPTE
-                    </button> */}
                   </div>
 
                   <div className="mt-4">

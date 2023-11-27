@@ -1,15 +1,28 @@
+import { RegisterOptions } from "react-hook-form";
+
 type PropsDefaultInput = {
   label: string;
   type?: React.HTMLInputTypeAttribute;
+  placeholder?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  ref?: React.LegacyRef<HTMLInputElement> | undefined;
+  value?: string | number | readonly string[] | undefined;
+  register?: RegisterOptions;
 };
 
 export default function DefaultInput({
   label,
   type = "text",
+  placeholder,
+  onChange,
+  ref,
+  value,
+  register,
 }: PropsDefaultInput) {
   return (
     <div className="relative">
       <input
+        ref={ref}
         type={type}
         id="floating_outlined"
         className="
@@ -20,7 +33,10 @@ export default function DefaultInput({
          outline-none
           focus:outline-none focus:ring-0
            focus:border-violet-1 peer"
-        placeholder=""
+        placeholder={placeholder}
+        onChange={onChange}
+        value={value}
+        {...register}
       />
       <label
         htmlFor="floating_outlined"

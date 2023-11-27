@@ -1,1 +1,4 @@
-export interface IAuth {}
+export interface IAuth {
+  refresh: string;
+  access: string;
+}
