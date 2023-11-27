@@ -1,21 +1,32 @@
 import { FC, useEffect, useState } from "react";
 import { MdModeEdit, MdDelete, MdOutlineAdd, MdOutlineSend } from "react-icons/md";
-import { IColumn, IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface";
+import { IColumn, IListAction } from "../../interfaces/genricModule/icolumn.interface";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { IOrder } from "../../interfaces/iorder.interface";
 import GenericList from "../../components/genericList/GenericList";
-import { Button, Label, Modal, TextInput } from "flowbite-react";
-import { GrAddCircle } from "react-icons/gr";
+import OrderCreateDialog from "./OrderCreateDialog";
+import { useOrderStore } from "../../stores/order.store";
+import { getOrders } from "../../services/order.service";
+import { useSnackbar } from "notistack";
+import { Spinner } from "flowbite-react";
+import OrderEditDialog from "./OrderEditDialog";
 
 const OrderList: FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
 
-  const [openModal, setOpenModal] = useState(false);
+  /** STORE */
+  const setSelectedItem = useOrderStore(state => state.setSelectedOrder);
+
+  /** LOCAL STATE */
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   /** LIST CONFIG */
   const actions: IListAction[] = [
-    { label: "Nouvelle demande", icon: <MdOutlineAdd />, callback: () => setOpenModal(true) },
-    { label: "Envoyer un formulaire", icon: <MdOutlineSend />, callback: () => console.log('send form') },
+    { label: "Nouvelle demande", icon: <MdOutlineAdd />, callback: () => onCreate() },
+    { label: "Envoyer un formulaire", icon: <MdOutlineSend />, callback: () => console.log('TODO: send form') },
   ];
 
   const mainFilters: IListAction[] = [
@@ -28,30 +39,24 @@ const OrderList: FC = () => {
     { label: "Confirmée", callback: () => console.log('confirmed') },
   ];
 
-  const filters: IListFilter[] = [
-    { label: "", type: "select", field: "", options: [{ label: "Nom de client", value: "client" }] }
-  ];
-
   const tabs: IListAction[] = [];
-  // const tabs: IListAction[] = [
-  //   { label: "Contenu", callback: () => console.log('content clicked') },
-  //   { label: "Media", callback: () => console.log('media clicked') },
-  //   { label: "Document", callback: () => console.log('document clicked') },
-  // ];
 
   /** ORDER TABLE CONFIGS */
   const rowActions: IListAction[] = [
-    { label: "Modifier", icon: MdModeEdit, callback: (row: any) => console.log('edit clicked', row) },
-    { label: "Supprimer", icon: MdDelete, callback: (row: any) => console.log('delete clicked', row) },
+    { label: "Modifier", icon: MdModeEdit, callback: (row: any) => onEdit(row) },
+    { label: "Supprimer", icon: MdDelete, callback: (row: any) => console.log('TODO: delete clicked', row) },
   ];
 
   const columns: IColumn[] = [
+    // {
+    //   field: "image", label: "",
+    //   displayValue: (src: string) => <img src={src} />
+    // },
+    { field: "travelers", label: "Client", sortable: true, displayValue: (value) => `${value![0]?.first_name || ''} ${value![0]?.last_name || ''}` },
     {
-      field: "image", label: "",
-      displayValue: (src: string) => <img src={src} />
+      field: "created_date", label: "Demande", sortable: true,
+      displayValue: (date: string) => date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : ''
     },
-    { field: "client", label: "Client", sortable: true },
-    { field: "created_date", label: "Demande", sortable: true, displayValue: (date: string) => date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : '' },
     {
       field: "arrival_date", label: "Arrivé", sortable: true,
       displayValue: (date: string) => (
@@ -61,7 +66,17 @@ const OrderList: FC = () => {
         </>
       )
     },
-    { field: "type", label: "Type de client" },
+    {
+      field: "departure_datetime", label: "Départ", sortable: true,
+      displayValue: (date: string) => (
+        <>
+          <p><b>{date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : ''}</b></p>
+          <p>{date ? format(new Date(date), 'H:m', { locale: fr }) : ''}</p>
+        </>
+      )
+    },
+    // { field: "type", label: "Type de client" },
+    { field: "trip_duration", label: "Durée (en j)" },
     {
       field: "status", label: "Status",
       displayValue: (status: string) => <div className="status" style={{ color: getStatusColor(status), backgroundColor: getStatusBgColor(status) }}>{status}</div>
@@ -70,12 +85,7 @@ const OrderList: FC = () => {
 
   const [rows, setRows] = useState<IOrder[]>([]);
   useEffect(() => {
-    const fake_rows: IOrder[] = [
-      { id: 1, client: "Annette Black", created_date: '2023-11-12', arrival_date: '2023-11-13 08:15:00', type: "B2B", status: "Nouvelle", image: "/profile-pic-test.jpg" },
-      { id: 2, client: "Allison Page", created_date: '2023-11-02', arrival_date: '2023-11-02 13:55:00', type: "B2B", status: "Nouvelle", image: "/profile-pic-test.jpg" },
-      { id: 3, client: "Léon Harper", created_date: '2023-11-11', arrival_date: '2023-11-16 09:18:00', type: "B2C", status: "Nouvelle", image: "/profile-pic-test.jpg" },
-    ];
-    setRows(fake_rows);
+    loadData();
   }, []);
   /** ****** */
 
@@ -98,6 +108,60 @@ const OrderList: FC = () => {
     }
   };
 
+  const onCreate = () => {
+    setSelectedItem(({} as any));
+    setOpenAddModal(true);
+  };
+
+  const onEdit = (item: IOrder) => {
+    setSelectedItem(item);
+    setOpenEditModal(true);
+  };
+
+  const onCancelAction = () => {
+    setSelectedItem(null);
+    setOpenAddModal(false);
+    setOpenEditModal(false);
+  };
+
+  const loadData = () => {
+    setLoading(true);
+    getOrders(20, 0)
+      .then((response) => {
+        setLoading(false);
+        setRows(response.data.results);
+      }).catch((error) => {
+        if (error.response?.data?.errors) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          for (const [_key, value] of Object.entries(error.response.data.errors)) {
+            if (Array.isArray(value)) {
+              value.map(error => enqueueSnackbar(`${error}`, { variant: 'error' }));
+            } else {
+              enqueueSnackbar(`${value}`, { variant: 'error' });
+            }
+          }
+        } else if (error.response) {
+          if (error.response.status === 400) {
+            for (const [key, value] of Object.entries(error.response.data)) {
+              if (Array.isArray(value)) {
+                value.map(error => enqueueSnackbar(`${key} : ${error}`, { variant: 'error' }));
+              } else {
+                enqueueSnackbar(`${key} : ${value}`, { variant: 'error' });
+              }
+            }
+          } else if (error.response.status === 401 || error.response.status === 403) {
+            enqueueSnackbar('Problème de permission', { variant: 'error' });
+          } else if (error.response.status === 500) {
+            enqueueSnackbar('Erreur du serveur', { variant: 'error' });
+          }
+        } else if (error.request) {
+          console.log('error.request : ', error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+      });
+  };
+
   return (
     <>
       <GenericList
@@ -111,44 +175,9 @@ const OrderList: FC = () => {
         tabs={tabs}
       />
 
-      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} className="glass-container">
-        <Modal.Body>
-          <div className="form-modal">
-            <Modal.Header className="form-modal-header">
-              <GrAddCircle />
-              <h3>Nouvelle demande</h3>
-              <p>Ajouter une nouvelle demande</p>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="form-modal-body">
-                <div className="relative z-0 w-full mb-6 group">
-                  <input type="email" name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                  <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
-                </div>
-
-                <div>
-                  <div className="mb-2 block">
-                    <Label
-                      htmlFor="email1"
-                      value="Your email"
-                    />
-                  </div>
-                  <TextInput
-                    id="email1"
-                    placeholder="name@flowbite.com"
-                    required
-                    type="email"
-                  />
-                </div>
-              </div>
-              <div className="form-modal-footer">
-                <Button color="gray" onClick={() => setOpenModal(false)}>Annuler</Button>
-                <Button onClick={() => setOpenModal(false)} className="contained-button">Passer la demande</Button>
-              </div>
-            </Modal.Body>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <OrderCreateDialog open={openAddModal} onClose={onCancelAction} onSuccess={loadData} />
+      <OrderEditDialog open={openEditModal} onClose={onCancelAction} onSuccess={loadData} />
+      {loading && <div className="big-loader"><Spinner /></div>}
     </>
   );
 }
