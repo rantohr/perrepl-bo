@@ -18,7 +18,7 @@ type FormValue = {
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { setAuth, setPersist } = useAuth();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required(),
@@ -43,8 +43,13 @@ export default function Login() {
   const onSubmit = async (body: FormValue) => {
     try {
       const { data } = await axios.post<IAuth>("/v1/auth/token/", body);
-      if (setAuth) setAuth(data);
-      navigate("/");
+      if (setAuth && setPersist) {
+        setAuth(data);
+        setPersist(data);
+        localStorage.setItem("persist", JSON.stringify(data));
+        localStorage.setItem("token", data.access);
+        navigate("/");
+      }
     } catch (error) {
       alert("Alert");
     }

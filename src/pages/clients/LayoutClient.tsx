@@ -1,9 +1,11 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BadgeCustom from "../components/BadgeCustom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Datepicker, Label, Modal, Select, TextInput } from "flowbite-react";
 import { StepperEnum } from "../../interfaces/enum/Stepper.enum";
 import { CgLaptop } from "react-icons/cg";
+import { getClient } from "../../services/client.service";
+import { ITraveler } from "../../interfaces/itraveler.interface";
 
 type PropsDynamicComponent = {
   setCreateClient: React.Dispatch<React.SetStateAction<boolean>>;
@@ -268,6 +270,18 @@ export default function LayoutClient() {
   const last = paths[paths.length - 1];
   const [openModal, setOpenModal] = useState(false);
   const [openCreateClient, setCreateClient] = useState(false);
+
+  const [clientList, setClientList] = useState<ITraveler[]>([]);
+
+  useEffect(() => {
+    getClient()
+      .then((clients) => {
+        setClientList(clients);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  console.log("clientList", clientList);
 
   return (
     <>

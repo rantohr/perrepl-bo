@@ -32,6 +32,7 @@ import ItineraryPage from "./pages/itinerary/ItineraryPage";
 import AllBadge from "./pages/clients/childBadge/All";
 import AgenceBadge from "./pages/clients/childBadge/Agence";
 import Dashboard from "./pages/dashboard/Dashboard";
+import PersistLogin from "./pages/auth/PersistLogin";
 
 const App: FC = (): ReactElement => {
   return (
@@ -40,50 +41,52 @@ const App: FC = (): ReactElement => {
       <Route path={"/login"} element={<Login />} />
       <Route path={"/register"} element={<Register />} />
       <Route path={"/test"} element={<Test />} />
-      <Route
-        path={"app"}
-        element={<Layout />}
-        children={[
-          <Route path="" element={<Dashboard />} />,
-          <Route path="orders" element={<OrderList />} />,
-          <Route path="library" element={<LibraryList />} />,
-          <Route path="templates" element={<TemplateList />} />,
-          <Route path="itinerary">
-            <Route path="list" element={<ItineraryList />}></Route>
-            <Route path="" element={<ItineraryPage />}>
-              <Route path="new" element={<Itinerary />} />
-              <Route path="quotations" element={<Quotations />} />
-              <Route path="rates" element={<Rates />} />
-              <Route path="invoicing" element={<Invoicing />} />
-            </Route>
-          </Route>,
-          <Route path="client">
-            <Route path="" element={<LayoutClient />}>
-              <Route path="" element={<AllBadge />} />
-              <Route path="b2b" element={<AllBadge />} />
-              <Route path="b2c" element={<AllBadge />} />
-              <Route path="agence" element={<AgenceBadge />} />
-            </Route>
-            <Route path="agence/update" element={<ClientAgenceProfile />} />
-            <Route path="agence/view" element={<ClientAgenceProfileView />}>
-              {/* <Route path="" element={<>general</>} /> */}
-              <Route path="general" element={<General />} />
-              <Route path="notes" element={<Notes />} />
-              <Route path="clients" element={<Clients />} />
-              <Route path="payrolls" element={<Payrolls />} />
-            </Route>
-            <Route path="overview/view" element={<LayoutClientWithTabs />}>
-              <Route path="" element={<GeneralClient />} />
-              <Route path="general" element={<GeneralClient />} />
-              <Route path="notes" element={<NotesClient />} />
-              <Route path="trips" element={<TripsClient />} />
-              <Route path="docs" element={<DocsClient />} />
-              <Route path="paxList" element={<PaxListsClient />} />
-              <Route path="payroll" element={<PayrollClient />} />
-            </Route>
-          </Route>,
-        ]}
-      />
+      <Route element={<PersistLogin />}>
+        <Route
+          path={"app"}
+          element={<Layout />}
+          children={[
+            <Route path="" element={<Dashboard />} />,
+            <Route path="orders" element={<OrderList />} />,
+            <Route path="library" element={<LibraryList />} />,
+            <Route path="templates" element={<TemplateList />} />,
+            <Route path="itinerary">
+              <Route path="list" element={<ItineraryList />}></Route>
+              <Route path="" element={<ItineraryPage />}>
+                <Route path="new" element={<Itinerary />} />
+                <Route path="quotations" element={<Quotations />} />
+                <Route path="rates" element={<Rates />} />
+                <Route path="invoicing" element={<Invoicing />} />
+              </Route>
+            </Route>,
+            <Route path="client">
+              <Route path="" element={<LayoutClient />}>
+                <Route path="" element={<AllBadge />} />
+                <Route path="b2b" element={<AllBadge />} />
+                <Route path="b2c" element={<AllBadge />} />
+                <Route path="agence" element={<AgenceBadge />} />
+              </Route>
+              <Route path="agence/update" element={<ClientAgenceProfile />} />
+              <Route path="agence/view" element={<ClientAgenceProfileView />}>
+                {/* <Route path="" element={<>general</>} /> */}
+                <Route path="general" element={<General />} />
+                <Route path="notes" element={<Notes />} />
+                <Route path="clients" element={<Clients />} />
+                <Route path="payrolls" element={<Payrolls />} />
+              </Route>
+              <Route path="overview/view" element={<LayoutClientWithTabs />}>
+                <Route path="" element={<GeneralClient />} />
+                <Route path="general" element={<GeneralClient />} />
+                <Route path="notes" element={<NotesClient />} />
+                <Route path="trips" element={<TripsClient />} />
+                <Route path="docs" element={<DocsClient />} />
+                <Route path="paxList" element={<PaxListsClient />} />
+                <Route path="payroll" element={<PayrollClient />} />
+              </Route>
+            </Route>,
+          ]}
+        />
+      </Route>
       <Route path={"/*"} element={<NotFound />} />
     </Routes>
   );
