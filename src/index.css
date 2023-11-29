@@ -10,7 +10,7 @@
 
 @layer components {
   .inputFloating {
-    @apply block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none outline-none focus:outline-0  focus:ring-0;
+    @apply block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none outline-none focus:outline-0 focus:ring-0;
   }
 
   .labelFloating {
@@ -22,10 +22,12 @@
   transition: 0.5s;
   font-family: "Raleway", sans-serif;
 }
+
 .glass-container {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(2px);
 }
+
 button:focus {
   box-shadow: none !important;
 }
@@ -39,12 +41,15 @@ button:focus {
 .bg-linear-blue {
   background: linear-gradient(79.63deg, #253f82 -6.72%, #375eeb 124.22%);
 }
+
 .bg-linear-blue-2 {
   background: linear-gradient(293.34deg, #868cff -12.59%, #4318ff 130.45%);
 }
+
 .bg-linear-blue-3 {
   background: linear-gradient(79.63deg, #0c1f61 -6.72%, #1f50cd 124.22%);
 }
+
 .menu-user-info img {
   object-fit: cover;
 }
@@ -108,6 +113,7 @@ button:focus {
   background-color: theme("colors.violet-pink");
   color: white;
 }
+
 .outlined-button-secondary svg,
 .outlined-button-secondary span,
 .outlined-button-secondary p {
@@ -115,6 +121,7 @@ button:focus {
   display: flex;
   gap: 5px;
 }
+
 .contained-button-secondary {
   background-color: theme("colors.violet-pink");
   color: #fff;
@@ -124,6 +131,7 @@ button:focus {
   justify-content: center;
   gap: 5px;
 }
+
 .contained-button-secondary svg,
 .contained-button-secondary span,
 .contained-button-secondary p {
@@ -132,11 +140,13 @@ button:focus {
   display: flex;
   gap: 5px;
 }
+
 .contained-button-secondary:hover {
   background-color: #fff !important;
   border-color: theme("colors.violet-pink") !important;
   color: theme("colors.violet-pink");
 }
+
 .contained-button-secondary:hover svg,
 .contained-button-secondary:hover span,
 .contained-button-secondary:hover p {
@@ -253,4 +263,39 @@ button:focus {
 
 .hover-event-item:hover {
   background-color: #381a441a;
+}
+
+.input-autocomplete {
+  position: relative;
+}
+
+.input-autocomplete:focus-within ul, 
+.input-autocomplete ul:focus,
+.input-autocomplete ul:active,
+.input-autocomplete ul:hover,
+.input-autocomplete ul li:focus,
+.input-autocomplete ul li:active,
+.input-autocomplete ul li:hover  {
+  display: block;
+}
+
+.input-autocomplete>ul {
+  display: none;
+  position: absolute;
+  padding: 0px;
+  margin: 0;
+  list-style: none;
+  width: -webkit-fill-available;
+  border: 1px solid #00000030;
+  border-radius: 5px;
+  font-size: small;
+}
+
+.input-autocomplete ul li {
+  padding: 7px 5px;
+  cursor: pointer;
+}
+
+.input-autocomplete ul li:hover {
+  background-color: #0000001a;
 }

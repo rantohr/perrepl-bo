@@ -11,6 +11,7 @@ import { Modal } from "flowbite-react"
 import { GrAddCircle } from "react-icons/gr"
 import { IForm } from "../../interfaces/genricModule/iform.interface"
 import GenericForm from "../../components/generciForm/GenericForm"
+import { getOrders } from "../../services/order.service"
 
 const ItineraryList: FC = () => {
 	const navigate = useNavigate();
@@ -22,7 +23,7 @@ const ItineraryList: FC = () => {
 		initialData: { title: '', order: null },
 		fields: [
 			{ field: 'title', label: "Titre", required: true, size: 3 },
-			{ field: 'order', label: "Demande", size: 3, type: "autocomplete" },
+			{ field: 'order', label: "Demande", size: 3, type: "autocomplete", autocompleteGetter: getOrders },
 		],
 		onCancel: () => setOpenForm(false),
 		onConfirm: (data) => confirmOrder(data)

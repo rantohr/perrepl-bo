@@ -5,11 +5,13 @@ import OrderForm from "./OrderForm";
 import { IOrder } from "../../interfaces/iorder.interface";
 import { useSnackbar } from "notistack";
 import { postOrder } from "../../services/order.service";
+import axios from "axios";
 
 const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: () => void }> = ({ open, onClose, onSuccess }) => {
 
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState();
 
   const onConfirm = (data: IOrder) => {
     console.log('FINAL DATA', data);
@@ -54,6 +56,25 @@ const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: ()
       });
   };
 
+  // const onFileChange = (event) => {
+  //   setFile(event.target.files[0])
+  // };
+
+  // const onFileUpload = () => {
+  //   const request = new FormData();
+  //   request.append('file', file);
+
+  //   axios({
+  //     method: 'POST',
+  //     url: `api/v2/document/`,
+  //     headers: {
+  //       'Authorization': `Token ${localStorage.getItem('token')}`,
+  //       'Content-Type': 'multipart/form-data'
+  //     },
+  //     data: request,
+  //   })
+  // };
+
   return (
     <>
       <Modal dismissible show={open} onClose={onClose} className="glass-container">
@@ -66,6 +87,15 @@ const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: ()
             </Modal.Header>
             <Modal.Body>
               <OrderForm onConfirm={onConfirm} onCancel={onClose} />
+              {/* <div>
+                <input
+                  type="file"
+                  onChange={onFileChange}
+                />
+                <button onClick={onFileUpload}>
+                  Upload!
+                </button>
+              </div> */}
             </Modal.Body>
           </div>
         </Modal.Body>

@@ -73,7 +73,7 @@ function Layout() {
 
   return (
     <>
-      {!auth ? (
+      {auth ? (
         <div className="bg-white pl-6">
           <header>
             <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
