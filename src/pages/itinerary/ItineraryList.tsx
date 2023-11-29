@@ -1,12 +1,33 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import GenericVariantSquareCard from "../../components/genericVariantSquareCard/GenericVariantSquareCard"
 import { props } from "../../components/genericVariantSquareCard/GenericVariantSquareCard"
 import GenericPageHeader from "../../components/genericList/GenericPageHeader"
-import GenericListFilters from "../../components/genericList/GenericListFilters"
-import { IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface"
+import { IListAction } from "../../interfaces/genricModule/icolumn.interface"
 import { MdOutlineAdd } from "react-icons/md"
+import { useNavigate } from "react-router-dom"
+import { useItineraryStore } from "../../stores/itinerary.store"
+import { IItinerary } from "../../interfaces/iitinerary.interface"
+import { Modal } from "flowbite-react"
+import { GrAddCircle } from "react-icons/gr"
+import { IForm } from "../../interfaces/genricModule/iform.interface"
+import GenericForm from "../../components/generciForm/GenericForm"
 
 const ItineraryList: FC = () => {
+	const navigate = useNavigate();
+
+	const setSelectedItinerary = useItineraryStore(state => state.setSelectedItinerary);
+
+	const [openForm, setOpenForm] = useState(false);
+	const formData: IForm = {
+		initialData: { title: '', order: null },
+		fields: [
+			{ field: 'title', label: "Titre", required: true, size: 3 },
+			{ field: 'order', label: "Demande", size: 3, type: "autocomplete" },
+		],
+		onCancel: () => setOpenForm(false),
+		onConfirm: (data) => confirmOrder(data)
+	};
+
 	const cards: props[] = [
 		{
 			title: "Road Trip a Madagascar",
@@ -53,21 +74,30 @@ const ItineraryList: FC = () => {
 				label: "NOUVEAU"
 			}
 		},
-		
+
 	]
 
 	const actions: IListAction[] = [
-		{ label: "Nouvelle itinéraire", icon: <MdOutlineAdd />, callback: () => { }, className: "contained-button" },
+		{ label: "Nouvelle itinéraire", icon: <MdOutlineAdd />, callback: () => setOpenForm(true), className: "contained-button" },
 	];
 
-	const filters: IListFilter[] = [
-		{ label: "", type: "select", field: "", options: [{ label: "Nom de client", value: "client" }] }
-	];
+	const confirmOrder = (data: any) => {
+		const itinerary: IItinerary = {
+			title: data.title || "",
+			duration: 0,
+			segments: [],
+			order: [],
+			client: [],
+		};
+		if (data.order) itinerary.order = [data.order];
+		setSelectedItinerary(itinerary);
+		setOpenForm(false);
+		navigate('/app/itinerary/new');
+	};
 
 	return (
 		<div className="list-container order-list">
 			<GenericPageHeader title="Itinéraire" total={8} actions={actions} />
-			{/* <GenericListFilters filters={filters} /> */}
 
 			<div className="cards">
 				{cards.map((card, card_index) => {
@@ -83,6 +113,21 @@ const ItineraryList: FC = () => {
 					)
 				})}
 			</div>
+
+			<Modal dismissible show={openForm} onClose={() => setOpenForm(false)} className="glass-container">
+				<Modal.Body>
+					<div className="form-modal">
+						<Modal.Header className="form-modal-header">
+							<GrAddCircle />
+							<h3>Nouvelle Itinéraire</h3>
+							<p>Ajouter une nouvelle itinéraire</p>
+						</Modal.Header>
+						<Modal.Body>
+							<GenericForm formData={formData} />
+						</Modal.Body>
+					</div>
+				</Modal.Body>
+			</Modal>
 		</div>
 	)
 }

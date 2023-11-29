@@ -20,7 +20,7 @@ const LayoutItinerary: FC = () => {
                         <div></div>
                     </div>
                     <div className="flex items-center font-semibold">
-                        <div className=" rounded-md bg-stone-950 opacity-80 border-white border-dashed border-2 text-white ml-2 px-2 py-1">
+                        {/* <div className=" rounded-md bg-stone-950 opacity-80 border-white border-dashed border-2 text-white ml-2 px-2 py-1">
                             LOGO
                         </div>
                         <div className=" rounded-md bg-stone-950 opacity-80 border-white text-white ml-2 px-2 py-1">
@@ -28,7 +28,7 @@ const LayoutItinerary: FC = () => {
                         </div>
                         <div className=" rounded-md bg-stone-950 opacity-80 border-white text-white ml-2 px-2 py-1">
                             <AiOutlinePlus color="white" fontSize="1.5em"/>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="px-10 mb-6 absolute bottom-0 flex justify-between w-full">
