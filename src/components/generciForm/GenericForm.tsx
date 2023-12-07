@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import FloatingInput from "../../components/input/FloatingInput";
 import { updateObjectField } from "../../functions/objectHandler";
 import { Button } from "flowbite-react";
 import { useSnackbar } from 'notistack';
-import { IField, IForm } from "../../interfaces/genricModule/iform.interface";
+import { IForm } from "../../interfaces/genricModule/iform.interface";
+import GenericField from "./GenericField";
 
 const GenericForm: FC<{ formData: IForm }> = ({ formData }) => {
 
@@ -12,8 +12,6 @@ const GenericForm: FC<{ formData: IForm }> = ({ formData }) => {
 
     /** LOCAL STATE */
     const [data, setData] = useState<any | null>(null);
-    const [autocompleteSearch, setAutocompleteSearch] = useState<string>('');
-    const [autocompleteResults, setAutocompleteResults] = useState<any[]>([]);
 
     useEffect(() => {
         if (initialData) {
@@ -24,33 +22,6 @@ const GenericForm: FC<{ formData: IForm }> = ({ formData }) => {
     /** FORM MANIPULATON */
     const updateField = (field: string, value: any) => {
         updateObjectField(data, field, value, setData);
-    };
-
-    const onSearchAutocomplete = (field: IField, value: string) => {
-        setAutocompleteSearch(value);
-        if (field.autocompleteGetter !== undefined) {
-            field.autocompleteGetter(10, 0, { search: value })
-                .then((response) => {
-                    if (response.data.results) setAutocompleteResults(response.data.results);
-                })
-                .catch(err => {
-                    console.log('error:', err);
-                    setAutocompleteResults([]);
-                });
-        }
-    };
-
-    const selectAutocompleteItem = (field: IField, value: any) => {
-        console.log('searcValue cccccc', value)
-        if (field.onChange !== undefined) {
-            const newData = field.onChange(data, value);
-            setData(newData);
-        }
-        else updateField(field.field, value);
-        setAutocompleteResults([]);
-        const searcValue = field.displayOption !== undefined ? field.displayOption(value) : (value.name || value.title || value.description);
-        console.log('searcValue', {value, searcValue})
-        setAutocompleteSearch(searcValue);
     };
 
     /** FORM CONFIRMATION */
@@ -102,47 +73,7 @@ const GenericForm: FC<{ formData: IForm }> = ({ formData }) => {
                                 <div className="col-span-3"><h6>{divider?.title}</h6></div>
                             }
                             <div className={`col-span-${field.size || 3}`}>
-                                {
-                                    field.type !== 'autocomplete' &&
-                                    <FloatingInput
-                                        label={`${field.label || ''} ${field.required ? '*' : ''}`}
-                                        type={field.type || "text"}
-                                        value={data[field.field]}
-                                        onChange={(v) => {
-                                            if (field.onChange !== undefined) {
-                                                const newData = field.onChange(data, v);
-                                                setData(newData);
-                                            }
-                                            else updateField(field.field, v);
-                                        }} />
-                                }
-                                {
-                                    field.type === 'autocomplete' &&
-                                    <div className="input-autocomplete">
-                                        <FloatingInput
-                                            label={`${field.label || ''} ${field.required ? '*' : ''}`}
-                                            type={field.type || "text"}
-                                            value={autocompleteSearch}
-                                            onChange={(v) => onSearchAutocomplete(field, v)}
-                                        />
-                                        {
-                                            Boolean(autocompleteSearch && autocompleteResults?.length) &&
-                                            <ul>
-                                                {
-                                                    autocompleteResults?.map(item => {
-                                                        return (
-                                                            <li key={`autoc-${field.field}-${item.id}`}
-                                                                onClick={() => selectAutocompleteItem(field, item)}>
-                                                                {field.displayOption !== undefined ? field.displayOption(item) : (item.name || item.title || item.description)}
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
-                                            </ul>
-                                        }
-                                    </div>
-                                }
-                                <small style={{ color: "red" }}>{data[field.field + '_error']}</small>
+                                <GenericField field={field} object={data} setObject={setData} onChange={updateField} />
                             </div>
                         </React.Fragment>
                     )

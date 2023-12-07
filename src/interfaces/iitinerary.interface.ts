@@ -20,7 +20,7 @@ export interface IItinerary {
 }
 
 export interface ISegment {
-  id: number,
+  id?: number,
   description?: string,
   duration: number,
   start_location?: ILocation[],

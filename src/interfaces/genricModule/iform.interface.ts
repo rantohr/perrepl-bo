@@ -17,5 +17,5 @@ export interface IField {
   onChange?: (dataState: any, value: any) => any,
   size?: number,
   autocompleteGetter?: (limit?: number, offset?: number, filter?: any) => Promise<AxiosResponse<{ count: number; results: any[] }>>,
-  displayOption?: (option: any) => string | number | null,
+  displayValue?: (option: any) => string | number | null,
 }

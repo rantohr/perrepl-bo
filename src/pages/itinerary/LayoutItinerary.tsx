@@ -4,15 +4,19 @@ import { IoBed, IoCalendarOutline } from "react-icons/io5"
 import { BsSendFill } from "react-icons/bs"
 import { useLocation, useNavigate } from "react-router-dom";
 import Tabs from "../../components/tabs/Tabs"
+import { useItineraryStore } from "../../stores/itinerary.store";
 
 const LayoutItinerary: FC = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
+    const selectedItinerary = useItineraryStore(state => state.selectedItinerary);
+    const setSelectedItinerary = useItineraryStore(state => state.setSelectedItinerary);
+
     return <>
         <div className="relative">
             <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-b rotate-180 opacity-80 from-stone-900"></div>
-            <div className="flex flex-col justify-between py-4 bg-cover bg-top bg-no-repeat" style={{backgroundImage: "url('../../../../photos/bg_maki.png')", minHeight: "400px"}}>
+            <div className="flex flex-col justify-between py-4 bg-cover bg-top bg-no-repeat" style={{ backgroundImage: "url('../../../../photos/bg_maki.png')", minHeight: "400px" }}>
                 <div className="px-10 flex items-center justify-between">
                     <div className="flex justify-between">
                         <div className="rounded-full bg-stone-950 opacity-80 p-3">
@@ -33,8 +37,8 @@ const LayoutItinerary: FC = () => {
                 </div>
                 <div className="px-10 mb-6 absolute bottom-0 flex justify-between w-full">
                     <div className="flex flex-col items-start font-bold text-white">
-                        <div className=" text-3xl py-4" style={{fontSize:"45px"}}>
-                            Wildlif Exploration in Andasibe - Maruxi
+                        <div className=" text-3xl py-4" style={{ fontSize: "45px" }}>
+                            {selectedItinerary?.title}
                         </div>
                         <div className="flex items-center">
                             <div className="rounded-3xl p-2 flex items-center bg-stone-400 bg-opacity-50">
@@ -69,7 +73,7 @@ const LayoutItinerary: FC = () => {
                                 </div>
                             </div>
                             <button className="contained-button-secondary my-2">
-                                <BsSendFill className="text-white"/>
+                                <BsSendFill className="text-white" />
                                 <span>Envoyer</span>
                             </button>
                         </div>
