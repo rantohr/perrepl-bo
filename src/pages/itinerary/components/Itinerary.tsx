@@ -29,6 +29,7 @@ const Itinerary: FC = () => {
 
     const [selectedSegmentIndex, setSelectedSegmentIndex] = useState<number>(0);
     const [openDesti, setOpenDesti] = useState(false);
+    const [add_mode, setAddMode] = useState('');
 
     const [isOpenDropDownEvent, setIsOpenDropDownEvent] = useState<boolean>(false)
     const [isOpenDropDownInfo, setIsOpenDropDownInfo] = useState<boolean>(false)
@@ -162,7 +163,7 @@ const Itinerary: FC = () => {
     /** Destination */
     const onSelectDestination = (destination: ILocation) => {
         const itinerary: IItinerary = JSON.parse(JSON.stringify(selectedItinerary));
-        
+
         let start = new Date();
         if (itinerary.segments.length && itinerary.segments[itinerary.segments.length - 1]) start = new Date(itinerary.segments[itinerary.segments.length - 1].arrival_time_utc || '');
         else if (itinerary.order![0]?.arrival_datetime) start = new Date(itinerary.order![0]?.arrival_datetime || '');
@@ -292,7 +293,7 @@ const Itinerary: FC = () => {
                                                                     : category.label === 'Activite'
                                                                         ? handleActivityClick
                                                                         : category.label === 'Hebergement'
-                                                                            ? handleLodgingClick
+                                                                            ? () => setAddMode('accommodation')
                                                                             : undefined
                                                             }
                                                         >
@@ -314,20 +315,22 @@ const Itinerary: FC = () => {
                 {
                     Boolean(selectedItinerary?.segments?.length) &&
                     <div className="flex flex-col w-full">
+                        {/* SEARCH BAR */}
+                        {
+                            Boolean(add_mode) &&
+                            <div className="flex w-full mt-14">
+                                <div className="flex w-full items-center bg-white rounded-xl px-10 py-1 mr-6 shadow-lg">
+                                    <BiSearch className="text-grey text-3xl" />
+                                    <input type="text" className="flex w-full border-none p-4 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 focus:ring-0 focus:ring-offset-0" placeholder="Hotel, activites, location" />
+                                </div>
+                                <div className="bg-white w-14 h-14 flex items-center justify-center rounded-xl p-4 cursor-pointer">
+                                    <TiDocumentText className="text-grey text-3xl" />
+                                </div>
+                            </div>
+                        }
                         {isFlightVisible && <FlightCard {...flightData} />}
                         {isActivityVisible && <ActivityCard {...activityData} />}
                         {isLodgingVisible && <LodgingCard {...lodgingData} />}
-
-                        {/* SEARCH BAR */}
-                        <div className="flex w-full mt-14">
-                            <div className="flex w-full items-center bg-white rounded-xl px-10 py-1 mr-6 shadow-lg">
-                                <BiSearch className="text-grey text-3xl" />
-                                <input type="text" className="flex w-full border-none p-4 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 focus:ring-0 focus:ring-offset-0" placeholder="Hotel, activites, location" />
-                            </div>
-                            <div className="bg-white w-14 h-14 flex items-center justify-center rounded-xl p-4 cursor-pointer">
-                                <TiDocumentText className="text-grey text-3xl" />
-                            </div>
-                        </div>
                     </div>
                 }
 
