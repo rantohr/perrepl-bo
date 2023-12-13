@@ -1,8 +1,13 @@
 import { FC } from "react"
 import { CiExport } from "react-icons/ci"
 import { LuSend } from "react-icons/lu"
+import { useItineraryStore } from "../../../stores/itinerary.store";
 
 const Invoicing: FC = () => {
+
+    const selectedItinerary = useItineraryStore(state => state.selectedItinerary);
+    const setSelectedItinerary = useItineraryStore(state => state.setSelectedItinerary);
+
     return <>
         <div className="flex justify-center items-start w-full">
             <div className="relative text-sm font-semibold text-grey bg-white rounded-lg py-3 px-2 w-7/12 ">

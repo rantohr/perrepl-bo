@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import FloatingInput from "../../components/input/FloatingInput";
 import { updateObjectField } from "../../functions/objectHandler";
 import { Button } from "flowbite-react";
 import { useSnackbar } from 'notistack';
 import { IForm } from "../../interfaces/genricModule/iform.interface";
+import GenericField from "./GenericField";
 
 const GenericForm: FC<{ formData: IForm }> = ({ formData }) => {
 
@@ -73,18 +73,7 @@ const GenericForm: FC<{ formData: IForm }> = ({ formData }) => {
                                 <div className="col-span-3"><h6>{divider?.title}</h6></div>
                             }
                             <div className={`col-span-${field.size || 3}`}>
-                                <FloatingInput
-                                    label={field.label}
-                                    type={field.type || "text"}
-                                    value={data[field.field]}
-                                    onChange={(v) => {
-                                        if (field.onChange !== undefined) {
-                                            const newData = field.onChange(data, v);
-                                            setData(newData);
-                                        }
-                                        else updateField(field.field, v);
-                                    }} />
-                                <small style={{ color: "red" }}>{data[field.field + '_error']}</small>
+                                <GenericField field={field} object={data} setObject={setData} onChange={updateField} />
                             </div>
                         </React.Fragment>
                     )
