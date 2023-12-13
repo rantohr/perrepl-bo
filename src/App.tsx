@@ -33,6 +33,9 @@ import AllBadge from "./pages/clients/childBadge/All";
 import AgenceBadge from "./pages/clients/childBadge/Agence";
 import Dashboard from "./pages/dashboard/Dashboard";
 import PersistLogin from "./pages/auth/PersistLogin";
+import LibrairyMedia from "./pages/library/LibraryMedia";
+import LibrairyDocument from "./pages/library/LibraryDocument";
+import LibrairyContent from "./pages/library/LibraryContent";
 
 const App: FC = (): ReactElement => {
   return (
@@ -48,7 +51,11 @@ const App: FC = (): ReactElement => {
           children={[
             <Route path="" element={<Dashboard />} />,
             <Route path="orders" element={<OrderList />} />,
-            <Route path="library" element={<LibraryList />} />,
+            <Route path="library" element={<LibraryList />} >
+              <Route path="" element={<LibrairyContent/>}/>
+              <Route path="media" element={<LibrairyMedia/>}/>
+              <Route path="document" element={<LibrairyDocument/>}/>
+            </Route>,
             <Route path="templates" element={<TemplateList />} />,
             <Route path="itinerary">
               <Route path="list" element={<ItineraryList />}></Route>

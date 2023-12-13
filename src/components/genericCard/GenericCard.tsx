@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa"
 
 export type typeMark = {
@@ -34,7 +34,7 @@ const GenericCard: FC<{
               >
                 <span className="mx-1">
                   {mark.icon &&
-                    mark.icon
+                    React.cloneElement(mark.icon, { style: { fontSize: "1rem" } })
                   }
                 </span>
                 {mark.label}
