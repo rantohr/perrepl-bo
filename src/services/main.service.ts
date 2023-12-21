@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, CancelTokenSource } from "axios";
 
-const API_HREF = "http://localhost:8000/"; // TODO: set global variable
+const API_HREF = "https://backend.pereepl.mg/"; // TODO: set global variable
 // const API_HREF = `http://localhost:${
 //   import.meta.env.BACKEND_PORT || 8000
 // }/api/`;
