@@ -27,6 +27,8 @@ import { getActivities } from "../../../services/activity.service";
 import { IActivity } from "../../../interfaces/iactivity.interface";
 import { postItinerary } from "../../../services/itinerary.service";
 import { useNavigate } from "react-router-dom";
+import { IListAction } from "../../../interfaces/genricModule/icolumn.interface";
+import GenericBtnDropdown from "../../../components/genericBtnDropdown/genericBtnDropdown";
 
 const Itinerary: FC = () => {
 
@@ -75,6 +77,7 @@ const Itinerary: FC = () => {
         {
             icon: <BiSolidPlaneAlt />,
             label: 'Flight',
+            callback: () => {handleFlightClick}
         },
         {
             icon: <BiSolidPlaneAlt />,
@@ -93,16 +96,26 @@ const Itinerary: FC = () => {
         {
             icon: <FaTaxi />,
             label: 'Transfert',
+            callback: () => {}
         },
         {
             icon: <BsFillCarFrontFill />,
             label: 'Transport',
+            callback: () => {}
         },
         {
             icon: <BiSolidPlaneAlt />,
             label: 'Service',
+            callback: () => {}
         }
     ];
+    const dropdownEvent: IListAction = {
+        label: "Ajouter un événement",
+        icon: <AiOutlinePlus className="mr-4" />,
+        callback: () => {alert("OK")},
+        actions: eventCategories
+    }
+
     // // Config Card
     const flightData = {
         title: 'DEPARTURE - Central European Summer Time',

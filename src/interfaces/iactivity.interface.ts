@@ -4,6 +4,6 @@ export interface IActivity {
   id: number,
   name: string,
   description?: string,
-  locations?: ILocation[],
+  location: ILocation,
   images?: string[]
 }
