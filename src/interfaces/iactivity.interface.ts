@@ -2,7 +2,7 @@ import { ILocation } from "./ilocation.interface"
 
 export interface IActivity {
   id: number,
-  title: string,
+  name: string,
   description?: string,
   locations?: ILocation[],
   images?: string[]

@@ -5,13 +5,33 @@ import { BsSendFill } from "react-icons/bs"
 import { useLocation, useNavigate } from "react-router-dom";
 import Tabs from "../../components/tabs/Tabs"
 import { useItineraryStore } from "../../stores/itinerary.store";
+import { format } from "date-fns";
 
 const LayoutItinerary: FC = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
     const selectedItinerary = useItineraryStore(state => state.selectedItinerary);
-    const setSelectedItinerary = useItineraryStore(state => state.setSelectedItinerary);
+
+    const getTravelerPax: any = (inputString: string | null | undefined) => {
+        if (!inputString) return { adultsCount: 0, childrenCount: 0, infantsCount: 0 };
+        const keyValuePairs = inputString.split(',');
+
+        const counts: any = {};
+
+        keyValuePairs.forEach(pair => {
+            const [key, value] = pair.split(':');
+            counts[key] = parseInt(value, 10);
+        });
+
+        const adultsCount = counts['ADT'] || 0;
+        const childrenCount = counts['CNN'] || 0;
+        const infantsCount = counts['INF'] || 0;
+
+        return { adultsCount, childrenCount, infantsCount };
+    }
+
+    const pax = getTravelerPax(selectedItinerary?.order![0]?.pax_type);
 
     return <>
         <div className="relative">
@@ -43,23 +63,30 @@ const LayoutItinerary: FC = () => {
                         <div className="flex items-center">
                             <div className="rounded-3xl p-2 flex items-center bg-stone-400 bg-opacity-50">
                                 <img className="w-7 h-7 rounded-full mr-4" src="/profile-pic-test.jpg" alt="" />
-                                <div className="">Brooklyn Simmons</div>
+                                <div className="">{selectedItinerary?.order![0]?.order_creator?.first_name} {selectedItinerary?.order![0]?.order_creator?.last_name}</div>
                             </div>
                             <div className="flex items-center mx-6 pr-6 border-r-2 border-white">
                                 <img src="/photos/people.svg" className="mr-2" alt="" />
-                                <span className="mx-2">4 Adults</span>
-                                <span className="mx-2">3 Enfants</span>
+                                {Boolean(pax?.adultsCount) && <span className="mx-2">{pax?.adultsCount} Adulte(s)</span>}
+                                {Boolean(pax?.childrenCount) && <span className="mx-2">{pax?.childrenCount} Enfant(s)</span>}
+                                {Boolean(pax?.infantsCount) && <span className="mx-2">{pax?.infantsCount} Bébé(s)</span>}
                             </div>
-                            <div className="flex items-center">
+                            {/* <div className="flex items-center">
                                 <IoBed className="mx-2" />
                                 <span className="mx-2">2 SGL</span>
                                 <span className="mx-2">2 DBL</span>
                                 <span className="mx-2">1 TPL</span>
+                            </div> */}
+                            <div className="flex items-center">
+                                <IoBed className="mx-2" />
+                                <span className="mx-2">{selectedItinerary?.order![0]?.room_type}</span>
                             </div>
                         </div>
                         <div className="flex items-center my-5">
                             <IoCalendarOutline className="mx-4" />
-                            19 SEP 2023  -  21 SEP 2023
+                            {selectedItinerary?.order![0]?.arrival_datetime ? format(new Date(selectedItinerary.order[0].arrival_datetime), 'dd MMM yyyy') : ''}
+                            {' - '}
+                            {selectedItinerary?.order![0]?.departure_datetime ? format(new Date(selectedItinerary.order[0].departure_datetime), 'dd MMM yyyy') : ''}
                         </div>
                     </div>
                     <div className="mx-auto">
@@ -68,11 +95,11 @@ const LayoutItinerary: FC = () => {
                             <div className="flex items-center">
                                 <img className="w-10 h-10 rounded-lg mr-2" src="/profile-pic-test.jpg" alt="" />
                                 <div className="flex  flex-col">
-                                    <span className=" text-white font-semibold">Kristin Watson</span>
-                                    <span className="text-white font-normale">Admin</span>
+                                    <span className=" text-white font-semibold">{selectedItinerary?.order![0]?.order_creator?.first_name}</span>
+                                    <span className="text-white font-normale">{selectedItinerary?.order![0]?.order_creator?.email}</span>
                                 </div>
                             </div>
-                            <button className="contained-button-secondary my-2">
+                            <button className="contained-button-secondary my-2 p-3">
                                 <BsSendFill className="text-white" />
                                 <span>Envoyer</span>
                             </button>

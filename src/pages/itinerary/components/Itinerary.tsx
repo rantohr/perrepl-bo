@@ -21,8 +21,16 @@ import { format } from "date-fns";
 import { ILocation } from "../../../interfaces/ilocation.interface";
 import GenericField from "../../../components/generciForm/GenericField";
 import { getLocations } from "../../../services/location.service";
+import { getAccommodations } from "../../../services/accommodation.service";
+import { IAccommodation } from "../../../interfaces/iaccommodation.interface";
+import { getActivities } from "../../../services/activity.service";
+import { IActivity } from "../../../interfaces/iactivity.interface";
+import { postItinerary } from "../../../services/itinerary.service";
+import { useNavigate } from "react-router-dom";
 
 const Itinerary: FC = () => {
+
+    const navigate = useNavigate();
 
     const selectedItinerary = useItineraryStore(state => state.selectedItinerary);
     const setSelectedItinerary = useItineraryStore(state => state.setSelectedItinerary);
@@ -48,7 +56,6 @@ const Itinerary: FC = () => {
         };
 
         window.addEventListener('click', handleOutsideClick);
-
         return () => {
             window.removeEventListener('click', handleOutsideClick);
         };
@@ -57,24 +64,12 @@ const Itinerary: FC = () => {
     const toggleDropdownInfo = () => {
         setIsOpenDropDownInfo(!isOpenDropDownInfo);
     };
-    useEffect(() => {
-        const handleOutsideClick = (event: MouseEvent) => {
-            if (dropdownInfoRef.current && !dropdownInfoRef.current.contains(event.target as Node)) {
-                setIsOpenDropDownInfo(false);
-            }
-        };
-
-        window.addEventListener('click', handleOutsideClick);
-
-        return () => {
-            window.removeEventListener('click', handleOutsideClick);
-        };
-    }, []);
 
     // CONFIG EVENT CATEGORIES
     interface IEventCategory {
         icon: JSX.Element;
         label: string;
+        onClick?: () => void;
     }
     const eventCategories: IEventCategory[] = [
         {
@@ -83,15 +78,17 @@ const Itinerary: FC = () => {
         },
         {
             icon: <BiSolidPlaneAlt />,
-            label: 'Activite',
+            label: 'Activité',
+            onClick: () => setAddMode('activity')
         },
         {
             icon: <GiFootTrip />,
-            label: 'Excursion',
+            label: 'Excursion'
         },
         {
             icon: <HiMiniBuildingOffice />,
-            label: 'Hebergement',
+            label: 'Hébergement',
+            onClick: () => setAddMode('accommodation')
         },
         {
             icon: <FaTaxi />,
@@ -113,37 +110,6 @@ const Itinerary: FC = () => {
         airport: 'Paris-Charles De Gaulle (CDG)',
         airline: 'Air France',
         flightNumber: 'AF 934',
-    };
-    const activityData = {
-        title: 'Visit to Ambohimanga Place',
-        description: 'Réservez des Hebergements A Andasibe, Madagascar booking.com a été visité par plus d\'un million d\'utilisateurs au cours du mois dernier Auberges de Jeunesse Réservation Sécurisée',
-        images: [
-            'https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph',
-            'https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph',
-        ],
-        tags: [
-            { icon: <IoPricetagOutline className="mr-2" />, label: 'Tour guide' },
-            { icon: <IoPricetagOutline className="mr-2" />, label: 'Prix d\'entree' }
-        ],
-    };
-    const lodgingData = {
-        title: 'Relais des Plateaux Hotel & Spa',
-        description: 'Located less than 5 km from Ivato Airport...',
-        image: 'https://img.freepik.com/photos-gratuite/maison-design-villa-moderne-salon-decloisonne-chambre-privee-aile-grande-terrasse-intimite_1258-169741.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698192000&semt=sph',
-    };
-
-    // VISIBILITY
-    const [isFlightVisible, setIsFlightVisible] = useState(false)
-    const [isActivityVisible, setIsActivityVisible] = useState(false)
-    const [isLodgingVisible, setIsLodgingVisible] = useState(false)
-    const handleFlightClick = () => {
-        setIsFlightVisible(!isFlightVisible);
-    };
-    const handleActivityClick = () => {
-        setIsActivityVisible(!isActivityVisible);
-    };
-    const handleLodgingClick = () => {
-        setIsLodgingVisible(!isLodgingVisible);
     };
 
     // Modal
@@ -173,7 +139,7 @@ const Itinerary: FC = () => {
 
         itinerary.segments.push({
             duration: 1,
-            start_location: [],
+            start_location: [destination],
             departure_time_utc: start.toUTCString(),
             arrival_time_utc: end.toUTCString(),
             hotels: [],
@@ -183,13 +149,83 @@ const Itinerary: FC = () => {
             transfers: [],
             transportations: [],
         });
-
-        if (itinerary?.segments![selectedSegmentIndex]) {
-            itinerary.segments[selectedSegmentIndex].start_location = [destination];
-        }
         setSelectedItinerary(itinerary);
 
         setOpenDesti(false);
+    };
+
+    /** Hotels */
+    const onSelectHotel = (hotel: IAccommodation) => {
+        const itinerary: IItinerary = JSON.parse(JSON.stringify(selectedItinerary));
+
+        if (!itinerary?.segments![selectedSegmentIndex]?.hotels?.length) {
+            itinerary.segments[selectedSegmentIndex].hotels = [];
+        }
+        itinerary.segments[selectedSegmentIndex].hotels?.push(hotel);
+        setSelectedItinerary(itinerary);
+        setAddMode('');
+    };
+
+    const onRemoveHotel = (index: number) => {
+        const itinerary: IItinerary = JSON.parse(JSON.stringify(selectedItinerary));
+
+        if (itinerary?.segments![selectedSegmentIndex]?.hotels![index]) {
+            itinerary.segments[selectedSegmentIndex].hotels?.splice(index, 1);
+        }
+        setSelectedItinerary(itinerary);
+        setAddMode('');
+    };
+
+    /** activities */
+    const onSelectActivity = (item: IActivity) => {
+        const itinerary: IItinerary = JSON.parse(JSON.stringify(selectedItinerary));
+
+        if (!itinerary?.segments![selectedSegmentIndex]?.activities?.length) {
+            itinerary.segments[selectedSegmentIndex].activities = [];
+        }
+        itinerary.segments[selectedSegmentIndex].activities?.push(item);
+        setSelectedItinerary(itinerary);
+        setAddMode('');
+    };
+    const onRemoveActivity = (index: number) => {
+        const itinerary: IItinerary = JSON.parse(JSON.stringify(selectedItinerary));
+
+        if (itinerary?.segments![selectedSegmentIndex]?.activities![index]) {
+            itinerary.segments[selectedSegmentIndex].activities?.splice(index, 1);
+        }
+        setSelectedItinerary(itinerary);
+        setAddMode('');
+    };
+
+    /** CONFIRM */
+    const createItinerary = () => {
+        console.log('<<createItinerary>>', selectedItinerary)
+        if (selectedItinerary) {
+            const validated: any = {
+                title: selectedItinerary.title,
+                description: '',
+                availability: '',
+                duration: selectedItinerary.segments?.length || 0,
+                segments: selectedItinerary.segments?.map(segment => {
+                    return {
+                        description: '',
+                        duration: 1,
+                        start_location: [segment.start_location![0]?.id],
+                        end_location: [],
+                        arrival_time_utc: segment.arrival_time_utc,
+                        departure_time_utc: segment.departure_time_utc,
+                        hotels: segment.hotels?.map(i => i.hotel_id),
+                        activities: segment.activities?.map(i => i.id),
+                    }
+                })
+            }
+            postItinerary(validated)
+                .then(response => {
+                    console.log('Created');
+                    navigate('/app/itinerary/list');
+                })
+                .catch(err => console.log('Error: ', err));
+        }
     };
 
     return <>
@@ -262,13 +298,12 @@ const Itinerary: FC = () => {
                             }</span>
                         </div>
                         <div className="relative inline-block text-left" ref={dropdownEventRef}>
-
-                            <button
+                            {/* <button
                                 onClick={() => setOpenModal(true)}
                                 className="contained-button-secondary text-white w-full flex items-center px-4 py-4 rounded-lg my-2"
                             >
                                 Open Modal
-                            </button>
+                            </button> */}
                             <button
                                 onClick={toggleDropdownEvent}
                                 className="font-bold bg-violet-1 shadow-lg shadow-violet-300 text-white w-full flex items-center px-4 py-4 rounded-lg my-2"
@@ -287,15 +322,7 @@ const Itinerary: FC = () => {
                                                     <li key={`event-category-${category_index}`}>
                                                         <div
                                                             className="flex items-center text-lg text-violet-1 font-semibold px-4 py-1 dark:hover:text-white cursor-pointer"
-                                                            onClick={
-                                                                category.label === 'Flight'
-                                                                    ? handleFlightClick
-                                                                    : category.label === 'Activite'
-                                                                        ? handleActivityClick
-                                                                        : category.label === 'Hebergement'
-                                                                            ? () => setAddMode('accommodation')
-                                                                            : undefined
-                                                            }
+                                                            onClick={category.onClick}
                                                         >
                                                             {category.icon && category.icon}
                                                             <span className="ml-4 text-base">{category.label && category.label}</span>
@@ -319,23 +346,56 @@ const Itinerary: FC = () => {
                         {
                             Boolean(add_mode) &&
                             <div className="flex w-full mt-14">
-                                <div className="flex w-full items-center bg-white rounded-xl px-10 py-1 mr-6 shadow-lg">
+                                {
+                                    add_mode === "accommodation" &&
+                                    <GenericField
+                                        object={selectedItinerary?.segments[selectedSegmentIndex]} field={{
+                                            field: 'hotels', label: 'Rechercher un hôtel', onChange: (f, v) => onSelectHotel(v),
+                                            type: "autocomplete", autocompleteGetter: getAccommodations, displayValue: (item) => item.name || item.title
+                                        }} />
+                                }
+                                {
+                                    add_mode === "activity" &&
+                                    <GenericField
+                                        object={selectedItinerary?.segments[selectedSegmentIndex]} field={{
+                                            field: 'activities', label: 'Rechercher une activité', onChange: (f, v) => onSelectActivity(v),
+                                            type: "autocomplete", autocompleteGetter: getActivities, displayValue: (item) => item.name || item.title
+                                        }} />
+                                }
+                                {/* <div className="flex w-full items-center bg-white rounded-xl px-10 py-1 mr-6 shadow-lg">
                                     <BiSearch className="text-grey text-3xl" />
                                     <input type="text" className="flex w-full border-none p-4 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 focus:ring-0 focus:ring-offset-0" placeholder="Hotel, activites, location" />
                                 </div>
                                 <div className="bg-white w-14 h-14 flex items-center justify-center rounded-xl p-4 cursor-pointer">
                                     <TiDocumentText className="text-grey text-3xl" />
-                                </div>
+                                </div> */}
                             </div>
                         }
-                        {isFlightVisible && <FlightCard {...flightData} />}
-                        {isActivityVisible && <ActivityCard {...activityData} />}
-                        {isLodgingVisible && <LodgingCard {...lodgingData} />}
+                        {/* {isFlightVisible && <FlightCard {...flightData} />} */}
+                        {
+                            selectedItinerary?.segments[selectedSegmentIndex]?.hotels?.map((hotel, h_i) => {
+                                return (<LodgingCard key={"hotel-" + h_i} hotel={hotel} onRemove={() => onRemoveHotel(h_i)} />);
+                            })
+                        }
+                        {
+                            selectedItinerary?.segments[selectedSegmentIndex]?.activities?.map((activity, a_i) => {
+                                return (
+                                    <ActivityCard key={"act-" + a_i} activity={activity}
+                                        onRemove={() => onRemoveActivity(a_i)}
+                                        tags={
+                                            [
+                                                { icon: <IoPricetagOutline className="mr-2" />, label: 'Tour guide' },
+                                                { icon: <IoPricetagOutline className="mr-2" />, label: 'Prix d\'entree' }
+                                            ]
+                                        } />
+                                );
+                            })
+                        }
                     </div>
                 }
 
                 {/* INFORMATIONS & DOCUMENT */}
-                <div className="flex flex-col w-full mt-14">
+                {/* <div className="flex flex-col w-full mt-14">
                     <div className="text-black text-md font-bold mt-2 mb-4" style={{ fontSize: "25px" }}>Informations & Documents</div>
                     <div className="flex">
                         <div className="flex w-full items-center bg-white rounded-xl px-10 pt-1 pb-8 mr-6 shadow-lg">
@@ -371,9 +431,9 @@ const Itinerary: FC = () => {
                             )}
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* NOTES */}
-                <div className="flex flex-col w-full mt-10">
+                {/* <div className="flex flex-col w-full mt-10">
                     <div className="text-grey text-md font-bold mb-3" style={{ fontSize: "25px" }}>Notes</div>
                     <div className="flex w-full">
                         <div className="flex w-full items-center bg-white rounded-xl px-10 py-1 mr-6 shadow-lg">
@@ -390,10 +450,16 @@ const Itinerary: FC = () => {
                             <span className="text-semibold">Nouvelle liste</span>
                         </button>
                     </div>
+                </div> */}
+                <div className="flex justify-end">
+                    <button
+                        onClick={createItinerary}
+                        className="contained-button-secondary text-white flex items-center px-8 py-4 rounded-lg my-2"
+                    >Créer l'itinéraire</button>
                 </div>
             </div>
-        </div>
 
+        </div>
 
         {/* START MODAL */}
         <Modal size="3xl" dismissible show={openModal} onClose={() => setOpenModal(false)}>

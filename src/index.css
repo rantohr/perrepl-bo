@@ -267,6 +267,11 @@ button:focus {
 
 .input-autocomplete {
   position: relative;
+  z-index: 1000;
+}
+
+.input-autocomplete * {
+  z-index: 1000;
 }
 
 .input-autocomplete:focus-within ul, 
@@ -294,6 +299,7 @@ button:focus {
 .input-autocomplete ul li {
   padding: 7px 5px;
   cursor: pointer;
+  background-color: white;
 }
 
 .input-autocomplete ul li:hover {
