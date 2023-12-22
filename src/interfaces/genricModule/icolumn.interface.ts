@@ -12,6 +12,7 @@ export interface IListAction {
   icon?: any;
   className?: string;
   callback: (row?: any) => void;
+  actions?: IListAction[];
 }
 
 export interface IListFilter {

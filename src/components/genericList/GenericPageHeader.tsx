@@ -2,6 +2,7 @@ import { FC } from "react";
 import { IListAction } from "../../interfaces/genricModule/icolumn.interface";
 import './genericList.css'
 import { Button } from "flowbite-react";
+import GenericBtnDropdown from "../genericBtnDropdown/genericBtnDropdown";
 
 const GenericPageHeader: FC<{ title: string, total?: number, actions?: IListAction[] }> = ({ title, total, actions }) => {
 
@@ -15,14 +16,15 @@ const GenericPageHeader: FC<{ title: string, total?: number, actions?: IListActi
         {
           actions?.map((action, action_index) => {
             return (
-              <Button
-                key={`list-action-${action_index}`}
-                outline
-                className={action.className || (action_index % 2 === 0 ? "outlined-button" : "contained-button")}
-                onClick={() => action.callback()}>
-                {action.icon}
-                <p>{action.label}</p>
-              </Button>
+              // <Button
+              //   key={`list-action-${action_index}`}
+              //   outline
+              //   className={action.className || (action_index % 2 === 0 ? "outlined-button" : "contained-button")}
+              //   onClick={() => action.callback()}>
+              //   {action.icon}
+              //   <p>{action.label}</p>
+              // </Button>
+              <GenericBtnDropdown action={action} key={`list-action-${action_index}`} />
             )
           })
         }

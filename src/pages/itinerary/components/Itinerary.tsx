@@ -21,6 +21,8 @@ import { format } from "date-fns";
 import { ILocation } from "../../../interfaces/ilocation.interface";
 import GenericField from "../../../components/generciForm/GenericField";
 import { getLocations } from "../../../services/location.service";
+import { IListAction } from "../../../interfaces/genricModule/icolumn.interface";
+import GenericBtnDropdown from "../../../components/genericBtnDropdown/genericBtnDropdown";
 
 const Itinerary: FC = () => {
 
@@ -72,40 +74,50 @@ const Itinerary: FC = () => {
     }, []);
 
     // CONFIG EVENT CATEGORIES
-    interface IEventCategory {
-        icon: JSX.Element;
-        label: string;
-    }
-    const eventCategories: IEventCategory[] = [
+    const eventCategories: IListAction[] = [
         {
             icon: <BiSolidPlaneAlt />,
             label: 'Flight',
+            callback: () => {handleFlightClick}
         },
         {
             icon: <BiSolidPlaneAlt />,
             label: 'Activite',
+            callback: () => {handleActivityClick}
         },
         {
             icon: <GiFootTrip />,
             label: 'Excursion',
+            callback: () => {}
         },
         {
             icon: <HiMiniBuildingOffice />,
             label: 'Hebergement',
+            callback: () => {setAddMode("accommodation")}
         },
         {
             icon: <FaTaxi />,
             label: 'Transfert',
+            callback: () => {}
         },
         {
             icon: <BsFillCarFrontFill />,
             label: 'Transport',
+            callback: () => {}
         },
         {
             icon: <BiSolidPlaneAlt />,
             label: 'Service',
+            callback: () => {}
         }
     ];
+    const dropdownEvent: IListAction = {
+        label: "Ajouter un événement",
+        icon: <AiOutlinePlus className="mr-4" />,
+        callback: () => {alert("OK")},
+        actions: eventCategories
+    }
+
     // // Config Card
     const flightData = {
         title: 'DEPARTURE - Central European Summer Time',
@@ -269,44 +281,10 @@ const Itinerary: FC = () => {
                             >
                                 Open Modal
                             </button>
-                            <button
-                                onClick={toggleDropdownEvent}
-                                className="font-bold bg-violet-1 shadow-lg shadow-violet-300 text-white w-full flex items-center px-4 py-4 rounded-lg my-2"
-                            >
-                                <AiOutlinePlus className="mr-4" />
-                                Ajouter un événement
-                            </button>
-                            {isOpenDropDownEvent && (
-                                <div
-                                    className="z-10 origin-top-right w-full absolute right-0 mt-2 rounded-lg shadow-lg bg-white divide-y divide-gray-100"
-                                >
-                                    <ul className=" py-2 text-sm text-gray-700 dark:text-gray-200">
-                                        {eventCategories &&
-                                            eventCategories.map((category, category_index) => {
-                                                return (
-                                                    <li key={`event-category-${category_index}`}>
-                                                        <div
-                                                            className="flex items-center text-lg text-violet-1 font-semibold px-4 py-1 dark:hover:text-white cursor-pointer"
-                                                            onClick={
-                                                                category.label === 'Flight'
-                                                                    ? handleFlightClick
-                                                                    : category.label === 'Activite'
-                                                                        ? handleActivityClick
-                                                                        : category.label === 'Hebergement'
-                                                                            ? () => setAddMode('accommodation')
-                                                                            : undefined
-                                                            }
-                                                        >
-                                                            {category.icon && category.icon}
-                                                            <span className="ml-4 text-base">{category.label && category.label}</span>
-                                                        </div>
-                                                    </li>
-                                                )
-                                            })
-                                        }
-                                    </ul>
-                                </div>
-                            )}
+
+                            {/* BUTTON ADD EVENT */}
+                            <GenericBtnDropdown action={dropdownEvent} />
+                            
                         </div>
                     </div>
                 }
