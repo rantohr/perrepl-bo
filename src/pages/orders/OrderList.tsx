@@ -1,6 +1,14 @@
 import { FC, useEffect, useState } from "react";
-import { MdModeEdit, MdDelete, MdOutlineAdd, MdOutlineSend } from "react-icons/md";
-import { IColumn, IListAction } from "../../interfaces/genricModule/icolumn.interface";
+import {
+  MdModeEdit,
+  MdDelete,
+  MdOutlineAdd,
+  MdOutlineSend,
+} from "react-icons/md";
+import {
+  IColumn,
+  IListAction,
+} from "../../interfaces/genricModule/icolumn.interface";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { IOrder } from "../../interfaces/iorder.interface";
@@ -11,12 +19,14 @@ import { getOrders } from "../../services/order.service";
 import { useSnackbar } from "notistack";
 import { Spinner } from "flowbite-react";
 import OrderEditDialog from "./OrderEditDialog";
+import { ITraveler } from "../../interfaces/itraveler.interface";
+import { IOrderStatus } from "../../interfaces/iorderStatus.interface";
 
 const OrderList: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   /** STORE */
-  const setSelectedItem = useOrderStore(state => state.setSelectedOrder);
+  const setSelectedItem = useOrderStore((state) => state.setSelectedOrder);
 
   /** LOCAL STATE */
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -25,26 +35,42 @@ const OrderList: FC = () => {
 
   /** LIST CONFIG */
   const actions: IListAction[] = [
-    { label: "Nouvelle demande", icon: <MdOutlineAdd />, callback: () => onCreate() },
-    { label: "Envoyer un formulaire", icon: <MdOutlineSend />, callback: () => console.log('TODO: send form') },
+    {
+      label: "Nouvelle demande",
+      icon: <MdOutlineAdd />,
+      callback: () => onCreate(),
+    },
+    {
+      label: "Envoyer un formulaire",
+      icon: <MdOutlineSend />,
+      callback: () => console.log("TODO: send form"),
+    },
   ];
 
   const mainFilters: IListAction[] = [
-    { label: "Tout", callback: () => console.log('all') },
-    { label: "Nouvelle", callback: () => console.log('new') },
-    { label: "En cours", callback: () => console.log('on going') },
-    { label: "En attente", callback: () => console.log('waiting') },
-    { label: "Envoyée", callback: () => console.log('sent') },
-    { label: "En voyage", callback: () => console.log('traveling') },
-    { label: "Confirmée", callback: () => console.log('confirmed') },
+    { label: "Tout", callback: () => console.log("all") },
+    { label: "Nouvelle", callback: () => console.log("new") },
+    { label: "En cours", callback: () => console.log("on going") },
+    { label: "En attente", callback: () => console.log("waiting") },
+    { label: "Envoyée", callback: () => console.log("sent") },
+    { label: "En voyage", callback: () => console.log("traveling") },
+    { label: "Confirmée", callback: () => console.log("confirmed") },
   ];
 
   const tabs: IListAction[] = [];
 
   /** ORDER TABLE CONFIGS */
   const rowActions: IListAction[] = [
-    { label: "Modifier", icon: MdModeEdit, callback: (row: any) => onEdit(row) },
-    { label: "Supprimer", icon: MdDelete, callback: (row: any) => console.log('TODO: delete clicked', row) },
+    {
+      label: "Modifier",
+      icon: MdModeEdit,
+      callback: (row: any) => onEdit(row),
+    },
+    {
+      label: "Supprimer",
+      icon: MdDelete,
+      callback: (row: any) => console.log("TODO: delete clicked", row),
+    },
   ];
 
   const columns: IColumn[] = [
@@ -52,34 +78,68 @@ const OrderList: FC = () => {
     //   field: "image", label: "",
     //   displayValue: (src: string) => <img src={src} />
     // },
-    { field: "travelers", label: "Client", sortable: true, displayValue: (value) => `${value![0]?.first_name || ''} ${value![0]?.last_name || ''}` },
     {
-      field: "created_date", label: "Demande", sortable: true,
-      displayValue: (date: string) => date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : ''
+      field: "order_creator", // "travelers"
+      label: "Client",
+      sortable: true,
+      displayValue: (value: ITraveler) => {
+        return value.first_name + " " + value.last_name;
+        // `${value![0]?.first_name || ""} ${value![0]?.last_name || ""}`,
+      },
     },
     {
-      field: "arrival_date", label: "Arrivé", sortable: true,
-      displayValue: (date: string) => (
-        <>
-          <p><b>{date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : ''}</b></p>
-          <p>{date ? format(new Date(date), 'H:m', { locale: fr }) : ''}</p>
-        </>
-      )
+      field: "created_at", // created_date
+      label: "Demande",
+      sortable: true,
+      displayValue: (date: string) =>
+        date ? format(new Date(date), "dd/MM/yyyy", { locale: fr }) : "",
     },
     {
-      field: "departure_datetime", label: "Départ", sortable: true,
+      field: "arrival_datetime", // arrival_date
+      label: "Arrivé",
+      sortable: true,
       displayValue: (date: string) => (
         <>
-          <p><b>{date ? format(new Date(date), 'dd/MM/yyyy', { locale: fr }) : ''}</b></p>
-          <p>{date ? format(new Date(date), 'H:m', { locale: fr }) : ''}</p>
+          <p>
+            <b>
+              {date ? format(new Date(date), "dd/MM/yyyy", { locale: fr }) : ""}
+            </b>
+          </p>
+          <p>{date ? format(new Date(date), "H:m", { locale: fr }) : ""}</p>
         </>
-      )
+      ),
+    },
+    {
+      field: "departure_datetime",
+      label: "Départ",
+      sortable: true,
+      displayValue: (date: string) => (
+        <>
+          <p>
+            <b>
+              {date ? format(new Date(date), "dd/MM/yyyy", { locale: fr }) : ""}
+            </b>
+          </p>
+          <p>{date ? format(new Date(date), "H:m", { locale: fr }) : ""}</p>
+        </>
+      ),
     },
     // { field: "type", label: "Type de client" },
     { field: "trip_duration", label: "Durée (en j)" },
     {
-      field: "status", label: "Status",
-      displayValue: (status: string) => <div className="status" style={{ color: getStatusColor(status), backgroundColor: getStatusBgColor(status) }}>{status}</div>
+      field: "order_statuses",
+      label: "Status",
+      displayValue: (status: IOrderStatus) => (
+        <div
+          className="status"
+          style={{
+            color: getStatusColor(status.order_status),
+            backgroundColor: getStatusBgColor(status.order_status),
+          }}
+        >
+          {status.order_status}
+        </div>
+      ),
     },
   ];
 
@@ -91,7 +151,7 @@ const OrderList: FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Nouvelle':
+      case "Nouvelle":
         return "#00d971";
       default:
         return "#00d971";
@@ -101,7 +161,7 @@ const OrderList: FC = () => {
 
   const getStatusBgColor = (status: string) => {
     switch (status) {
-      case 'Nouvelle':
+      case "Nouvelle":
         return "#00d9712b";
       default:
         return "#00d9712b";
@@ -109,7 +169,7 @@ const OrderList: FC = () => {
   };
 
   const onCreate = () => {
-    setSelectedItem(({} as any));
+    setSelectedItem({} as any);
     setOpenAddModal(true);
   };
 
@@ -130,34 +190,44 @@ const OrderList: FC = () => {
       .then((response) => {
         setLoading(false);
         setRows(response.data.results);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         if (error.response?.data?.errors) {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          for (const [_key, value] of Object.entries(error.response.data.errors)) {
+          for (const [_key, value] of Object.entries(
+            error.response.data.errors
+          )) {
             if (Array.isArray(value)) {
-              value.map(error => enqueueSnackbar(`${error}`, { variant: 'error' }));
+              value.map((error) =>
+                enqueueSnackbar(`${error}`, { variant: "error" })
+              );
             } else {
-              enqueueSnackbar(`${value}`, { variant: 'error' });
+              enqueueSnackbar(`${value}`, { variant: "error" });
             }
           }
         } else if (error.response) {
           if (error.response.status === 400) {
             for (const [key, value] of Object.entries(error.response.data)) {
               if (Array.isArray(value)) {
-                value.map(error => enqueueSnackbar(`${key} : ${error}`, { variant: 'error' }));
+                value.map((error) =>
+                  enqueueSnackbar(`${key} : ${error}`, { variant: "error" })
+                );
               } else {
-                enqueueSnackbar(`${key} : ${value}`, { variant: 'error' });
+                enqueueSnackbar(`${key} : ${value}`, { variant: "error" });
               }
             }
-          } else if (error.response.status === 401 || error.response.status === 403) {
-            enqueueSnackbar('Problème de permission', { variant: 'error' });
+          } else if (
+            error.response.status === 401 ||
+            error.response.status === 403
+          ) {
+            enqueueSnackbar("Problème de permission", { variant: "error" });
           } else if (error.response.status === 500) {
-            enqueueSnackbar('Erreur du serveur', { variant: 'error' });
+            enqueueSnackbar("Erreur du serveur", { variant: "error" });
           }
         } else if (error.request) {
-          console.log('error.request : ', error.request);
+          console.log("error.request : ", error.request);
         } else {
-          console.log('Error', error.message);
+          console.log("Error", error.message);
         }
       });
   };
@@ -175,11 +245,23 @@ const OrderList: FC = () => {
         tabs={tabs}
       />
 
-      <OrderCreateDialog open={openAddModal} onClose={onCancelAction} onSuccess={loadData} />
-      <OrderEditDialog open={openEditModal} onClose={onCancelAction} onSuccess={loadData} />
-      {loading && <div className="big-loader"><Spinner /></div>}
+      <OrderCreateDialog
+        open={openAddModal}
+        onClose={onCancelAction}
+        onSuccess={loadData}
+      />
+      <OrderEditDialog
+        open={openEditModal}
+        onClose={onCancelAction}
+        onSuccess={loadData}
+      />
+      {loading && (
+        <div className="big-loader">
+          <Spinner />
+        </div>
+      )}
     </>
   );
-}
+};
 
 export default OrderList;

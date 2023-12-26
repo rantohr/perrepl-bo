@@ -1,7 +1,8 @@
-import axios, { AxiosResponse, CancelTokenSource } from "axios";
+import { AxiosResponse, CancelTokenSource } from "axios";
 import { IOrder } from "../interfaces/iorder.interface";
+import axios from "../api/axios";
 
-const API_HREF = "http://localhost:8000/"; // TODO: set global variable
+const API_HREF = "http://localhost:8000/api/"; // TODO: set global variable
 // const API_HREF = `http://localhost:${
 //   import.meta.env.BACKEND_PORT || 8000
 // }/api/`;
@@ -15,14 +16,14 @@ export const getOrders = (
   if (filter) {
     handledFilter = { ...filter };
   }
-  return axios.get(`${API_HREF}orders/`, {
+  return axios.get(`/v2/order/`, {
     params: {
       limit,
       offset,
       ...handledFilter,
     },
     headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 };
@@ -39,14 +40,14 @@ export const getOrderById = (
 };
 
 export const postOrder = (sinister: IOrder): Promise<AxiosResponse<IOrder>> => {
-  if (cancelToken) {
-    cancelToken.cancel("Operation canceled due to new request.");
-  }
-  cancelToken = axios.CancelToken.source();
-  return axios.post(`${API_HREF}orders/`, sinister, {
-    cancelToken: cancelToken.token,
+  // if (cancelToken) {
+  //   cancelToken.cancel("Operation canceled due to new request.");
+  // }
+  // cancelToken = axios.CancelToken.source();
+  return axios.post(`${API_HREF}v2/order/`, sinister, {
+    // cancelToken: cancelToken.token,
     headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 };

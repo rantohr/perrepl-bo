@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { Datepicker, Label, Modal, Select, TextInput } from "flowbite-react";
 import { StepperEnum } from "../../interfaces/enum/Stepper.enum";
 import { CgLaptop } from "react-icons/cg";
-import { getClient } from "../../services/client.service";
+import { getClient, getOrder } from "../../services/client.service";
 import { ITraveler } from "../../interfaces/itraveler.interface";
+import { getOrders } from "../../services/order.service";
+import { IOrderResults } from "../../interfaces/results/iorder.interface.result";
 
 type PropsDynamicComponent = {
   setCreateClient: React.Dispatch<React.SetStateAction<boolean>>;
@@ -271,14 +273,20 @@ export default function LayoutClient() {
   const [openModal, setOpenModal] = useState(false);
   const [openCreateClient, setCreateClient] = useState(false);
 
-  const [clientList, setClientList] = useState<ITraveler[]>([]);
+  // const [clientList, setClientList] = useState<ITraveler[]>([]);
+  const [clientList, setClientList] = useState<IOrderResults[]>([]);
 
   useEffect(() => {
-    getClient()
-      .then((clients) => {
-        setClientList(clients);
+    getOrder()
+      .then((orders) => {
+        setClientList(orders);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.log(err));
+    // getClient()
+    //   .then((clients) => {
+    //     setClientList(clients);
+    //   })
+    //   .catch((err) => console.error(err));
   }, []);
 
   console.log("clientList", clientList);
@@ -396,7 +404,11 @@ export default function LayoutClient() {
         </div>
 
         <div className="container mt-4">
-          <Outlet />
+          <Outlet
+            context={{
+              clientList: clientList,
+            }}
+          />
         </div>
       </div>
 
