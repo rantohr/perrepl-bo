@@ -16,7 +16,7 @@ export const getClient = async () => {
 
 export const getOrder = async () => {
   const { data } = await axiosPrivate.get<{ results: IOrderResults[] }>(
-    "/v2/order",
+    "api/v2/order",
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

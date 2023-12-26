@@ -1,9 +1,11 @@
 import axios, { AxiosResponse, CancelTokenSource } from "axios";
 
-const API_HREF = "https://backend.pereepl.mg/"; // TODO: set global variable
+// const API_HREF = "https://backend.pereepl.mg/"; // TODO: set global variable
 // const API_HREF = `http://localhost:${
 //   import.meta.env.BACKEND_PORT || 8000
 // }/api/`;
+
+const API_HREF = import.meta.env.VITE_URL_BACKEND;
 let cancelToken: CancelTokenSource | null = null;
 export const getAll = (
   endpoint: string,
@@ -13,7 +15,7 @@ export const getAll = (
 ): Promise<AxiosResponse<{ count: number; results: any[] }>> => {
   let params = {
     limit: limit || 10,
-    offset: offset || 0
+    offset: offset || 0,
   };
   if (filter) {
     params = { ...filter };
@@ -38,7 +40,10 @@ export const getById = (
   });
 };
 
-export const post = (endpoint: string, data: any): Promise<AxiosResponse<any>> => {
+export const post = (
+  endpoint: string,
+  data: any
+): Promise<AxiosResponse<any>> => {
   if (cancelToken) {
     cancelToken.cancel("Operation canceled due to new request.");
   }
@@ -68,7 +73,10 @@ export const patch = (
   });
 };
 
-export const put = (endpoint: string, data: any): Promise<AxiosResponse<any>> => {
+export const put = (
+  endpoint: string,
+  data: any
+): Promise<AxiosResponse<any>> => {
   if (cancelToken) {
     cancelToken.cancel("Operation canceled due to new request.");
   }
