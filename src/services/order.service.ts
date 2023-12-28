@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { IOrder } from "../interfaces/iorder.interface";
 import { getAll, getById, patch, post, put, remove } from "./main.service";
+import { CreateOrderDto } from "../dto/create.order.dto";
 
 const endpoint = "api/v2/order";
 export const getOrders = (
@@ -17,7 +18,9 @@ export const getOrderById = (
   return getById(endpoint, id);
 };
 
-export const postOrder = (data: IOrder): Promise<AxiosResponse<IOrder>> => {
+export const postOrder = (
+  data: CreateOrderDto
+): Promise<AxiosResponse<IOrder>> => {
   return post(endpoint, data);
 };
 
