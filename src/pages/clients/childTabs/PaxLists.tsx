@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import { IOrder } from "../../../interfaces/iorder.interface";
+import { clearPaxType } from "../../../functions";
+import { IPaxType } from "../../../interfaces/ipaxType.interface";
 
 type PropsResume = {
   label: string;
-  count: string;
+  count: string | number;
   noBorder?: boolean;
 };
 
@@ -15,9 +19,11 @@ type IPayrolls = {
 const CollapseCustom = ({
   label,
   values,
+  setterPaxList,
 }: {
   label: string;
   values: IPayrolls[];
+  setterPaxList: (index: number, values: Omit<IPayrolls, "no">) => void;
 }) => {
   return (
     <div className="acc mt-3">
@@ -63,6 +69,7 @@ const CollapseCustom = ({
                 no={item.no}
                 firstname={item.firstname}
                 lastname={item.lastname}
+                setterPaxList={setterPaxList}
               />
             ))}
           </tbody>
@@ -72,10 +79,24 @@ const CollapseCustom = ({
   );
 };
 
-const RowsCustom = ({ firstname, lastname, no }: IPayrolls) => {
-  const hasValue = firstname && lastname;
+const RowsCustom = ({
+  firstname,
+  lastname,
+  no,
+  setterPaxList,
+}: IPayrolls & {
+  setterPaxList: (index: number, values: Omit<IPayrolls, "no">) => void;
+}) => {
+  // const hasValue = firstname && lastname;
 
   const [edit, setEdit] = useState(false);
+  const [firstName, setFirstName] = useState(firstname);
+  const [lastName, setLastName] = useState(lastname);
+
+  console.log({
+    firstName,
+    lastName,
+  });
 
   return (
     <tr>
@@ -86,18 +107,45 @@ const RowsCustom = ({ firstname, lastname, no }: IPayrolls) => {
         {no}
       </th>
 
-      {hasValue && (
-        <>
-          <td className="px-[10px] py-[8px] font-medium text-black rounded-lg bg-[#F6F6F6]">
-            {firstname}
-          </td>
-          <td className="px-[10px] py-[8px] font-medium text-black rounded-lg bg-[#F6F6F6]">
-            {lastname}
-          </td>
+      {/* {hasValue && ( */}
+      <>
+        <td className="px-[10px] py-[8px] font-medium text-black rounded-lg bg-[#F6F6F6]">
+          {edit && (
+            <div>
+              <input
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+                onChange={(e) => setFirstName(e.target.value)}
+                value={firstName}
+              />
+            </div>
+          )}
+          {!edit && firstName}
+        </td>
+        <td className="px-[10px] py-[8px] font-medium text-black rounded-lg bg-[#F6F6F6]">
+          {edit && (
+            <div>
+              <input
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+                onChange={(e) => setLastName(e.target.value)}
+                value={lastName}
+              />
+            </div>
+          )}
+          {!edit && lastName}
+        </td>
 
-          <td className="bg-white">
-            <div className="flex gap-2 cursor-pointer">
-              <div>
+        <td className="bg-white">
+          <div className="flex gap-2 cursor-pointer">
+            <div
+              onClick={() => {
+                if (!edit) setEdit(true);
+              }}
+            >
+              {!edit && (
                 <svg
                   width="12"
                   height="12"
@@ -110,30 +158,57 @@ const RowsCustom = ({ firstname, lastname, no }: IPayrolls) => {
                     fill="#00ADED"
                   />
                 </svg>
-              </div>
-              <div>
+              )}
+              {edit && (
                 <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  onClick={() => {
+                    setterPaxList(no - 1, {
+                      firstname: firstName,
+                      lastname: lastName,
+                    });
+
+                    console.log("test", edit);
+
+                    setEdit(false);
+                  }}
                 >
                   <path
-                    d="M12 1.2L10.8 0L6 4.8L1.2 0L0 1.2L4.8 6L0 10.8L1.2 12L6 7.2L10.8 12L12 10.8L7.2 6L12 1.2Z"
-                    fill="#FF4040"
+                    fill="currentColor"
+                    d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"
                   />
                 </svg>
-              </div>
+              )}
             </div>
-          </td>
-        </>
-      )}
+            {/* <div>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 1.2L10.8 0L6 4.8L1.2 0L0 1.2L4.8 6L0 10.8L1.2 12L6 7.2L10.8 12L12 10.8L7.2 6L12 1.2Z"
+                  fill="#FF4040"
+                />
+              </svg>
+            </div> */}
+          </div>
+        </td>
+      </>
+      {/* )} */}
 
-      {!hasValue && (
+      {/* {!hasValue && (
         <td
           className="px-[10px] py-[8px] cursor-pointer rounded-lg bg-[#F6F6F6]"
           colSpan={2}
+          onClick={() => {
+            setEdit(true);
+          }}
         >
           <div className="flex items-center gap-2 justify-center font-bold text-grey-3">
             <div>
@@ -159,7 +234,7 @@ const RowsCustom = ({ firstname, lastname, no }: IPayrolls) => {
             <p>Ajouter un passager</p>
           </div>
         </td>
-      )}
+      )} */}
     </tr>
   );
 };
@@ -175,6 +250,37 @@ const Resume = ({ count, label, noBorder = false }: PropsResume) => {
 };
 
 export default function PaxListsClient() {
+  const contextProvider = useOutletContext<{
+    currentOrder: IOrder;
+  }>();
+  const { currentOrder } = contextProvider;
+
+  const { total } = clearPaxType(currentOrder.pax_type);
+  const [paxList, setPaxList] = useState<IPayrolls[]>([]);
+
+  useEffect(() => {
+    if (total) {
+      const datas: IPayrolls[] = [];
+
+      for (let i = 0; i < total; i++) {
+        datas.push({
+          no: i + 1,
+          firstname: "",
+          lastname: "",
+        });
+      }
+
+      setPaxList(datas);
+    }
+  }, [total]);
+
+  const setterPaxList = (index: number, values: Omit<IPayrolls, "no">) => {
+    const newDatas = [...paxList];
+    const patchValue = { ...newDatas[index], ...values };
+    newDatas[index] = patchValue;
+    setPaxList(newDatas);
+  };
+
   return (
     <div className="p-5 rounded-lg bg-white mt-4">
       <div className="header flex gap-2">
@@ -202,9 +308,14 @@ export default function PaxListsClient() {
 
         <div className="flex gap-4 items-center">
           <h4 className="font-bold">Configuration de chambre</h4>
-          <Resume label="SGL" count="2" />
+          {/* <Resume label="SGL" count="2" />
           <Resume label="DBL" count="1" />
-          <Resume label="TPL" count="1" noBorder={true} />
+          <Resume label="TPL" count="1" noBorder={true} /> */}
+          <Resume
+            label={currentOrder.room_type}
+            count={total}
+            noBorder={true}
+          />
         </div>
 
         <div className="flex items-center w-full  justify-end">
@@ -244,21 +355,11 @@ export default function PaxListsClient() {
       </div>
 
       <CollapseCustom
-        label="SGL"
-        values={[
-          {
-            no: 1,
-            firstname: "Marvin",
-            lastname: "McKinney",
-          },
-          {
-            no: 2,
-            firstname: "",
-            lastname: "",
-          },
-        ]}
+        label={currentOrder.room_type}
+        values={paxList}
+        setterPaxList={setterPaxList}
       />
-      <CollapseCustom
+      {/* <CollapseCustom
         label="DBL"
         values={[
           {
@@ -267,17 +368,17 @@ export default function PaxListsClient() {
             lastname: "",
           },
         ]}
-      />
-      <CollapseCustom
+      /> */}
+      {/* <CollapseCustom
         label="TPL"
         values={[
           {
             no: 3,
-            firstname: "",
-            lastname: "",
+            firstname: "test",
+            lastname: "test",
           },
         ]}
-      />
+      /> */}
     </div>
   );
 }

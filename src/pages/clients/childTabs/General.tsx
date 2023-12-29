@@ -2,6 +2,7 @@ import { useOutletContext } from "react-router-dom";
 import { IOrder } from "../../../interfaces/iorder.interface";
 import { format } from "date-fns";
 import { clearPaxType } from "../../../functions";
+import { useState } from "react";
 
 const Kpi = ({
   className = " bg-linear-blue",
@@ -282,6 +283,7 @@ export default function PayrollGeneralClient() {
   const { currentOrder } = contextProvider;
 
   const paxType = clearPaxType(currentOrder.pax_type);
+
   return (
     <div>
       <div className="bg-white mt-3 flex gap-4 ">
