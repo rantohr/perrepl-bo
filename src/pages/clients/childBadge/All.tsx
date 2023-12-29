@@ -7,6 +7,7 @@ import {
 // import { ITraveler } from "../../../interfaces/itraveler.interface";
 import { IOrderResults } from "../../../interfaces/results/iorder.interface.result";
 import { formatDateWithDateFns } from "../../../functions";
+import { IOrder } from "../../../interfaces/iorder.interface";
 
 type IClient = {
   img: string;
@@ -35,7 +36,14 @@ export default function AllBadge() {
     {
       label: "Voir",
       //   icon: MdDelete,
-      callback: () => navigate("/app/client/overview/view/general"),
+      callback: (row: IOrder) => {
+        row;
+        navigate(`/app/client/overview/view/${row.id}/general`, {
+          state: {
+            order: row,
+          },
+        });
+      },
     },
     {
       label: "Effacer",
@@ -170,9 +178,9 @@ export default function AllBadge() {
   //   rows = rows.filter((item) => item.clientType.toLowerCase().includes("b2b"));
   // }
 
-  if (pathname.includes("b2c")) {
+  if (pathname.includes("direct")) {
     rows = rows.filter((item) =>
-      item.client_type.toLowerCase().includes("b2c")
+      item.client_type.toLowerCase().includes("direct")
     );
   }
 

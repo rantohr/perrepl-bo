@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-
+const patternPaxType = /^([A-Za-z]+):(\d+)$/;
 export const formatDateWithDateFns = (date: string, formated?: string) => {
   return format(new Date(date), formated ? formated : "yyyy-MM-dd");
 };
@@ -141,4 +141,24 @@ export const LIST_VARIABLES = {
       label: "Bébé",
     },
   ],
+};
+
+export const clearPaxType = (pax_type: string) => {
+  const countByPaxType = {
+    adt: 0,
+    cnn: 0,
+    inf: 0,
+    total: 0,
+  };
+  const spliter = pax_type.split(",");
+
+  for (const item of spliter) {
+    const result = patternPaxType.exec(item) as RegExpExecArray;
+    const word = result[1].toLowerCase() as keyof typeof countByPaxType;
+    const number = parseInt(result[2], 10);
+    countByPaxType[word] = number;
+    countByPaxType.total = countByPaxType.total + number;
+  }
+
+  return countByPaxType;
 };

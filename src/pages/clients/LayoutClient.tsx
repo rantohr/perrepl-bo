@@ -381,10 +381,10 @@ export default function LayoutClient() {
             }}
           />
           <BadgeCustom
-            label="Client B2C"
-            active={last.includes("b2c")}
+            label="Client DIRECT"
+            active={last.includes("direct")}
             onClick={() => {
-              navigate("/app/client/b2c");
+              navigate("/app/client/direct");
             }}
           />
           <BadgeCustom
