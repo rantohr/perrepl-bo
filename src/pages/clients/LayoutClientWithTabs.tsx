@@ -342,35 +342,34 @@ export default function LayoutClientWithTabs() {
                         });
                       },
                     },
-                    {
-                      active: pathname.includes("paxList"),
-                      label: "Pax List",
-                      callback: () => {
-                        navigate(
-                          `/app/client/overview/view/${orderId}/paxList`,
-                          {
-                            state: {
-                              order: currentOrder,
-                            },
-                          }
-                        );
-                      },
-                    },
-
-                    {
-                      active: pathname.includes("payroll"),
-                      label: "paiements",
-                      callback: () => {
-                        navigate(
-                          `/app/client/overview/view/${orderId}/payroll`,
-                          {
-                            state: {
-                              order: currentOrder,
-                            },
-                          }
-                        );
-                      },
-                    },
+                    // {
+                    //   active: pathname.includes("paxList"),
+                    //   label: "Pax List",
+                    //   callback: () => {
+                    //     navigate(
+                    //       `/app/client/overview/view/${orderId}/paxList`,
+                    //       {
+                    //         state: {
+                    //           order: currentOrder,
+                    //         },
+                    //       }
+                    //     );
+                    //   },
+                    // },
+                    // {
+                    //   active: pathname.includes("payroll"),
+                    //   label: "paiements",
+                    //   callback: () => {
+                    //     navigate(
+                    //       `/app/client/overview/view/${orderId}/payroll`,
+                    //       {
+                    //         state: {
+                    //           order: currentOrder,
+                    //         },
+                    //       }
+                    //     );
+                    //   },
+                    // },
                   ]}
                 />
               </div>

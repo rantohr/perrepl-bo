@@ -350,7 +350,7 @@ export default function PayrollGeneralClient() {
             ]}
           />
 
-          <Resume
+          {/* <Resume
             iconSvg={
               <svg
                 width="42"
@@ -387,7 +387,7 @@ export default function PayrollGeneralClient() {
                 count: "-",
               },
             ]}
-          />
+          /> */}
         </div>
 
         <div className="mt-4 flex flex-col gap-5">
@@ -430,7 +430,7 @@ export default function PayrollGeneralClient() {
               // },
             ]}
           />
-          <Resume
+          {/* <Resume
             iconSvg={
               <svg
                 width="42"
@@ -471,7 +471,7 @@ export default function PayrollGeneralClient() {
                 isCheckbox: true,
               },
             ]}
-          />
+          /> */}
         </div>
       </div>
     </div>

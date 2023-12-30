@@ -21,6 +21,7 @@ import { Spinner } from "flowbite-react";
 import OrderEditDialog from "./OrderEditDialog";
 import { ITraveler } from "../../interfaces/itraveler.interface";
 import { IOrderStatus } from "../../interfaces/iorderStatus.interface";
+import OrderChangeStatus from "./OrderChangeStatus";
 
 const OrderList: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -32,6 +33,7 @@ const OrderList: FC = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [openChangeStatus, setOpenChangeStatus] = useState<IOrder | null>(null);
 
   /** LIST CONFIG */
   const actions: IListAction[] = [
@@ -65,6 +67,13 @@ const OrderList: FC = () => {
       label: "Modifier",
       icon: MdModeEdit,
       callback: (row: any) => onEdit(row),
+    },
+    {
+      label: "Changer de status",
+      // icon: MdModeEdit,
+      callback: (row: any) => {
+        setOpenChangeStatus(row);
+      },
     },
     {
       label: "Supprimer",
@@ -254,6 +263,12 @@ const OrderList: FC = () => {
         open={openEditModal}
         onClose={onCancelAction}
         onSuccess={loadData}
+      />
+
+      <OrderChangeStatus
+        currentOrder={openChangeStatus}
+        setOpen={setOpenChangeStatus}
+        loadData={loadData}
       />
       {loading && (
         <div className="big-loader">
