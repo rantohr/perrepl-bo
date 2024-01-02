@@ -15,13 +15,16 @@ import { IOrder } from "../../interfaces/iorder.interface";
 import GenericList from "../../components/genericList/GenericList";
 import OrderCreateDialog from "./OrderCreateDialog";
 import { useOrderStore } from "../../stores/order.store";
-import { getOrders } from "../../services/order.service";
+import { deleteOrder, getOrders } from "../../services/order.service";
 import { useSnackbar } from "notistack";
 import { Spinner } from "flowbite-react";
 import OrderEditDialog from "./OrderEditDialog";
 import { ITraveler } from "../../interfaces/itraveler.interface";
 import { IOrderStatus } from "../../interfaces/iorderStatus.interface";
 import OrderChangeStatus from "./OrderChangeStatus";
+import { LIST_VARIABLES } from "../../functions";
+import BadgeCustom from "../components/BadgeCustom";
+import { last } from "lodash";
 
 const OrderList: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -49,15 +52,18 @@ const OrderList: FC = () => {
     },
   ];
 
-  const mainFilters: IListAction[] = [
-    { label: "Tout", callback: () => console.log("all") },
-    { label: "Nouvelle", callback: () => console.log("new") },
-    { label: "En cours", callback: () => console.log("on going") },
-    { label: "En attente", callback: () => console.log("waiting") },
-    { label: "Envoyée", callback: () => console.log("sent") },
-    { label: "En voyage", callback: () => console.log("traveling") },
-    { label: "Confirmée", callback: () => console.log("confirmed") },
-  ];
+  const mainFilters: IListAction[] = LIST_VARIABLES.ORDER_STATUS.map(
+    (item) => ({ label: item.label, callback: () => {} })
+  );
+  //  [
+  //   { label: "Tout", callback: () => console.log("all") },
+  //   { label: "Nouvelle", callback: () => console.log("new") },
+  //   { label: "En cours", callback: () => console.log("on going") },
+  //   { label: "En attente", callback: () => console.log("waiting") },
+  //   { label: "Envoyée", callback: () => console.log("sent") },
+  //   { label: "En voyage", callback: () => console.log("traveling") },
+  //   { label: "Confirmée", callback: () => console.log("confirmed") },
+  // ];
 
   const tabs: IListAction[] = [];
 
@@ -78,7 +84,13 @@ const OrderList: FC = () => {
     {
       label: "Supprimer",
       icon: MdDelete,
-      callback: (row: any) => console.log("TODO: delete clicked", row),
+      callback: (row: IOrder) => {
+        deleteOrder(row.id)
+          .then(() => {
+            loadData();
+          })
+          .catch((err) => console.log("err", err));
+      },
     },
   ];
 
@@ -243,6 +255,20 @@ const OrderList: FC = () => {
 
   return (
     <>
+      {/* <div className="flex gap-2 mt-4">
+        {LIST_VARIABLES.ORDER_STATUS.map((item, index) => {
+          return (
+            <BadgeCustom
+              key={index}
+              label={item.label}
+              active={false}
+              onClick={() => {
+                // navigate("/app/client");
+              }}
+            />
+          );
+        })}
+      </div> */}
       <GenericList
         title="Demandes"
         total={3}

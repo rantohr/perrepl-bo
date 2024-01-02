@@ -36,6 +36,7 @@ import PersistLogin from "./pages/auth/PersistLogin";
 import LibrairyMedia from "./pages/library/LibraryMedia";
 import LibrairyDocument from "./pages/library/LibraryDocument";
 import LibrairyContent from "./pages/library/LibraryContent";
+import LayoutSupplier from "./pages/supplier/LayoutSupplier";
 
 const App: FC = (): ReactElement => {
   return (
@@ -94,6 +95,7 @@ const App: FC = (): ReactElement => {
                 <Route path="payroll" element={<PayrollClient />} />
               </Route>
             </Route>,
+            <Route path="supplier" element={<LayoutSupplier />}></Route>,
           ]}
         />
       </Route>
