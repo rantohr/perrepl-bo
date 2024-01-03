@@ -77,7 +77,7 @@ const Itinerary: FC = () => {
         {
             icon: <BiSolidPlaneAlt />,
             label: 'Flight',
-            callback: () => {handleFlightClick}
+            callback: () => { handleFlightClick }
         },
         {
             icon: <BiSolidPlaneAlt />,
@@ -96,23 +96,23 @@ const Itinerary: FC = () => {
         {
             icon: <FaTaxi />,
             label: 'Transfert',
-            callback: () => {}
+            callback: () => { }
         },
         {
             icon: <BsFillCarFrontFill />,
             label: 'Transport',
-            callback: () => {}
+            callback: () => { }
         },
         {
             icon: <BiSolidPlaneAlt />,
             label: 'Service',
-            callback: () => {}
+            callback: () => { }
         }
     ];
     const dropdownEvent: IListAction = {
         label: "Ajouter un événement",
         icon: <AiOutlinePlus className="mr-4" />,
-        callback: () => {alert("OK")},
+        callback: () => { alert("OK") },
         actions: eventCategories
     }
 
@@ -219,16 +219,17 @@ const Itinerary: FC = () => {
                 description: '',
                 availability: '',
                 duration: selectedItinerary.segments?.length || 0,
+                order: selectedItinerary.order?.map(o => { return { id: o.id } }),
                 segments: selectedItinerary.segments?.map(segment => {
                     return {
                         description: '',
                         duration: 1,
-                        start_location: [segment.start_location![0]?.id],
+                        start_location: [{ id: segment.start_location![0]?.id }],
                         end_location: [],
-                        arrival_time_utc: segment.arrival_time_utc,
-                        departure_time_utc: segment.departure_time_utc,
-                        hotels: segment.hotels?.map(i => i.hotel_id),
-                        activities: segment.activities?.map(i => i.id),
+                        arrival_time_utc: new Date(segment.arrival_time_utc).toISOString(),
+                        departure_time_utc: new Date(segment.departure_time_utc).toISOString(),
+                        hotels: segment.hotels?.map(i => { return { id: i.hotel_id } }),
+                        activities: segment.activities?.map(i => { return { id: i.id } }),
                     }
                 })
             }

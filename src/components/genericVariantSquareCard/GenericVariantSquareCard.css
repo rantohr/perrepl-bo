@@ -22,6 +22,7 @@ body {
   height: auto;
   width: 100%;
 }
+
 .card .card-body {
   background-color: rgba(137, 90, 135, 0.8);
   border-radius: 1em;
@@ -32,6 +33,7 @@ body {
   transform: translateY(100%);
   transition: 0.2s ease-in-out;
   z-index: 1;
+  padding: 0;
 }
 .card .card-body .card-header {
   align-items: center;
