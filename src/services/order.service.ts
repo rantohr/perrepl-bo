@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { IOrder } from "../interfaces/iorder.interface";
 import { getAll, getById, patch, post, put, remove } from "./main.service";
 import { CreateOrderDto } from "../dto/create.order.dto";
+import axios from "../api/axios";
 
 const endpoint = "api/v2/order";
 export const getOrders = (
@@ -39,4 +40,16 @@ export const deleteOrder = (
   id: number | undefined
 ): Promise<AxiosResponse<any>> => {
   return remove(endpoint, id);
+};
+
+export const updateOrderStatus = (orderId: number, order_status: string) => {
+  return axios.post(
+    `v2/order/${orderId}/change_status/`,
+    { order_status },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
 };

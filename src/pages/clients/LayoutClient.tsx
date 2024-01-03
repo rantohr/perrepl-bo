@@ -394,13 +394,13 @@ export default function LayoutClient() {
               navigate("/app/client/b2b");
             }}
           />
-          <BadgeCustom
+          {/* <BadgeCustom
             label="Agence"
             active={last.includes("agence")}
             onClick={() => {
               navigate("/app/client/agence");
             }}
-          />
+          /> */}
         </div>
 
         <div className="container mt-4">

@@ -8,6 +8,7 @@ import {
 import { IOrderResults } from "../../../interfaces/results/iorder.interface.result";
 import { formatDateWithDateFns } from "../../../functions";
 import { IOrder } from "../../../interfaces/iorder.interface";
+import { deleteOrder } from "../../../services/order.service";
 
 type IClient = {
   img: string;
@@ -48,23 +49,28 @@ export default function AllBadge() {
     {
       label: "Effacer",
       //   icon: MdModeEdit,
-      callback: () => alert("No action"),
+      callback: (row: IOrder) => {
+        deleteOrder(row.id)
+          .then((res) => {
+            console.log("res", res);
+          })
+          .catch((err) => alert(err));
+      },
     },
-    {
-      label: "Archiver",
-      //   icon: MdModeEdit,
-      callback: () => alert("No action"),
-    },
+    // {
+    //   label: "Archiver",
+    //   callback: () => alert("No action"),
+    // },
   ];
 
   const columns: IColumn[] = [
-    {
-      field: "img",
-      label: ``,
-      displayValue: (value: string) => {
-        return value ? <img src={value} /> : "";
-      },
-    },
+    // {
+    //   field: "img",
+    //   label: ``,
+    //   displayValue: (value: string) => {
+    //     return value ? <img src={value} /> : "";
+    //   },
+    // },
     {
       field: "client",
       label: "Client",
@@ -117,18 +123,18 @@ export default function AllBadge() {
         );
       },
     },
-    {
-      field: "by",
-      label: "Traitée par",
-      displayValue: (value: string, row: IClient) => {
-        return (
-          <div className="text-left">
-            <p className="font-bold text-violet-2 ">{row.by}</p>
-            <p className="font-normal text-grey-5">{row.role}</p>
-          </div>
-        );
-      },
-    },
+    // {
+    //   field: "by",
+    //   label: "Traitée par",
+    //   displayValue: (value: string, row: IClient) => {
+    //     return (
+    //       <div className="text-left">
+    //         <p className="font-bold text-violet-2 ">{row.by}</p>
+    //         <p className="font-normal text-grey-5">{row.role}</p>
+    //       </div>
+    //     );
+    //   },
+    // },
     {
       field: "demande",
       label: "Demande",

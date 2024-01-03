@@ -61,22 +61,15 @@ const GenericListFilters: FC<{
                 label={filter.label}
                 active={filter.label === "Tout"}
                 onClick={filter.callback}
+                key={filter_index}
               />
-              {/* <Button
-                key={`list-main-filter-${filter_index}`} outline
-                className={activeMainFilter === filter_index ? "contained-button-secondary" : "default-outlined-button"}
-                onClick={() => clickMainFilter(filter, filter_index)}>
-                {filter.icon} {filter.label}
-              </Button> */}
             </>
           );
         })}
       </div>
 
       {/* FILTER */}
-      {
-        Boolean(filters?.length) &&
-
+      {Boolean(filters?.length) && (
         <div>
           <svg
             className="w-6 h-6 text-gray-800 dark:text-white"
@@ -114,7 +107,7 @@ const GenericListFilters: FC<{
             return <div key={`list-filter-${filter_index}`}></div>;
           })}
         </div>
-      }
+      )}
     </div>
   );
 };

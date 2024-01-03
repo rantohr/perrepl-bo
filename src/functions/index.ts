@@ -141,6 +141,29 @@ export const LIST_VARIABLES = {
       label: "Bébé",
     },
   ],
+  ORDER_STATUS: [
+    {
+      value: "New",
+      label: "New",
+    },
+    {
+      value: "Confirmed",
+      label: "Confirmed",
+    },
+
+    {
+      value: "In Progress",
+      label: "In Progress",
+    },
+    {
+      value: "Pending",
+      label: "Pending",
+    },
+    {
+      value: "Blocked",
+      label: "Blocked",
+    },
+  ],
 };
 
 export const clearPaxType = (pax_type: string) => {
