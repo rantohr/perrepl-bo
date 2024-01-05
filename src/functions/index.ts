@@ -164,6 +164,16 @@ export const LIST_VARIABLES = {
       label: "Blocked",
     },
   ],
+  SUPPLIER_ROLE: [
+    {
+      value: "RESERVATION",
+      label: "RESERVATION",
+    },
+    {
+      value: "MANAGER",
+      label: "MANAGER",
+    },
+  ],
 };
 
 export const clearPaxType = (pax_type: string) => {

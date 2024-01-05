@@ -377,7 +377,7 @@ function Layout() {
                 }}
                 active={selectedMenu === 5}
               />
-
+              {/* 
               <Menu
                 icon={
                   <svg
@@ -399,7 +399,7 @@ function Layout() {
                   // setSelectedMenu(6);
                 }}
                 active={selectedMenu === 6}
-              />
+              /> */}
 
               <Menu
                 icon={
