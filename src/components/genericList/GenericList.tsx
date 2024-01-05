@@ -40,7 +40,7 @@ const GenericList: FC<IListOptions> = ({
               <>
                 <BadgeCustom
                   label={filter.label}
-                  active={filter.label === "Tout"}
+                  active={filter.active}
                   onClick={filter.callback}
                   key={filter_index}
                 />

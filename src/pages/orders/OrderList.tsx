@@ -23,8 +23,6 @@ import { ITraveler } from "../../interfaces/itraveler.interface";
 import { IOrderStatus } from "../../interfaces/iorderStatus.interface";
 import OrderChangeStatus from "./OrderChangeStatus";
 import { LIST_VARIABLES, getColorByStatusOrder } from "../../functions";
-import BadgeCustom from "../components/BadgeCustom";
-import { last } from "lodash";
 
 const OrderList: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -37,6 +35,7 @@ const OrderList: FC = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openChangeStatus, setOpenChangeStatus] = useState<IOrder | null>(null);
+  const [statusFilter, setStatusFilter] = useState("All");
 
   /** LIST CONFIG */
   const actions: IListAction[] = [
@@ -52,9 +51,22 @@ const OrderList: FC = () => {
     },
   ];
 
-  const mainFilters: IListAction[] = LIST_VARIABLES.ORDER_STATUS.map(
-    (item) => ({ label: item.label, callback: () => {} })
-  );
+  const mainFilters: IListAction[] = [
+    {
+      callback: () => {
+        setStatusFilter("All");
+      },
+      active: statusFilter === "All",
+      label: "All",
+    },
+    ...LIST_VARIABLES.ORDER_STATUS.map((item) => ({
+      label: item.label,
+      active: statusFilter === item.label,
+      callback: () => {
+        setStatusFilter(item.label);
+      },
+    })),
+  ];
   //  [
   //   { label: "Tout", callback: () => console.log("all") },
   //   { label: "Nouvelle", callback: () => console.log("new") },
@@ -167,7 +179,7 @@ const OrderList: FC = () => {
   const [rows, setRows] = useState<IOrder[]>([]);
   useEffect(() => {
     loadData();
-  }, []);
+  }, [statusFilter]);
   /** ****** */
 
   const getStatusColor = (status: string) => {
@@ -210,7 +222,14 @@ const OrderList: FC = () => {
     getOrders(20, 0)
       .then((response) => {
         setLoading(false);
-        setRows(response.data.results);
+
+        if (statusFilter === "All") setRows(response.data.results);
+        else
+          setRows(
+            response.data.results.filter(
+              (item) => item.order_statuses.order_status === statusFilter
+            )
+          );
       })
       .catch((error) => {
         if (error.response?.data?.errors) {
@@ -271,7 +290,7 @@ const OrderList: FC = () => {
       </div> */}
       <GenericList
         title="Demandes"
-        total={3}
+        total={rows.length}
         columns={columns}
         rows={rows}
         actions={actions}
