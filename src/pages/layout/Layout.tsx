@@ -44,7 +44,7 @@ const Menu = ({
 function Layout() {
   const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useState(0);
-  const { auth } = useAuth();
+  const { auth, setAuth, setPersist } = useAuth();
 
   useEffect(() => {
     const currentURL = window.location.href;
@@ -118,7 +118,7 @@ function Layout() {
                       />
                     </div>
                   </div>
-                  <div className="menu-user-info">
+                  <div className="menu-user-info ">
                     <div>
                       <svg
                         width="34"
@@ -162,9 +162,24 @@ function Layout() {
                       src="/finoana.jpeg"
                       alt="Default avatar"
                     />
-                    <div>
-                      <h5>Finoana ANDRIATSILAVO</h5>
+                    <div tabIndex={0} className="dropdown">
+                      <h5>Administrateur</h5>
                       <h6>Admin</h6>
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content z-[1] menu p-2 shadow  w-52"
+                      >
+                        <li
+                          onClick={() => {
+                            if (setAuth) setAuth(null);
+                            if (setPersist) setPersist(null);
+                            localStorage.clear();
+                            navigate("/login");
+                          }}
+                        >
+                          <div>Déconnexion</div>
+                        </li>
+                      </ul>
                     </div>
                     <div>
                       <svg
