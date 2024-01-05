@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import GenericVariantSquareCard from "../../components/genericVariantSquareCard/GenericVariantSquareCard"
 import { props } from "../../components/genericVariantSquareCard/GenericVariantSquareCard"
 import GenericPageHeader from "../../components/genericList/GenericPageHeader"
@@ -12,6 +12,8 @@ import { GrAddCircle } from "react-icons/gr"
 import { IForm } from "../../interfaces/genricModule/iform.interface"
 import GenericForm from "../../components/generciForm/GenericForm"
 import { getOrders } from "../../services/order.service"
+import { getItineraries } from "../../services/itinerary.service"
+import { format } from "date-fns"
 
 const ItineraryList: FC = () => {
 	const navigate = useNavigate();
@@ -19,6 +21,7 @@ const ItineraryList: FC = () => {
 	const setSelectedItinerary = useItineraryStore(state => state.setSelectedItinerary);
 
 	const [openForm, setOpenForm] = useState(false);
+	const [cards, setCards] = useState<any[]>([]);
 	const formData: IForm = {
 		initialData: { title: '', order: null },
 		fields: [
@@ -29,54 +32,51 @@ const ItineraryList: FC = () => {
 		onConfirm: (data) => confirmOrder(data)
 	};
 
-	const cards: props[] = [
-		{
-			title: "Road Trip a Madagascar",
-			image: "/photos/Rectangle-2384.jpg",
-			content: {
-				img_profil: "/profile-pic-test.jpg",
-				name_profil: "Jane Cooper",
-				nb_person: "2 Adultes",
-				date: "20 JUIN - 29 JUIN | 9Jours"
-			},
-			action: { action: "Paysages des hauts plateaux", callback: () => { } },
-			price: 440,
-			mark: {
-				label: "NOUVEAU"
-			}
-		},
-		{
-			title: "Road Trip a Madagascar",
-			image: "/photos/rec-1.jpg",
-			content: {
-				img_profil: "/profile-pic-test.jpg",
-				name_profil: "Jane Cooper",
-				nb_person: "2 Adultes",
-				date: "20 JUIN - 29 JUIN | 9Jours"
-			},
-			action: { action: "Paysages des hauts plateaux", callback: () => { } },
-			price: 440,
-			mark: {
-				label: "NOUVEAU"
-			}
-		},
-		{
-			title: "Road Trip a Madagascar",
-			image: "/photos/rec-3.jpg",
-			content: {
-				img_profil: "/profile-pic-test.jpg",
-				name_profil: "Jane Cooper",
-				nb_person: "2 Adultes",
-				date: "20 JUIN - 29 JUIN | 9Jours"
-			},
-			action: { action: "Paysages des hauts plateaux", callback: () => { } },
-			price: 440,
-			mark: {
-				label: "NOUVEAU"
-			}
-		},
+	const getTravelerPax: any = (inputString: string | null | undefined) => {
+		if (!inputString) return { adultsCount: 0, childrenCount: 0, infantsCount: 0 };
+		const keyValuePairs = inputString.split(',');
 
-	]
+		const counts: any = {};
+
+		keyValuePairs.forEach(pair => {
+			const [key, value] = pair.split(':');
+			counts[key] = parseInt(value, 10);
+		});
+
+		const adultsCount = counts['ADT'] || 0;
+		const childrenCount = counts['CNN'] || 0;
+		const infantsCount = counts['INF'] || 0;
+
+		return { adultsCount, childrenCount, infantsCount };
+	}
+
+	useEffect(() => {
+		getItineraries(20, 0)
+			.then(response => {
+				if (response.data.results) {
+					setCards(response.data.results?.map(i => {
+						const pax = getTravelerPax(i?.order?.pax_type);
+						return {
+							title: i.title,
+							image: i.image || "/photos/Rectangle-2384.jpg",
+							content: {
+								img_profil: "/profile-pic-test.jpg",
+								name_profil: `${i.client?.first_name || ''} ${i.client?.last_name || ''}`,
+								nb_person: `${pax?.adultsCount ? pax?.adultsCount + 'Adulte(s) - ' : '0'}${pax?.childrenCount ? pax?.childrenCount + 'Enfant(s) - ' : '0'}${pax?.infantsCount ? pax?.infantsCount + 'Bébé(s)' : '0'}`,
+								date: `${i?.order?.arrival_datetime ? format(new Date(i.order.arrival_datetime), 'dd MMM yyyy') : ''} - 
+								${i?.order?.departure_datetime ? format(new Date(i.order.departure_datetime), 'dd MMM yyyy') : ''} | ${i.duration} Jours`
+							},
+							action: { action: "Modifier", callback: () => { } },
+							// price: 440,
+							mark: {
+								label: "NOUVEAU"
+							}
+						}
+					}));
+				}
+			})
+			.catch(err => console.error(err));
+	}, []);
 
 	const actions: IListAction[] = [
 		{ label: "Nouvelle itinéraire", icon: <MdOutlineAdd />, callback: () => setOpenForm(true), className: "contained-button" },
