@@ -22,7 +22,7 @@ import OrderEditDialog from "./OrderEditDialog";
 import { ITraveler } from "../../interfaces/itraveler.interface";
 import { IOrderStatus } from "../../interfaces/iorderStatus.interface";
 import OrderChangeStatus from "./OrderChangeStatus";
-import { LIST_VARIABLES } from "../../functions";
+import { LIST_VARIABLES, getColorByStatusOrder } from "../../functions";
 import BadgeCustom from "../components/BadgeCustom";
 import { last } from "lodash";
 
@@ -154,8 +154,8 @@ const OrderList: FC = () => {
         <div
           className="status"
           style={{
-            color: getStatusColor(status.order_status),
-            backgroundColor: getStatusBgColor(status.order_status),
+            color: getColorByStatusOrder(status.order_status).color, // getStatusColor(status.order_status),
+            backgroundColor: getColorByStatusOrder(status.order_status).bg, //getStatusBgColor(status.order_status),
           }}
         >
           {status.order_status}

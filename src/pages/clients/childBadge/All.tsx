@@ -6,7 +6,10 @@ import {
 } from "../../../interfaces/genricModule/icolumn.interface";
 // import { ITraveler } from "../../../interfaces/itraveler.interface";
 import { IOrderResults } from "../../../interfaces/results/iorder.interface.result";
-import { formatDateWithDateFns } from "../../../functions";
+import {
+  formatDateWithDateFns,
+  getColorByStatusOrder,
+} from "../../../functions";
 import { IOrder } from "../../../interfaces/iorder.interface";
 import { deleteOrder } from "../../../services/order.service";
 
@@ -141,8 +144,15 @@ export default function AllBadge() {
       displayValue: (value: string, row: IOrderResults) => {
         return (
           <span
-            className="bg-yellow-2 text-yellow-1 text-xs font-bold me-2 
+            className=" text-xs font-bold me-2 
           px-2.5 py-1.5 rounded-full "
+            style={{
+              color: getColorByStatusOrder(row.order_statuses.order_status)
+                .color, // getStatusColor(status.order_status),
+              backgroundColor: getColorByStatusOrder(
+                row.order_statuses.order_status
+              ).bg, //getStatusBgColor(status.order_status),
+            }}
           >
             {/* En cours */}
             {row.order_statuses.order_status}

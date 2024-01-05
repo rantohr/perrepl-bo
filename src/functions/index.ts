@@ -195,3 +195,33 @@ export const clearPaxType = (pax_type: string) => {
 
   return countByPaxType;
 };
+
+export const getColorByStatusOrder = (status: string) => {
+  let bg = "#00d9712b";
+  let color = "#00d971";
+
+  switch (status) {
+    case "New":
+      bg = "#7FC7D9";
+      color = "#FFF";
+      break;
+
+    case "In Progress":
+      break;
+
+    case "Pending":
+      bg = "#FDCA45";
+      color = "#FFF";
+      break;
+
+    case "Blocked":
+      bg = "#DF2E38";
+      color = "#FFF";
+      break;
+
+    default:
+      break;
+  }
+
+  return { bg, color };
+};
