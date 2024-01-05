@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { differenceInDays, format } from "date-fns";
 import { CreateOrderDto } from "../../dto/create.order.dto";
 import { IPaxType } from "../../interfaces/ipaxType.interface";
+import { enqueueSnackbar } from "notistack";
 
 // type CreateTraveler = Omit<ITraveler, "id" | "created_at">;
 
@@ -135,6 +136,10 @@ export default function OrderFormV2({ onConfirm }: PropsOrderFormV2) {
         },
       ],
     };
+
+    // enqueueSnackbar("Enregister avec succès", {
+    //   variant: "success",
+    // });
 
     onConfirm(datas);
   };

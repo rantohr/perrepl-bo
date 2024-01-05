@@ -6,8 +6,10 @@ import { StepperEnum } from "../../interfaces/enum/Stepper.enum";
 import { CgLaptop } from "react-icons/cg";
 import { getClient, getOrder } from "../../services/client.service";
 import { ITraveler } from "../../interfaces/itraveler.interface";
-import { getOrders } from "../../services/order.service";
+import { getOrders, postOrder } from "../../services/order.service";
 import { IOrderResults } from "../../interfaces/results/iorder.interface.result";
+import OrderFormV2 from "../orders/OrderFormV2";
+import { enqueueSnackbar } from "notistack";
 
 type PropsDynamicComponent = {
   setCreateClient: React.Dispatch<React.SetStateAction<boolean>>;
@@ -271,8 +273,8 @@ export default function LayoutClient() {
   const paths = pathname.split("/");
   const last = paths[paths.length - 1];
   const [openModal, setOpenModal] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [openCreateClient, setCreateClient] = useState(false);
-
   // const [clientList, setClientList] = useState<ITraveler[]>([]);
   const [clientList, setClientList] = useState<IOrderResults[]>([]);
 
@@ -287,7 +289,7 @@ export default function LayoutClient() {
     //     setClientList(clients);
     //   })
     //   .catch((err) => console.error(err));
-  }, []);
+  }, [refresh]);
 
   console.log("clientList", clientList);
 
@@ -593,7 +595,25 @@ export default function LayoutClient() {
           </svg>
         </Modal.Header>
         <Modal.Body>
-          <DynamicComponent setCreateClient={setCreateClient} />
+          {/* <DynamicComponent setCreateClient={setCreateClient} /> */}
+          <OrderFormV2
+            onConfirm={(data) => {
+              postOrder(data)
+                .then(() => {
+                  enqueueSnackbar("Enregister avec succès", {
+                    variant: "success",
+                  });
+                })
+                .catch(() => {
+                  enqueueSnackbar("Une erreur a été rencontrée", {
+                    variant: "error",
+                  });
+                });
+
+              setRefresh((state) => !state);
+              setCreateClient(false);
+            }}
+          />
         </Modal.Body>
       </Modal>
     </>
