@@ -35,6 +35,7 @@ export default {
         "black-1": "#000000CC",
         "blue-1": "#1189F81A",
         "blue-2": "#1189F8",
+        "blue-3": "#381a4480",
         "yellow-1": "#F8B711",
         "yellow-2": "#F8B7111A",
       },
