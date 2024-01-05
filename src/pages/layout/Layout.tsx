@@ -401,7 +401,7 @@ function Layout() {
                 active={selectedMenu === 6}
               /> */}
 
-              <Menu
+              {/* <Menu
                 icon={
                   <svg
                     width="18"
@@ -426,7 +426,7 @@ function Layout() {
                   // setSelectedMenu(7);
                 }}
                 active={selectedMenu === 7}
-              />
+              /> */}
 
               <Menu
                 icon={

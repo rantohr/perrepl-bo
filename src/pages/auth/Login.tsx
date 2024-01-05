@@ -37,7 +37,7 @@ export default function Login() {
     resolver: yupResolver<FormValue>(validationSchema),
     mode: "onSubmit",
     defaultValues: {
-      email: "admin@pereepl.mg",
+      email: "admin@pereepl.com",
       password: "password",
     },
   });
