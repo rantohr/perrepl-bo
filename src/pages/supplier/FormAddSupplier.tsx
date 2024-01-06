@@ -9,13 +9,12 @@ import { postSupplier } from "../../services/supplier.service";
 import { enqueueSnackbar } from "notistack";
 import { LIST_VARIABLES } from "../../functions";
 import SelectCustom from "../components/SelectCustom";
+import { useContextLayoutSupplier } from "./LayoutSupplier";
 
 type FormValue = CreateSupplierDto;
 
-type PropsFormAddSupplier = {
-  close?: () => void;
-};
-export default function FormAddSupplier({ close }: PropsFormAddSupplier) {
+export default function FormAddSupplier() {
+  const { setOpen } = useContextLayoutSupplier();
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(),
     location: Yup.string().required(),
@@ -60,6 +59,8 @@ export default function FormAddSupplier({ close }: PropsFormAddSupplier) {
       enqueueSnackbar("Enregister avec succès", {
         variant: "success",
       });
+
+      setOpen((state) => !state);
     } catch (error) {
       enqueueSnackbar("Une erreur a été rencontrée", {
         variant: "error",
@@ -286,7 +287,7 @@ export default function FormAddSupplier({ close }: PropsFormAddSupplier) {
         <Button
           color="gray"
           onClick={() => {
-            if (close) close();
+            setOpen((state) => !state);
           }}
         >
           Annuler

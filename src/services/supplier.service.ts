@@ -14,3 +14,11 @@ export const postSupplier = (body: CreateSupplierDto) => {
     }
   );
 };
+
+export const getAllSupplier = () => {
+  return axios.get<IBackendResponse<ISupplier[]>>(`${API_HREF}/v2/supplier/`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};

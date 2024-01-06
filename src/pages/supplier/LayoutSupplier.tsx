@@ -1,6 +1,7 @@
 import { Modal } from "flowbite-react";
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import FormAddSupplier from "./FormAddSupplier";
+import ListSupplier from "./ListSupplier";
 
 type PropsBadgeSupplier = {
   label: string;
@@ -80,33 +81,48 @@ const BadgeSupplier = ({ label, active, icon }: PropsBadgeSupplier) => {
   );
 };
 
+interface ContextLayoutSupplier {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ContextLayoutSupplier = createContext<ContextLayoutSupplier | undefined>(
+  undefined
+);
+
 export default function LayoutSupplier() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-[#F6F6F6]">
-      <div className="flex items-center">
-        <h2 className="font-bold text-2xl text-black ">Prestataire</h2>
-        <div className=" w-full flex justify-end ">
-          <div className="dropdown">
-            <button
-              tabIndex={0}
-              className="btn py-[6px] px-[10px] text-xs text-white font-bold bg-violet-1 hover:bg-violet-1"
-              onClick={() => setOpen(true)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+    <ContextLayoutSupplier.Provider
+      value={{
+        setOpen,
+        open,
+      }}
+    >
+      <div className="bg-[#F6F6F6]">
+        <div className="flex items-center">
+          <h2 className="font-bold text-2xl text-black ">Prestataire</h2>
+          <div className=" w-full flex justify-end ">
+            <div className="dropdown">
+              <button
+                tabIndex={0}
+                className="btn py-[6px] px-[10px] text-xs text-white font-bold bg-violet-1 hover:bg-violet-1"
+                onClick={() => setOpen(true)}
               >
-                <path
-                  fill="currentColor"
-                  d="M18 13h-5v5c0 .55-.45 1-1 1s-1-.45-1-1v-5H6c-.55 0-1-.45-1-1s.45-1 1-1h5V6c0-.55.45-1 1-1s1 .45 1 1v5h5c.55 0 1 .45 1 1s-.45 1-1 1"
-                />
-              </svg>
-              Nouveau prestataire
-              <svg
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M18 13h-5v5c0 .55-.45 1-1 1s-1-.45-1-1v-5H6c-.55 0-1-.45-1-1s.45-1 1-1h5V6c0-.55.45-1 1-1s1 .45 1 1v5h5c.55 0 1 .45 1 1s-.45 1-1 1"
+                  />
+                </svg>
+                Nouveau prestataire
+                {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="10"
                 height="10"
@@ -116,9 +132,9 @@ export default function LayoutSupplier() {
                   fill="currentColor"
                   d="M8.037 11.166L14.5 22.36c.825 1.43 2.175 1.43 3 0l6.463-11.195c.826-1.43.15-2.598-1.5-2.598H9.537c-1.65 0-2.326 1.17-1.5 2.6z"
                 />
-              </svg>
-            </button>
-            <ul
+              </svg> */}
+              </button>
+              {/* <ul
               tabIndex={0}
               className="dropdown-content z-[1] menu p-2 shadow  w-52"
             >
@@ -213,12 +229,12 @@ export default function LayoutSupplier() {
                   Service
                 </div>
               </li>
-            </ul>
+            </ul> */}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-4 flex gap-[8px]">
+        {/* <div className="mt-4 flex gap-[8px]">
         <BadgeSupplier
           label="Hébergement"
           active={true}
@@ -315,29 +331,39 @@ export default function LayoutSupplier() {
             </svg>
           }
         />
-      </div>
+      </div> */}
 
-      <div className="mt-4">
-        <CardRepresentation />
-      </div>
+        <div className="mt-4">
+          {/* <CardRepresentation /> */}
+          <ListSupplier />
+        </div>
 
-      <Modal
-        dismissible
-        show={open}
-        onClose={() => setOpen(false)}
-        className="glass-container"
-        size={"3xl"}
-      >
-        <Modal.Header>
-          <h3 className="font-bold text-2xl">Préstataire</h3>
-          <p className="text-neutre font-normal text-xs">
-            Ajouter un nouveau prestataire
-          </p>
-        </Modal.Header>
-        <Modal.Body>
-          <FormAddSupplier />
-        </Modal.Body>
-      </Modal>
-    </div>
+        <Modal
+          dismissible
+          show={open}
+          onClose={() => setOpen(false)}
+          className="glass-container"
+          size={"3xl"}
+        >
+          <Modal.Header>
+            <h3 className="font-bold text-2xl">Préstataire</h3>
+            <p className="text-neutre font-normal text-xs">
+              Ajouter un nouveau prestataire
+            </p>
+          </Modal.Header>
+          <Modal.Body>
+            <FormAddSupplier />
+          </Modal.Body>
+        </Modal>
+      </div>
+    </ContextLayoutSupplier.Provider>
   );
 }
+
+export const useContextLayoutSupplier = (): ContextLayoutSupplier => {
+  const context = useContext(ContextLayoutSupplier);
+  if (!context) {
+    throw new Error("useMyContext must be used within a MyContextProvider");
+  }
+  return context;
+};

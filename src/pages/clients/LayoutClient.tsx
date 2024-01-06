@@ -300,7 +300,9 @@ export default function LayoutClient() {
           <div className="flex gap-4 items-center w-1/2">
             <h4 className="font-bold text-2xl">Client</h4>
             <div className="bg-transparent-grey w-[30px] h-[27px] rounded-full flex justify-center items-center">
-              <span className="font-normal text-xs text-neutre ">2</span>
+              <span className="font-normal text-xs text-neutre ">
+                {clientList.length}
+              </span>
             </div>
           </div>
           <div className=" w-1/2 flex gap-4 justify-end">
