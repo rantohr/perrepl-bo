@@ -6,52 +6,67 @@ import { IOrder } from "../../interfaces/iorder.interface";
 import { useSnackbar } from "notistack";
 import { postOrder } from "../../services/order.service";
 import axios from "axios";
+import OrderFormV2 from "./OrderFormV2";
+import { CreateOrderDto } from "../../dto/create.order.dto";
 
-const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: () => void }> = ({ open, onClose, onSuccess }) => {
-
+const OrderCreateDialog: FC<{
+  open: boolean;
+  onClose: () => void;
+  onSuccess?: () => void;
+}> = ({ open, onClose, onSuccess }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState();
 
-  const onConfirm = (data: IOrder) => {
-    console.log('FINAL DATA', data);
+  const onConfirm = (data: CreateOrderDto) => {
+    console.log("FINAL DATA", data);
     setLoading(true);
     postOrder(data)
       .then((response) => {
-        console.log('response', response);
+        console.log("response", response);
         setLoading(false);
-        enqueueSnackbar('demande créée avec succès', { variant: 'success' });
+        enqueueSnackbar("demande créée avec succès", { variant: "success" });
         onClose();
         if (onSuccess !== undefined) onSuccess();
-      }).catch((error) => {
+      })
+      .catch((error) => {
         setLoading(false);
         if (error.response?.data?.errors) {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          for (const [_key, value] of Object.entries(error.response.data.errors)) {
+          for (const [_key, value] of Object.entries(
+            error.response.data.errors
+          )) {
             if (Array.isArray(value)) {
-              value.map(error => enqueueSnackbar(`${error}`, { variant: 'error' }));
+              value.map((error) =>
+                enqueueSnackbar(`${error}`, { variant: "error" })
+              );
             } else {
-              enqueueSnackbar(`${value}`, { variant: 'error' });
+              enqueueSnackbar(`${value}`, { variant: "error" });
             }
           }
         } else if (error.response) {
           if (error.response.status === 400) {
             for (const [key, value] of Object.entries(error.response.data)) {
               if (Array.isArray(value)) {
-                value.map(error => enqueueSnackbar(`${key} : ${error}`, { variant: 'error' }));
+                value.map((error) =>
+                  enqueueSnackbar(`${key} : ${error}`, { variant: "error" })
+                );
               } else {
-                enqueueSnackbar(`${key} : ${value}`, { variant: 'error' });
+                enqueueSnackbar(`${key} : ${value}`, { variant: "error" });
               }
             }
-          } else if (error.response.status === 401 || error.response.status === 403) {
-            enqueueSnackbar('Problème de permission', { variant: 'error' });
+          } else if (
+            error.response.status === 401 ||
+            error.response.status === 403
+          ) {
+            enqueueSnackbar("Problème de permission", { variant: "error" });
           } else if (error.response.status === 500) {
-            enqueueSnackbar('Erreur du serveur', { variant: 'error' });
+            enqueueSnackbar("Erreur du serveur", { variant: "error" });
           }
         } else if (error.request) {
-          console.log('error.request : ', error.request);
+          console.log("error.request : ", error.request);
         } else {
-          console.log('Error', error.message);
+          console.log("Error", error.message);
         }
       });
   };
@@ -77,7 +92,12 @@ const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: ()
 
   return (
     <>
-      <Modal dismissible show={open} onClose={onClose} className="glass-container">
+      <Modal
+        dismissible
+        show={open}
+        onClose={onClose}
+        className="glass-container"
+      >
         <Modal.Body>
           <div className="form-modal">
             <Modal.Header className="form-modal-header">
@@ -86,7 +106,8 @@ const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: ()
               <p>Ajouter une nouvelle demande</p>
             </Modal.Header>
             <Modal.Body>
-              <OrderForm onConfirm={onConfirm} onCancel={onClose} />
+              <OrderFormV2 onConfirm={onConfirm} />
+              {/* <OrderForm onConfirm={onConfirm} onCancel={onClose} /> */}
               {/* <div>
                 <input
                   type="file"
@@ -100,9 +121,13 @@ const OrderCreateDialog: FC<{ open: boolean, onClose: () => void, onSuccess?: ()
           </div>
         </Modal.Body>
       </Modal>
-      {loading && <div className="big-loader"><Spinner /></div>}
+      {loading && (
+        <div className="big-loader">
+          <Spinner />
+        </div>
+      )}
     </>
   );
-}
+};
 
 export default OrderCreateDialog;

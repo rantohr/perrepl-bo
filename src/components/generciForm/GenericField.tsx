@@ -2,8 +2,8 @@ import { FC, useState } from "react";
 import FloatingInput from "../../components/input/FloatingInput";
 import { IField } from "../../interfaces/genricModule/iform.interface";
 
-const GenericField: FC<{ field: IField, object: any | null, setObject?: (object: any | null) => void, onChange?: (field: string, value: any) => void }> = ({
-    field, object, setObject, onChange
+const GenericField: FC<{ className?: string, field: IField, object: any | null, setObject?: (object: any | null) => void, onChange?: (field: string, value: any) => void }> = ({
+    field, object, setObject, onChange, className
 }) => {
 
     /** LOCAL STATE */
@@ -71,6 +71,7 @@ const GenericField: FC<{ field: IField, object: any | null, setObject?: (object:
             {
                 field.type !== 'autocomplete' &&
                 <FloatingInput
+                    className={className}
                     label={`${field.label || ''} ${field.required ? '*' : ''}`}
                     type={field.type || "text"}
                     value={getValue(field)}
@@ -84,7 +85,7 @@ const GenericField: FC<{ field: IField, object: any | null, setObject?: (object:
             }
             {
                 field.type === 'autocomplete' &&
-                <div className="input-autocomplete">
+                <div className={`${className} input-autocomplete`}>
                     <FloatingInput
                         label={`${field.label || ''} ${field.required ? '*' : ''}`}
                         type={field.type || "text"}

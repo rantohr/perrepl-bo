@@ -4,8 +4,12 @@ import { useEffect, useState } from "react";
 import { Datepicker, Label, Modal, Select, TextInput } from "flowbite-react";
 import { StepperEnum } from "../../interfaces/enum/Stepper.enum";
 import { CgLaptop } from "react-icons/cg";
-import { getClient } from "../../services/client.service";
+import { getClient, getOrder } from "../../services/client.service";
 import { ITraveler } from "../../interfaces/itraveler.interface";
+import { getOrders, postOrder } from "../../services/order.service";
+import { IOrderResults } from "../../interfaces/results/iorder.interface.result";
+import OrderFormV2 from "../orders/OrderFormV2";
+import { enqueueSnackbar } from "notistack";
 
 type PropsDynamicComponent = {
   setCreateClient: React.Dispatch<React.SetStateAction<boolean>>;
@@ -269,17 +273,23 @@ export default function LayoutClient() {
   const paths = pathname.split("/");
   const last = paths[paths.length - 1];
   const [openModal, setOpenModal] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [openCreateClient, setCreateClient] = useState(false);
-
-  const [clientList, setClientList] = useState<ITraveler[]>([]);
+  // const [clientList, setClientList] = useState<ITraveler[]>([]);
+  const [clientList, setClientList] = useState<IOrderResults[]>([]);
 
   useEffect(() => {
-    getClient()
-      .then((clients) => {
-        setClientList(clients);
+    getOrder()
+      .then((orders) => {
+        setClientList(orders);
       })
-      .catch((err) => console.error(err));
-  }, []);
+      .catch((err) => console.log(err));
+    // getClient()
+    //   .then((clients) => {
+    //     setClientList(clients);
+    //   })
+    //   .catch((err) => console.error(err));
+  }, [refresh]);
 
   console.log("clientList", clientList);
 
@@ -290,7 +300,9 @@ export default function LayoutClient() {
           <div className="flex gap-4 items-center w-1/2">
             <h4 className="font-bold text-2xl">Client</h4>
             <div className="bg-transparent-grey w-[30px] h-[27px] rounded-full flex justify-center items-center">
-              <span className="font-normal text-xs text-neutre ">2</span>
+              <span className="font-normal text-xs text-neutre ">
+                {clientList.length}
+              </span>
             </div>
           </div>
           <div className=" w-1/2 flex gap-4 justify-end">
@@ -373,10 +385,10 @@ export default function LayoutClient() {
             }}
           />
           <BadgeCustom
-            label="Client B2C"
-            active={last.includes("b2c")}
+            label="Client DIRECT"
+            active={last.includes("direct")}
             onClick={() => {
-              navigate("/app/client/b2c");
+              navigate("/app/client/direct");
             }}
           />
           <BadgeCustom
@@ -386,17 +398,21 @@ export default function LayoutClient() {
               navigate("/app/client/b2b");
             }}
           />
-          <BadgeCustom
+          {/* <BadgeCustom
             label="Agence"
             active={last.includes("agence")}
             onClick={() => {
               navigate("/app/client/agence");
             }}
-          />
+          /> */}
         </div>
 
         <div className="container mt-4">
-          <Outlet />
+          <Outlet
+            context={{
+              clientList: clientList,
+            }}
+          />
         </div>
       </div>
 
@@ -581,7 +597,25 @@ export default function LayoutClient() {
           </svg>
         </Modal.Header>
         <Modal.Body>
-          <DynamicComponent setCreateClient={setCreateClient} />
+          {/* <DynamicComponent setCreateClient={setCreateClient} /> */}
+          <OrderFormV2
+            onConfirm={(data) => {
+              postOrder(data)
+                .then(() => {
+                  enqueueSnackbar("Enregister avec succès", {
+                    variant: "success",
+                  });
+                })
+                .catch(() => {
+                  enqueueSnackbar("Une erreur a été rencontrée", {
+                    variant: "error",
+                  });
+                });
+
+              setRefresh((state) => !state);
+              setCreateClient(false);
+            }}
+          />
         </Modal.Body>
       </Modal>
     </>

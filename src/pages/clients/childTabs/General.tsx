@@ -1,3 +1,9 @@
+import { useOutletContext } from "react-router-dom";
+import { IOrder } from "../../../interfaces/iorder.interface";
+import { format } from "date-fns";
+import { clearPaxType } from "../../../functions";
+import { useState } from "react";
+
 const Kpi = ({
   className = " bg-linear-blue",
   map = false,
@@ -163,7 +169,7 @@ type PropsResume = {
   iconSvg: React.ReactNode;
   children: {
     title: string;
-    count: string;
+    count: string | number;
     isCheckbox?: boolean;
     onChange?: () => void;
   }[];
@@ -270,21 +276,34 @@ const Resume = ({
     </div>
   );
 };
-export default function payrollGeneralClient() {
+export default function PayrollGeneralClient() {
+  const contextProvider = useOutletContext<{
+    currentOrder: IOrder;
+  }>();
+  const { currentOrder } = contextProvider;
+
+  const paxType = clearPaxType(currentOrder.pax_type);
+
   return (
     <div>
       <div className="bg-white mt-3 flex gap-4 ">
-        <Kpi label="Date d’arrivée" date="20 Jun 2023" />
+        <Kpi
+          label="Date d’arrivée"
+          date={format(new Date(currentOrder.arrival_datetime), "dd MMMM yyyy")}
+        />
         <Kpi
           className="bg-linear-blue-2"
           label="Date de départ"
-          date="20 Jun 2023"
+          date={format(
+            new Date(currentOrder.departure_datetime),
+            "dd MMMM yyyy"
+          )}
         />
         <Kpi
           className="bg-linear-blue-3"
           map={true}
           label="Durée du séjour"
-          date="9 Jours"
+          date={`${currentOrder.trip_duration} Jours`}
         />
       </div>
 
@@ -313,25 +332,25 @@ export default function payrollGeneralClient() {
               </svg>
             }
             label="Pax"
-            count={6}
+            count={paxType.total}
             enableEdit={true}
             children={[
               {
                 title: "Adultes",
-                count: "4",
+                count: paxType.adt,
               },
               {
                 title: "Enfants",
-                count: "2",
+                count: paxType.cnn,
               },
               {
                 title: "Bébé",
-                count: "-",
+                count: paxType.inf,
               },
             ]}
           />
 
-          <Resume
+          {/* <Resume
             iconSvg={
               <svg
                 width="42"
@@ -368,7 +387,7 @@ export default function payrollGeneralClient() {
                 count: "-",
               },
             ]}
-          />
+          /> */}
         </div>
 
         <div className="mt-4 flex flex-col gap-5">
@@ -395,23 +414,23 @@ export default function payrollGeneralClient() {
               </svg>
             }
             label="Configuration chambre"
-            count={4}
+            count={paxType.total}
             children={[
               {
-                title: "SGL",
-                count: "2",
+                title: currentOrder.room_type,
+                count: paxType.total,
               },
-              {
-                title: "DBL",
-                count: "1",
-              },
-              {
-                title: "TPL",
-                count: "1",
-              },
+              // {
+              //   title: "DBL",
+              //   count: "1",
+              // },
+              // {
+              //   title: "TPL",
+              //   count: "1",
+              // },
             ]}
           />
-          <Resume
+          {/* <Resume
             iconSvg={
               <svg
                 width="42"
@@ -452,7 +471,7 @@ export default function payrollGeneralClient() {
                 isCheckbox: true,
               },
             ]}
-          />
+          /> */}
         </div>
       </div>
     </div>

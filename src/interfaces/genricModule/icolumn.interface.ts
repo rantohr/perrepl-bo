@@ -13,6 +13,7 @@ export interface IListAction {
   className?: string;
   callback: (row?: any) => void;
   actions?: IListAction[];
+  active?: boolean;
 }
 
 export interface IListFilter {

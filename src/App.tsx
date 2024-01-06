@@ -36,6 +36,7 @@ import PersistLogin from "./pages/auth/PersistLogin";
 import LibrairyMedia from "./pages/library/LibraryMedia";
 import LibrairyDocument from "./pages/library/LibraryDocument";
 import LibrairyContent from "./pages/library/LibraryContent";
+import LayoutSupplier from "./pages/supplier/LayoutSupplier";
 
 const App: FC = (): ReactElement => {
   return (
@@ -51,10 +52,10 @@ const App: FC = (): ReactElement => {
           children={[
             <Route path="" element={<Dashboard />} />,
             <Route path="orders" element={<OrderList />} />,
-            <Route path="library" element={<LibraryList />} >
-              <Route path="" element={<LibrairyContent/>}/>
-              <Route path="media" element={<LibrairyMedia/>}/>
-              <Route path="document" element={<LibrairyDocument/>}/>
+            <Route path="library" element={<LibraryList />}>
+              <Route path="" element={<LibrairyContent />} />
+              <Route path="media" element={<LibrairyMedia />} />
+              <Route path="document" element={<LibrairyDocument />} />
             </Route>,
             <Route path="templates" element={<TemplateList />} />,
             <Route path="itinerary">
@@ -70,7 +71,7 @@ const App: FC = (): ReactElement => {
               <Route path="" element={<LayoutClient />}>
                 <Route path="" element={<AllBadge />} />
                 <Route path="b2b" element={<AllBadge />} />
-                <Route path="b2c" element={<AllBadge />} />
+                <Route path="direct" element={<AllBadge />} />
                 <Route path="agence" element={<AgenceBadge />} />
               </Route>
               <Route path="agence/update" element={<ClientAgenceProfile />} />
@@ -81,7 +82,10 @@ const App: FC = (): ReactElement => {
                 <Route path="clients" element={<Clients />} />
                 <Route path="payrolls" element={<Payrolls />} />
               </Route>
-              <Route path="overview/view" element={<LayoutClientWithTabs />}>
+              <Route
+                path="overview/view/:id"
+                element={<LayoutClientWithTabs />}
+              >
                 <Route path="" element={<GeneralClient />} />
                 <Route path="general" element={<GeneralClient />} />
                 <Route path="notes" element={<NotesClient />} />
@@ -91,6 +95,7 @@ const App: FC = (): ReactElement => {
                 <Route path="payroll" element={<PayrollClient />} />
               </Route>
             </Route>,
+            <Route path="supplier" element={<LayoutSupplier />}></Route>,
           ]}
         />
       </Route>

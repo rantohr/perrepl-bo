@@ -23,6 +23,10 @@
   font-family: "Raleway", sans-serif;
 }
 
+.bgDashWelcom {
+  background: linear-gradient(285deg, #381a44 25.34%, #9965ad 102.93%);
+}
+
 .glass-container {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(2px);
@@ -267,19 +271,24 @@ button:focus {
 
 .input-autocomplete {
   position: relative;
+  z-index: 1000;
 }
 
-.input-autocomplete:focus-within ul, 
+.input-autocomplete * {
+  z-index: 1000;
+}
+
+.input-autocomplete:focus-within ul,
 .input-autocomplete ul:focus,
 .input-autocomplete ul:active,
 .input-autocomplete ul:hover,
 .input-autocomplete ul li:focus,
 .input-autocomplete ul li:active,
-.input-autocomplete ul li:hover  {
+.input-autocomplete ul li:hover {
   display: block;
 }
 
-.input-autocomplete>ul {
+.input-autocomplete > ul {
   display: none;
   position: absolute;
   padding: 0px;
@@ -294,6 +303,7 @@ button:focus {
 .input-autocomplete ul li {
   padding: 7px 5px;
   cursor: pointer;
+  background-color: white;
 }
 
 .input-autocomplete ul li:hover {

@@ -36,6 +36,10 @@ export default function Login() {
   } = useForm<FormValue>({
     resolver: yupResolver<FormValue>(validationSchema),
     mode: "onSubmit",
+    defaultValues: {
+      email: "admin@pereepl.com",
+      password: "password",
+    },
   });
 
   console.log("errors", { errors, getValues: getValues() });
@@ -51,6 +55,7 @@ export default function Login() {
         navigate("/");
       }
     } catch (error) {
+      console.log("error", error);
       alert("Alert");
     }
   };
