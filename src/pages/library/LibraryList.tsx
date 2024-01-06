@@ -4,16 +4,35 @@ import GenericListFilters from "../../components/genericList/GenericListFilters"
 import { IListAction, IListFilter } from "../../interfaces/genricModule/icolumn.interface";
 import { MdCarRental, MdCleaningServices, MdDescription, MdHouse, MdOutlineAdd, MdSnowboarding } from "react-icons/md";
 import { useNavigate, Outlet } from "react-router-dom";
+import { useAccommodationStore } from "../../stores/accommodation.store";
+import AccommodationCreateDialog from "./accommodation/AccommodationCreateDialog";
+import { IAccommodation } from "../../interfaces/iaccommodation.interface";
 
 const LibraryList: FC = () => {
   const navigate = useNavigate()
 
+  /** STORE */
+  const setSelectedItem = useAccommodationStore(state => state.setSelectedAccommodation);
+
+  /** LOCAL STATE */
+  const [openAddAccommodationModal, setOpenAddAccommodationModal] = useState(false);
+
+
   const onCreateActivity = () => {
-    
-  }
+      setSelectedItem(({} as any));
+      setOpenAddAccommodationModal(true);
+  };
+
+  const onEdit = (item: IAccommodation) => {
+  };
+
+  const onCancelAction = () => {
+      setSelectedItem(null);
+      setOpenAddAccommodationModal(false);
+  };
 
   const action: IListAction[] = [
-    { label: "Activité", icon: <MdSnowboarding />, callback: () => {} },
+    { label: "Activité", icon: <MdSnowboarding />, callback: () => {setOpenAddAccommodationModal(true)} },
     { label: "Hébergement", icon: <MdHouse />, callback: () => {}, },
     { label: "Transport", icon: <MdCarRental />, callback: () => {} },
     { label: "Service", icon: <MdCleaningServices />, callback: () => {} },
@@ -47,6 +66,8 @@ const LibraryList: FC = () => {
       <GenericPageHeader title="Librairie" total={8} actions={actions}/>
       <GenericListFilters tabs={tabs} />
       <Outlet/>
+
+      <AccommodationCreateDialog open={openAddAccommodationModal} onClose={onCancelAction} onSuccess={onCreateActivity} />
     </div>
   );
 }
